@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.almortah.almortah.HomeActivity"
+    android:background="@drawable/mainpage"
+    >
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        android:id="@+id/guestButton"
+        android:text="CONTINUE AS GUEST"
+        android:textColor="@color/colorWhite"
+
+        android:backgroundTint="@color/colorBlue"/>
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/guestButton"
+        android:layout_alignStart="@+id/guestButton"
+        android:layout_marginTop="30dp"
+        android:id="@+id/signinButton"
+        android:text="LOGIN"
+        android:textColor="@color/colorWhite"
+        android:backgroundTint="@color/colorGreen"
+        />
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/signinButton"
+        android:layout_alignStart="@+id/signinButton"
+        android:layout_marginTop="30dp"
+        android:text="SIGN UP"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/signupButton"
+
+        android:backgroundTint="@color/colorDarkGrey"/>
+
+
+</RelativeLayout>

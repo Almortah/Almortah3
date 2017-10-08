@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "875117581361",
+    "firebase_url": "https://almortah-b0203.firebaseio.com",
+    "project_id": "almortah-b0203",
+    "storage_bucket": "almortah-b0203.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875117581361:android:bbdd4cec75fa18d3",
+        "android_client_info": {
+          "package_name": "com.almortah.almortah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875117581361-qt72aj78ild044pe2amrkuqc8q01q8qd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.almortah.almortah",
+            "certificate_hash": "8fc436a496ff881942aee5d89fd6b41ced60b6f3"
+          }
+        },
+        {
+          "client_id": "875117581361-ce2kgdmriv82lfcti40qev3koasa7siv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7FjJj1Y8_nUFEYyQNPBcBr2Idzc14sPE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875117581361-ce2kgdmriv82lfcti40qev3koasa7siv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
