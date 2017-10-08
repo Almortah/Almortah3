@@ -80,7 +80,6 @@ public class Signup extends AppCompatActivity {
                             hashMap.put("username",username);
                             hashMap.put("phone", phone);
                             hashMap.put("email", email);
-
                             mDatabase.child("users").child(user.getUid()).setValue(hashMap);
 
                             updateUI(user);
