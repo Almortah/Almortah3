@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="175dp"
+            android:src="@drawable/chalet_test_image"
+            android:id="@+id/chaletImage"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                tools:text="Golden Chalet"
+                android:textColor="@color/colorPrimaryDark"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:id="@+id/chaletName"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                tools:text="Rating: 7"
+                android:textColor="@color/colorPrimaryDark"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:id="@+id/chaletRating"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    tools:text="@string/Price"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="20dp"
+                    android:id="@+id/chaletPrice"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:text="Alwadi"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="20dp"
+                    android:id="@+id/chaletLocation"/>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
