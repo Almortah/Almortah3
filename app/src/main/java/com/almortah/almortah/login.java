@@ -84,8 +84,8 @@ public class login extends AppCompatActivity  {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Log.d(TAG,"Error");
-            //Intent intent = new Intent(this,Test.class);
-          //  startActivity(intent);
+            Intent intent = new Intent(this,ChaletListActivity.class);
+            startActivity(intent);
 
         } else {
             Toast.makeText(this,"Wrong Email or Password",Toast.LENGTH_LONG);

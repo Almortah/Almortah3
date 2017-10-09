@@ -17,6 +17,7 @@ tools:context="com.almortah.almortah.login">
         android:textSize="40sp"
         android:layout_marginLeft="20dp"/>
 
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
