@@ -57,48 +57,49 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                >
 
                 <ImageView
                     android:id="@+id/locationLogo"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_alignParentStart="true"
-                    android:paddingLeft="100dp"
-                    app:srcCompat="@drawable/ic_location_on_black_24dp" />
+                    app:srcCompat="@drawable/location_icon" />
 
                 <TextView
                     android:id="@+id/chaletLocation"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="90dp"
+                    android:layout_marginLeft="40dp"
                     android:layout_marginTop="5dp"
-                    android:paddingTop="20dp"
+                    android:paddingTop="25dp"
                     android:textSize="20sp"
                     tools:text="Alwadi" />
 
                 <TextView
                     android:id="@+id/chaletPrice"
                     android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="80dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="130dp"
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/chaletLocation"
                     android:paddingEnd="10dp"
-                    android:paddingTop="20dp"
-                    android:text="@string/Price"
+                    android:paddingTop="30dp"
+                    android:text="300 S.R"
                     android:textSize="20sp" />
 
                 <ImageView
                     android:id="@+id/priceLogo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignEnd="@+id/chaletPrice"
                     android:layout_alignParentTop="true"
+                    android:layout_marginEnd="35dp"
                     android:layout_marginRight="45dp"
                     android:paddingRight="10dp"
-                    app:srcCompat="@drawable/ic_attach_money_black_24dp" />
+                    app:srcCompat="@drawable/price_icon" />
             </RelativeLayout>
 
             <LinearLayout
@@ -107,9 +108,11 @@
              >
 
                 <RatingBar
-                    android:layout_width="250dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="25dp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:numStars="5"
+                    />
 
                 <Button
                     android:layout_width="match_parent"
