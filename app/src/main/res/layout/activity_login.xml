@@ -35,6 +35,12 @@ tools:context="com.almortah.almortah.login">
         android:inputType="textPassword"
         android:id="@+id/password"/>
 
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+         />
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

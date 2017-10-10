@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +41,7 @@ public class login extends AppCompatActivity  {
 
         mAuth = FirebaseAuth.getInstance();
 
-
-         // Check if user is signed in
+        // Check if user is signed in
         onStart();
 
         mLogin.setOnClickListener(new View.OnClickListener() {
