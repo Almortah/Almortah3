@@ -5,8 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.almortah.almortah.HomeActivity"
-    android:background="@drawable/mainpage"
+    android:background="@drawable/home_page"
     >
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="75dp"
+        app:srcCompat="@drawable/white_noname" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -16,15 +25,15 @@
         android:layout_marginTop="140dp"
         android:paddingLeft="60dp"
         />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="185dp"
+        android:paddingLeft="15dp"
         android:text="Rest-houses and Chalets now closer"
         android:textColor="@color/colorWhite"
-        android:textSize="22sp"
-        android:paddingLeft="15dp"
-        />
+        android:textSize="22sp" />
     <Button
         android:layout_width="250dp"
         android:layout_height="60dp"
