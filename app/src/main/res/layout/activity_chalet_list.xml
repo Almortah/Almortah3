@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.almortah.almortah.ChaletListActivity"
-    android:id="@+id/chalet_list">
+    android:id="@+id/chalet_list"
+    android:divider="@color/colorDarkGrey"
+    android:dividerHeight="9dp">
+
+
 
 </ListView>

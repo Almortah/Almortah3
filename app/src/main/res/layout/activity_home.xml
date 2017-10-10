@@ -1,45 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.almortah.almortah.HomeActivity"
-    android:background="@drawable/mainpage"
-    >
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="220dp"
-        android:id="@+id/guestButton"
-        android:text="CONTINUE AS GUEST"
-        android:textColor="@color/colorWhite"
+    android:background="@drawable/mainpage">
 
-        android:backgroundTint="@color/colorBlue"/>
     <Button
-        android:layout_width="250dp"
+        android:id="@+id/guestButton"
+        android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_below="@+id/guestButton"
-        android:layout_alignStart="@+id/guestButton"
-        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/colorBlue"
+        android:text="CONTINUE AS GUEST"
+
+        android:textColor="@color/colorWhite"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/signinButton"
+        android:layout_marginStart="67dp"
+        android:layout_marginEnd="67dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="60dp"
         android:id="@+id/signinButton"
         android:text="LOGIN"
         android:textColor="@color/colorWhite"
         android:backgroundTint="@color/colorGreen"
-        />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/signupButton"
+        app:layout_constraintRight_toRightOf="@+id/guestButton"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintLeft_toLeftOf="@+id/guestButton" />
+
     <Button
-        android:layout_width="250dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_below="@+id/signinButton"
-        android:layout_alignStart="@+id/signinButton"
-        android:layout_marginTop="30dp"
         android:text="SIGN UP"
         android:textColor="@color/colorWhite"
         android:id="@+id/signupButton"
 
-        android:backgroundTint="@color/colorDarkGrey"/>
+        android:backgroundTint="@color/colorDarkGrey"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/signinButton"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="91dp"
+        app:layout_constraintLeft_toLeftOf="@+id/signinButton" />
+
+    <ImageView
+        android:id="@+id/whiteLogo"
+        android:layout_width="92dp"
+        android:layout_height="79dp"
+        app:srcCompat="@drawable/white_noname"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_bias="0.213"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="0.125" />
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
