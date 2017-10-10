@@ -8,14 +8,16 @@
     android:paddingTop="56dp"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
-tools:context="com.almortah.almortah.login">
+tools:context="com.almortah.almortah.login"
+    android:background="@drawable/login">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
         android:textSize="40sp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/colorWhite"/>
 
 
     <EditText
@@ -34,6 +36,12 @@ tools:context="com.almortah.almortah.login">
         android:hint="Password"
         android:inputType="textPassword"
         android:id="@+id/password"/>
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+         />
 
     <Button
         android:layout_width="fill_parent"
