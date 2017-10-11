@@ -29,7 +29,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="185dp"
+        android:layout_marginTop="190dp"
         android:paddingLeft="15dp"
         android:text="Rest-houses and Chalets now closer"
         android:textColor="@color/colorWhite"
@@ -39,7 +39,7 @@
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="270dp"
         android:id="@+id/guestButton"
         android:text="CONTINUE AS GUEST"
         android:textColor="@color/colorWhite"
