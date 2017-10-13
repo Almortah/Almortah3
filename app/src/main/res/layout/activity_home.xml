@@ -99,15 +99,15 @@
         android:backgroundTint="@color/colorGreen"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/signupButton"
-        app:layout_constraintRight_toRightOf="@+id/signupButton"
+        app:layout_constraintBottom_toTopOf="@+id/submitOwner"
+        app:layout_constraintRight_toRightOf="@+id/submitOwner"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="19dp"
-        app:layout_constraintLeft_toLeftOf="@+id/signupButton"
+        app:layout_constraintLeft_toLeftOf="@+id/submitOwner"
         app:layout_constraintHorizontal_bias="0.0" />
 
     <Button
-        android:id="@+id/signupButton"
+        android:id="@+id/submitOwner"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginBottom="57dp"

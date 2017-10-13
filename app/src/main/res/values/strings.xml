@@ -1,13 +1,41 @@
 <resources>
+    <!-- General strings  -->
     <string name="app_name">AlMortah</string>
     <string name="Price">Price</string>
-    <string name="title_activity_chalet_list">Chalets</string>
+    <string name="title_activity_chalet_list">Rest-houses and chalets</string>
 
     <!-- Strings related to Settings -->
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="submit">Submit</string>
+    <string name="userType">Who are you?</string>
+
+    <!-- Error messages -->
+    <string name="erVerifyPassword">Password not match</string>
+    <string name="erEmptyField">All fields are required</string>
+    <string name="erAuth">Email or Password did not meet the requirements</string>
+    <string name="erVerifyEmail">Can not verify your email</string>
 
 
+    <!-- Admin strings -->
+
+
+    <!-- Owner strings  -->
+    <string name="owner">Owner</string>
+    <string name="chaletOwner">I have rest-houses or chalets</string>
+
+
+    <!-- Customer strings -->
+    <string name="customer">Customer</string>
+    <string name="username">Username</string>
+    <string name="fullname">Full name</string>
+    <string name="phone">Phone number</string>
+    <string name="email">Valid Email</string>
+    <string name="password">Password (More than 6 characteristics)</string>
+    <string name="verifyPassword">Verify Password</string>
+
+
+    <!-- Strange strings!! -->
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
@@ -77,4 +105,10 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+    <string-array name="android_dropdown_arrays">
+        <item>Customer</item>
+        <item>Owner</item>
+    </string-array>
+
 </resources>

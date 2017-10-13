@@ -1,188 +1,75 @@
 package com.almortah.almortah;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-
 public class Signup extends AppCompatActivity {
+
+    private Spinner userType;
 
     private EditText mUsername;
     private EditText mFullname;
     private EditText mPhonenumber;
     private EditText mEmail;
     private EditText mPassword;
-    private FirebaseAuth mAuth;
+    private EditText mPassword2;
     private Button mSignup;
-    private DatabaseReference mDatabase;
+    private AlmortahDB almortahDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        mAuth = FirebaseAuth.getInstance();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        almortahDB = new AlmortahDB(this);
+
+        Button ownerSignup = (Button) findViewById(R.id.owner);
+        ownerSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), signupOwner.class));
+            }
+        });
+
+
         //EditText
         mUsername = (EditText) findViewById(R.id.username);
         mFullname = (EditText) findViewById(R.id.fullname);
         mPhonenumber = (EditText) findViewById(R.id.phone);
-        mEmail= (EditText) findViewById(R.id.email);
+        mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
+        mPassword2 = (EditText) findViewById(R.id.password2);
 
-        mSignup= (Button) findViewById(R.id.signupButton);
+        mSignup = (Button) findViewById(R.id.submitCustomer);
         mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount(mEmail.getText().toString(),mPassword.getText().toString());
+                final String username = mUsername.getText().toString().trim();
+                final String fullname = mFullname.getText().toString().trim();
+                final String phone = mPhonenumber.getText().toString().trim();
+                final String email = mEmail.getText().toString().trim();
+                final String password = mPassword.getText().toString().trim();
+                final String passowrd2 = mPassword2.getText().toString().trim();
 
-
+                if (username.equals("") || fullname.equals("") || phone.equals("") || email.equals("") || password.equals("")) {
+                    Toast.makeText(Signup.this, R.string.erEmptyField, Toast.LENGTH_LONG).show();
+                    return;
+                } else if (!(password.equals(passowrd2))) {
+                    Toast.makeText(Signup.this, R.string.erVerifyPassword, Toast.LENGTH_LONG).show();
+                    return;
+                } else {
+                    if (almortahDB.signupACustomer(fullname, username, phone, email, password)) {
+                        startActivity(new Intent(v.getContext(), login.class));
+                    }
+                }
             }
         });
 
     }
-    private void createAccount(final String email, String password) {
-
-        if (!validateForm()) {
-            return;
-        }
-
-        // [START create_user_with_email]
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            String username= mUsername.getText().toString().trim();
-                            String fullname = mFullname.getText().toString().trim();
-                            String phone = mPhonenumber.getText().toString().trim();
-
-                            //Store user info in the database
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            HashMap<String,String> hashMap = new HashMap<String, String>();
-                            hashMap.put("Name",fullname );
-                            hashMap.put("username",username);
-                            hashMap.put("phone", phone);
-                            hashMap.put("email", email);
-                            hashMap.put("type", "1");
-                            mDatabase.child("users").child(user.getUid()).setValue(hashMap);
-                            sendVerificationEmail();
-                            //updateUI(user);
-                        } else {
-                            // If sign up fails, display a message to the user.
-                            Toast.makeText(Signup.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-
-                    }
-                });
-
-    }
-
-    private void updateUI(FirebaseUser user) {
-        if (user != null) {
-           Intent intent = new Intent(this,login.class);
-            startActivity(intent);
-
-        } else {
-            Toast.makeText(this,"Wrong Email or Password",Toast.LENGTH_LONG);
-        }
-    }
-
-    //validate Input form
-    private boolean validateForm() {
-        boolean valid = true;
-
-        String email = mEmail.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            mEmail.setError("Required.");
-            valid = false;
-        } else {
-            mEmail.setError(null);
-        }
-
-        String password = mPassword.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            mPassword.setError("Required.");
-            valid = false;
-        } else {
-            mPassword.setError(null);
-        }
-        String username = mUsername.getText().toString();
-        if (TextUtils.isEmpty(username)) {
-            mUsername.setError("Required.");
-            valid = false;
-        } else {
-            mUsername.setError(null);
-        }
-        String phonenumber = mPhonenumber.getText().toString();
-        if (TextUtils.isEmpty(phonenumber)) {
-            mPhonenumber.setError("Required.");
-            valid = false;
-        } else {
-            mPhonenumber.setError(null);
-        }
-        String fullname = mFullname.getText().toString();
-        if (TextUtils.isEmpty(fullname)) {
-            mFullname.setError("Required.");
-            valid = false;
-        } else {
-            mFullname.setError(null);
-        }
-
-        return valid;
-    }
-
-    private void sendVerificationEmail()
-    {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        user.sendEmailVerification()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            // email sent
-
-
-                            // after email is sent just logout the user and finish this activity
-                            FirebaseAuth.getInstance().signOut();
-                            startActivity(new Intent(Signup.this, login.class));
-                            finish();
-                        }
-                        else
-                        {
-                            // email not sent, so display message and restart the activity or do whatever you wish to do
-
-                            //restart this activity
-                            overridePendingTransition(0, 0);
-                            finish();
-                            overridePendingTransition(0, 0);
-                            startActivity(getIntent());
-
-                        }
-                    }
-                });
-    }
-
-
-
-
 
 }

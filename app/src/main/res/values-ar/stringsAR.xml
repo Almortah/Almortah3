@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General strings  -->
+    <string name="app_name">المرتاح</string>
+    <string name="Price">السعر</string>
+    <string name="title_activity_chalet_list">الإستراحات والشاليهات</string>
+
+    <!-- Strings related to Settings -->
+    <string name="login">تسجيل الدخول</string>
+    <string name="register">التسجيل</string>
+    <string name="submit">حفظ</string>
+
+    <!-- Error messages -->
+    <string name="erVerifyPassword">كلمة المرور غير متطابقة</string>
+    <string name="erEmptyField">جميع البيانات مطلوبة</string>
+    <string name="erAuth">البريد الإكتروني او كلمة السر لم تستوفي المتطلبات</string>
+
+
+    <!-- Admin strings -->
+
+
+
+
+    <!-- Owner strings  -->
+
+
+
+    <!-- Customer strings -->
+    <string name="username">اسم المستخدم</string>
+    <string name="fullname">الإسم الكامل</string>
+    <string name="phone">رقم الجوال</string>
+    <string name="email">بريد إكتروني حقيقي</string>
+    <string name="password">رقم المرور (أكثر من 6 حروف او أرقام)</string>
+    <string name="verifyPassword">تأكيد رقم المرور</string>
+
+
+
+
+</resources>

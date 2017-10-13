@@ -19,7 +19,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         guestButton = (Button) findViewById(R.id.guestButton);
         signinButton = (Button) findViewById(R.id.signinButton);
-        signupButton = (Button) findViewById(R.id.signupButton);
+        signupButton = (Button) findViewById(R.id.submitOwner);
 
         guestButton.setOnClickListener(this);
         signinButton.setOnClickListener(this);
@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Intent signin = new Intent(this,login.class);
                 startActivity(signin);
                 break;
-            case R.id.signupButton :
+            case R.id.submitOwner:
                 Intent signup = new Intent(this,Signup.class);
                 startActivity(signup);
                 break;

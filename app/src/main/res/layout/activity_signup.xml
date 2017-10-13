@@ -1,123 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent">
-
-<LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.almortah.almortah.Signup"
-    android:paddingTop="20dp"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp"
-    android:orientation="vertical"
-    android:background="@drawable/signup"
-    >
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign-up"
-        android:textSize="40sp"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/colorWhite"/>
-
-    <TextView
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="6dp"
-        android:textSize="20sp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="USERNAME"
-        android:textColor="@color/colorWhite"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/signup"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="20dp"
+        tools:context="com.almortah.almortah.Signup"
+        android:weightSum="1">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="@string/register"
+            android:textColor="@color/colorWhite"
+            android:textSize="40sp" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/username"
-        />
-    <TextView
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="6dp"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="FULL NAME"
-        android:textColor="@color/colorWhite"/>
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/username" />
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/fullname"
-        android:textColor="@color/colorWhite"/>
-    <TextView
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="6dp"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="PHONENUMBER"
-        android:textColor="@color/colorWhite"/>
+        <EditText
+            android:id="@+id/fullname"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/fullname"
+            android:textColor="@color/colorWhite" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:inputType="number"
-        android:id="@+id/phone"/>
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/phone"
+            android:inputType="phone" />
 
-    <TextView
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="6dp"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="EMAIL ADDRESS"
-        android:textColor="@color/colorWhite"/>
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/email"/>
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
 
-    <TextView
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="6dp"
-        android:textSize="20sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="PASSWORD"
-        android:textColor="@color/colorWhite"/>
+        <EditText
+            android:id="@+id/password2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/verifyPassword"
+            android:inputType="textPassword" />
 
-    <EditText
+    <Button
+        android:id="@+id/submitCustomer"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/password"
-        />
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:backgroundTint="#62BA60"
+        android:gravity="center"
+        android:text="@string/submit"
+        android:textColor="@color/colorWhite" />
 
-<Button
-    android:layout_width="100dp"
-    android:layout_height="50dp"
-    android:text="SIGNUP"
-    android:textColor="@color/colorWhite"
-    android:backgroundTint="#62BA60"
-    android:id="@+id/signupButton"/>
+    <Button
+        android:id="@+id/owner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:backgroundTint="#0B7CAC"
+        android:gravity="center"
+        android:text="@string/chaletOwner"
+        android:textColor="@color/colorWhite" />
 
 
 </LinearLayout>
-</ScrollView>

@@ -14,11 +14,12 @@ import java.util.ArrayList;
 
 public class ChaletListActivity extends AppCompatActivity {
 
+    private AlmortahDB almortahDB = new AlmortahDB(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chalet_list);
-
+        Bundle user = getIntent().getExtras();
         ArrayList<Chalet> chalets= new ArrayList<>();
         chalets.add(new Chalet("1","Golden","Type","Alflah",7));
         chalets.add(new Chalet("1","Silver","Type","alwadi",10));
@@ -38,13 +39,13 @@ public class ChaletListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
+        menuInflater.inflate(R.menu.visitor_menu, menu);
         return true;
     }
 
     /**
-     * Event Handling for Individual menu item selected
-     * Identify single menu item by it's id
+     * Event Handling for Individual visitor_menu item selected
+     * Identify single visitor_menu item by it's id
      * */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
