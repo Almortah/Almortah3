@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ public class Signup extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword;
     private EditText mPassword2;
+    private RadioGroup mRadio;
     private Button mSignup;
     private AlmortahDB almortahDB;
 
@@ -27,16 +30,6 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         almortahDB = new AlmortahDB(this);
-
-        Button ownerSignup = (Button) findViewById(R.id.owner);
-        ownerSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), signupOwner.class));
-            }
-        });
-
-
         //EditText
         mUsername = (EditText) findViewById(R.id.username);
         mFullname = (EditText) findViewById(R.id.fullname);
@@ -44,6 +37,7 @@ public class Signup extends AppCompatActivity {
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
         mPassword2 = (EditText) findViewById(R.id.password2);
+        mRadio = (RadioGroup) findViewById(R.id.type);
 
         mSignup = (Button) findViewById(R.id.submitCustomer);
         mSignup.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +49,11 @@ public class Signup extends AppCompatActivity {
                 final String email = mEmail.getText().toString().trim();
                 final String password = mPassword.getText().toString().trim();
                 final String passowrd2 = mPassword2.getText().toString().trim();
+                int type = 1;
+                RadioButton ownerType = (RadioButton) findViewById(R.id.ownerType);
+
+                if(ownerType.isChecked())
+                    type = 2;
 
                 if (username.equals("") || fullname.equals("") || phone.equals("") || email.equals("") || password.equals("")) {
                     Toast.makeText(Signup.this, R.string.erEmptyField, Toast.LENGTH_LONG).show();
@@ -63,9 +62,11 @@ public class Signup extends AppCompatActivity {
                     Toast.makeText(Signup.this, R.string.erVerifyPassword, Toast.LENGTH_LONG).show();
                     return;
                 } else {
-                    if (almortahDB.signupACustomer(fullname, username, phone, email, password)) {
-                        startActivity(new Intent(v.getContext(), login.class));
-                    }
+                        almortahDB.signup(fullname, username, phone, email, password, type);
+                        Toast.makeText(getApplicationContext(),"YREEE",Toast.LENGTH_LONG).show();
+
+                    startActivity(new Intent(Signup.this, login.class));
+
                 }
             }
         });

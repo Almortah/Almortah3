@@ -1,7 +1,6 @@
 package com.almortah.almortah;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
@@ -23,19 +22,18 @@ import java.util.HashMap;
 
 public class AlmortahDB extends Activity {
     private final DatabaseReference almortahDB = FirebaseDatabase.getInstance().getReference();
-    ;
+    private FirebaseAuth.AuthStateListener mAuthListener;
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private Context context;
+    private Activity context;
     private boolean flag;
 
-    public AlmortahDB(Context context) {
+    public AlmortahDB(Activity context) {
         this.context = context;
     }
 
-    public boolean signupACustomer(final String fullname, final String username, final String phone, final String email, String password) {
-        flag = false;
+    public void signup(final String fullname, final String username, final String phone, final String email, String password, final int type) {
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -46,50 +44,17 @@ public class AlmortahDB extends Activity {
                             hashMap.put("username", username);
                             hashMap.put("phone", phone);
                             hashMap.put("email", email);
-                            hashMap.put("type", "1");
+                            hashMap.put("type", String.valueOf(type));
                             almortahDB.child("users").child(user.getUid()).setValue(hashMap);
                             user.sendEmailVerification();
-                            flag = true;
                         } else {
                             // If sign up fails, display a message to the user.
                             Toast.makeText(context, task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
-                            flag = false;
                         }
 
                     }
                 });
-        return flag;
-    }
-
-    public boolean signupAnOwner(final String fullname, final String username, final String phone, final String email, String password) {
-        flag = false;
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            //Store user info in the database
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            HashMap<String, String> hashMap = new HashMap<String, String>();
-                            hashMap.put("Name", fullname);
-                            hashMap.put("username", username);
-                            hashMap.put("phone", phone);
-                            hashMap.put("email", email);
-                            hashMap.put("type", "2");
-                            almortahDB.child("users").child(user.getUid()).setValue(hashMap);
-                            user.sendEmailVerification();
-                            flag = true;
-                        } else {
-                            // If sign up fails, display a message to the user.
-                            Toast.makeText(context, task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                            flag = false;
-                        }
-
-                    }
-                });
-        return flag;
     }
 
     public ArrayList<Chalet> getAllChalets() {
@@ -129,6 +94,20 @@ public class AlmortahDB extends Activity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
 

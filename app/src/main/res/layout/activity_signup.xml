@@ -69,6 +69,27 @@
             android:hint="@string/verifyPassword"
             android:inputType="textPassword" />
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/type">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:text="@string/customer"
+            android:id="@+id/customerType"
+            android:checked="true"
+            android:textSize="15sp" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/chaletOwner"
+            android:id="@+id/ownerType"
+            android:textSize="15sp"/>
+    </RadioGroup>
+
     <Button
         android:id="@+id/submitCustomer"
         android:layout_width="match_parent"
@@ -77,16 +98,6 @@
         android:backgroundTint="#62BA60"
         android:gravity="center"
         android:text="@string/submit"
-        android:textColor="@color/colorWhite" />
-
-    <Button
-        android:id="@+id/owner"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="right"
-        android:backgroundTint="#0B7CAC"
-        android:gravity="center"
-        android:text="@string/chaletOwner"
         android:textColor="@color/colorWhite" />
 
 

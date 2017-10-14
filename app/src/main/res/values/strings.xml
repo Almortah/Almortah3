@@ -22,7 +22,7 @@
 
     <!-- Owner strings  -->
     <string name="owner">Owner</string>
-    <string name="chaletOwner">I have rest-houses or chalets</string>
+    <string name="chaletOwner">Rest-house/Chalet owner</string>
 
 
     <!-- Customer strings -->
