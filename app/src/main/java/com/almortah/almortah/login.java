@@ -15,10 +15,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class login extends AppCompatActivity  {
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     private EditText mEmailField;
     private EditText mPassField;
     private Button mLogin;
@@ -81,8 +87,31 @@ public class login extends AppCompatActivity  {
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Log.d(TAG,"Error");
-            Intent intent = new Intent(this,ChaletListActivity.class);
-            startActivity(intent);
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference type=mDatabase.child("users").child(user.getUid()).child("type");
+            type.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String typeValue = dataSnapshot.getValue().toString();
+                    Log.i("TYPE",typeValue);
+                    if(typeValue=="1"){
+                        Intent intent = new Intent(login.this,ChaletListActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        startActivity(new Intent(login.this,MyChalets.class));
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.i("Error","Error fetch type");
+
+                }
+            });
+
+
 
         } else {
             Toast.makeText(this,"Wrong Email or Password",Toast.LENGTH_LONG).show();

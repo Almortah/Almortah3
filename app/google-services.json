@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "875117581361-1v75g61mbr2budhellrvkgp8613e9qd6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.almortah.almortah",
+            "certificate_hash": "0604406cd213cff45e38e761df40d887f642abbf"
+          }
+        },
+        {
           "client_id": "875117581361-qt72aj78ild044pe2amrkuqc8q01q8qd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

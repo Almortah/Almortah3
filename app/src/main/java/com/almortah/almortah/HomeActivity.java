@@ -6,17 +6,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button guestButton;
     private Button signinButton;
     private Button signupButton;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        mAuth.signOut();
         guestButton = (Button) findViewById(R.id.guestButton);
         signinButton = (Button) findViewById(R.id.signinButton);
         signupButton = (Button) findViewById(R.id.submitOwner);

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chaletName">اسم الشاليه</string>
+    <string name="chaletOwner">مالك الشاليه</string>
+    <string name="customer">الزبون</string>
+    <string name="erVerifyEmail">لم يتم تأكيد الايميل</string>
+    <string name="owner">مالك</string>
+    <string name="userType">نوع المستخدم</string>
+
+    <string-array name="android_dropdown_arrays">
+        <item>الزبون</item>
+        <item>المالك</item>
+    </string-array>
+
+
+</resources>

@@ -119,5 +119,7 @@ public class AlmortahDB extends Activity {
         return mAuth;
     }
 
+
+
 }
 
