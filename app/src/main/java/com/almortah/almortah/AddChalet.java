@@ -2,6 +2,7 @@ package com.almortah.almortah;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -49,16 +51,30 @@ public class AddChalet extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                String chaletName= mChaletName.getText().toString().trim();
-                String chaletPrice = mChaletPrice.getText().toString().trim();
-                String chaletOwnerId = user.getUid().toString();
-                HashMap<String,String> hashMap = new HashMap<String, String>();
-                String url = firebaseStorage.child(user.getUid().toString()).getDownloadUrl().getResult().toString();
-                hashMap.put("user id",chaletOwnerId);
-                hashMap.put("name",chaletName);
-                hashMap.put("price", chaletPrice);
-                hashMap.put("ImageUrl",url);
-                mDatabase.child("chalet").push().setValue(hashMap);
+
+                //String url = firebaseStorage.child(user.getUid().toString()).getDownloadUrl().getResult().toString();
+                firebaseStorage.child(user.getUid().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // TODO: handle uri
+                        String chaletName= mChaletName.getText().toString().trim();
+                        String chaletPrice = mChaletPrice.getText().toString().trim();
+                        String chaletOwnerId = user.getUid().toString();
+                        HashMap<String,String> hashMap = new HashMap<String, String>();
+                        hashMap.put("user id",chaletOwnerId);
+                        hashMap.put("name",chaletName);
+                        hashMap.put("price", chaletPrice);
+                        hashMap.put("ImageUrl",uri.getPath());
+                        mDatabase.child("chalet").push().setValue(hashMap);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                       Log.i("ERORR","ERORR");
+                    }
+                });
+
+
             }
         });
 
@@ -92,7 +108,7 @@ public class AddChalet extends AppCompatActivity {
         if(requestCode == PICK_CONTACT_REQUEST && resultCode == RESULT_OK){
             Log.v("CHECK","CHECKING ");
             Uri uri = data.getData();
-            StorageReference filepath = firebaseStorage.child(user.getUid()).child(uri.getLastPathSegment());
+            StorageReference filepath = firebaseStorage.child(user.getUid());
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
