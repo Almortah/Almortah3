@@ -61,7 +61,7 @@ public class AddChalet extends AppCompatActivity {
                         String chaletPrice = mChaletPrice.getText().toString().trim();
                         String chaletOwnerId = user.getUid().toString();
                         HashMap<String,String> hashMap = new HashMap<String, String>();
-                        hashMap.put("user id",chaletOwnerId);
+                        hashMap.put("ownerID",chaletOwnerId);
                         hashMap.put("name",chaletName);
                         hashMap.put("price", chaletPrice);
                         hashMap.put("ImageUrl",uri.getPath());
