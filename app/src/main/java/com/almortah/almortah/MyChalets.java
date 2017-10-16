@@ -8,10 +8,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -31,16 +37,24 @@ public class MyChalets extends AppCompatActivity {
     private ArrayList<Chalet> ownerChalets = new ArrayList<>();
 
 
+    public ArrayList<Chalet> getOwnerChalets() {
+        return ownerChalets;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_chalets);
         almortahDB = new AlmortahDB(this);
-
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
+      //  ownerChalets = almortahDB.getMyChalets(mAuth.getCurrentUser().getUid());
         final String userID = user.getUid();
         final String userId = user.getProviderId();
+
+
+
+
         // ArrayList<Chalet> ownerChalets = almortahDB.getMyChalets(user.getUid());
         //ownerChalets = almortahDB.getMyChalets(userID);
       /*  DatabaseReference chalet = almortahDB.getAlmortahDB().child("chalets");
@@ -60,18 +74,37 @@ public class MyChalets extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });*/
+       // if(!getOwnerChalets().isEmpty()) {
+         //   ListView myChalest = (ListView) findViewById(R.id.myChalets);
+           // MyChaletsAdapter myChaletsAdapter = new MyChaletsAdapter(this, getOwnerChalets());
+            //yChalest.setAdapter(myChaletsAdapter);
 
-        ListView myChalest = (ListView) findViewById(R.id.myChalets);
-        MyChaletsAdapter myChaletsAdapter = new MyChaletsAdapter(this,ownerChalets);
-        myChalest.setAdapter(myChaletsAdapter);
 
-    }
+            final ListView listView = (ListView) findViewById(R.id.myChalets);
+            final ArrayList<Chalet> myChalets = new ArrayList<>();
+           DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("chalets");
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot singleChalet : dataSnapshot.getChildren()) {
+                        Chalet chalet = singleChalet.getValue(Chalet.class);
+                        if(chalet.getOwnerID().equals(userID)) {
+                            myChalets.add(chalet);
+                        }
+                    }
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(MyChalets.this, android.R.layout.simple_list_item_1, myChalets);
+                    listView.setAdapter(arrayAdapter);
+                }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        ownerChalets = almortahDB.getMyChalets(mAuth.getCurrentUser().getUid());
-    }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+            });
+        }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
