@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,8 +91,8 @@ public class MyChalets extends AppCompatActivity {
                             myChalets.add(chalet);
                         }
                     }
-                    ArrayAdapter arrayAdapter = new ArrayAdapter(MyChalets.this, android.R.layout.simple_list_item_1, myChalets);
-                    listView.setAdapter(arrayAdapter);
+                    MyChaletsAdapter myChaletsAdapter = new MyChaletsAdapter(MyChalets.this, myChalets);
+                    listView.setAdapter(myChaletsAdapter);
                 }
 
                 @Override
