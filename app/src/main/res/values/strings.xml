@@ -24,6 +24,8 @@
     <string name="owner">Owner</string>
     <string name="chaletOwner">Rest-house/Chalet owner</string>
     <string name="chaletName">Chalet Name</string>
+    <string name="promotion">Promotion</string>
+    <string name="newChalet">Add a new chalet</string>
 
     <!-- Customer strings -->
     <string name="customer">Customer</string>

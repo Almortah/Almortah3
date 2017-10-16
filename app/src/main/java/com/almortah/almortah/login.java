@@ -88,17 +88,18 @@ public class login extends AppCompatActivity  {
         if (user != null) {
             Log.d(TAG,"Error");
             mDatabase = FirebaseDatabase.getInstance().getReference();
-            DatabaseReference type=mDatabase.child("users").child(user.getUid()).child("type");
+
+            DatabaseReference type = mDatabase.child("users").child(user.getUid()).child("type");
             type.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String typeValue = dataSnapshot.getValue().toString();
                     Log.i("TYPE",typeValue);
-                    if(typeValue=="1"){
+                    if(typeValue.equals("1")){
                         Intent intent = new Intent(login.this,ChaletListActivity.class);
                         startActivity(intent);
                     }
-                    else{
+                    if(typeValue.equals("2")){
                         startActivity(new Intent(login.this,MyChalets.class));
                     }
 

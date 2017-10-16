@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,11 +32,11 @@ public class ChaletAdapter extends ArrayAdapter<Chalet> {
         Chalet chalet = getItem(position);
 
         TextView chaletName = (TextView) listItemView.findViewById(R.id.chaletName);
-        chaletName.setText(chalet.getChaletName());
+        chaletName.setText(chalet.getName());
       //  TextView chaletRating = (TextView) listItemView.findViewById(R.id.chaletRating);
         //chaletRating.setText(""+chalet.getChaletRating());
         TextView chaletLocation = (TextView) listItemView.findViewById(R.id.chaletLocation);
-        chaletLocation.setText(chalet.getChaletLocation());
+        chaletLocation.setText(chalet.getPromotion());
 
         return listItemView;
 

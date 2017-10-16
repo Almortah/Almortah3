@@ -10,11 +10,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Created by ALMAHRI on 10/13/17.
@@ -32,33 +36,53 @@ public class AlmortahDB extends Activity {
     }
 
     public void signup(final String fullname, final String username, final String phone, final String email, String password, final int type) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            //Store user info in the database
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            HashMap<String, String> hashMap = new HashMap<String, String>();
-                            hashMap.put("Name", fullname);
-                            hashMap.put("username", username);
-                            hashMap.put("phone", phone);
-                            hashMap.put("email", email);
-                            hashMap.put("type", String.valueOf(type));
-                            almortahDB.child("users").child(user.getUid()).setValue(hashMap);
-                            user.sendEmailVerification();
-                        } else {
-                            // If sign up fails, display a message to the user.
-                            Toast.makeText(context, task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
+        Task<AuthResult> i = mAuth.createUserWithEmailAndPassword(email,password);
+        i.isComplete();
+        i.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    //Store user info in the database
+                    FirebaseUser user = task.getResult().getUser();
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("Name", fullname);
+                        hashMap.put("username", username);
+                        hashMap.put("phone", phone);
+                        hashMap.put("email", email);
+                        hashMap.put("nbChalets","0");
+                        hashMap.put("type", String.valueOf(type));
+                        almortahDB.child("users").child(user.getUid()).setValue(hashMap);
+                }
+            }
+        });
     }
 
     public ArrayList<Chalet> getAllChalets() {
         return null;
+    }
+
+    public ArrayList<Chalet> getMyChalets(final String ownerID){
+        final ArrayList<Chalet> ownerChalets = new ArrayList<>();
+        final String userID = mAuth.getCurrentUser().getUid();
+        DatabaseReference chalet = almortahDB.child("chalets");
+        chalet.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                while ((iterator.hasNext())) {
+                    Chalet chalet = iterator.next().getValue(Chalet.class);
+                    if(chalet.getOwnerID().equals(ownerID)) {
+                        ownerChalets.add(chalet);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        return ownerChalets;
     }
 
     public ArrayList<Users> getAllUsers(int userType) { // 1: Customer, 2: Owner
@@ -118,7 +142,6 @@ public class AlmortahDB extends Activity {
     public FirebaseAuth getmAuth() {
         return mAuth;
     }
-
 
 
 }

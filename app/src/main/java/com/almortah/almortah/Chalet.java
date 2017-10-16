@@ -6,59 +6,57 @@ package com.almortah.almortah;
 
 public class Chalet {
 
-    private String chaletID;
-    private String chaletName;
-    private String chaletType;
-    private String chaletLocation;
+    private String images;
+    private String chaletNm;
+    private String eidPrice;
+    private String name;
+    private String normalPrice;
+    private String ownerID;
+    private String promotion;
+    private String weekendPrice;
 
+    public Chalet(){}
 
-    private int chaletRating;
-
-    public Chalet(String chaletID, String chaletName, String chaletType, String chaletLocation, int chaletRating) {
-        this.chaletID = chaletID;
-        this.chaletName = chaletName;
-        this.chaletType = chaletType;
-        this.chaletLocation = chaletLocation;
-        this.chaletRating= chaletRating;
+    public Chalet(String images, String chaletNm, String eidPrice, String name, String normalPrice, String ownerID, String promotion, String weekendPrice) {
+        this.images = images;
+        this.chaletNm = chaletNm;
+        this.eidPrice = eidPrice;
+        this.name = name;
+        this.normalPrice = normalPrice;
+        this.ownerID = ownerID;
+        this.promotion = promotion;
+        this.weekendPrice = weekendPrice;
     }
 
-    public String getChaletID() {
-        return chaletID;
+    public String getImages() {
+        return images;
     }
 
-    public void setChaletID(String chaletID) {
-        this.chaletID = chaletID;
+    public String getChaletNm() {
+        return chaletNm;
     }
 
-    public String getChaletName() {
-        return chaletName;
+    public String getEidPrice() {
+        return eidPrice;
     }
 
-    public void setChaletName(String chaletName) {
-        this.chaletName = chaletName;
+    public String getName() {
+        return name;
     }
 
-    public String getChaletType() {
-        return chaletType;
+    public String getNormalPrice() {
+        return normalPrice;
     }
 
-    public void setChaletType(String chaletType) {
-        this.chaletType = chaletType;
+    public String getOwnerID() {
+        return ownerID;
     }
 
-    public String getChaletLocation() {
-        return chaletLocation;
+    public String getPromotion() {
+        return promotion;
     }
 
-    public void setChaletLocation(String chaletLocation) {
-        this.chaletLocation = chaletLocation;
+    public String getWeekendPrice() {
+        return weekendPrice;
     }
-    public int getChaletRating() {
-        return chaletRating;
-    }
-
-    public void setChaletRating(int chaletRating) {
-        this.chaletRating = chaletRating;
-    }
-
 }

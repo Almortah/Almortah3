@@ -3,6 +3,7 @@
     package="com.almortah.almortah">
     
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -25,6 +26,17 @@
             android:label="@string/title_activity_chalet_list" />
         <activity android:name=".MyChalets" />
         <activity android:name=".AddChalet"></activity>
+
+
+        <provider
+            android:name="com.werb.pickphotoview.provider.PickProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/pick_file_paths"/>
+        </provider>
     </application>
 
 </manifest>
