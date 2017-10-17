@@ -49,5 +49,8 @@
         <item>Customer</item>
         <item>Owner</item>
     </string-array>
+    <string name="logout">Logout</string>
+    <string name="guest">CONTINUE AS GUEST</string>
+    <string name="signAlmortah">Rest-houses and Chalets now closer</string>
 
 </resources>

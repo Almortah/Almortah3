@@ -124,6 +124,9 @@ public class MyChalets extends AppCompatActivity {
             case R.id.newChalet:
                 startActivity(new Intent(this, AddChalet.class));
                 return true;
+            case R.id.logout:
+                mAuth.signOut();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -26,7 +26,6 @@ import com.werb.pickphotoview.util.PickConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 public class AddChalet extends AppCompatActivity {
 
@@ -60,7 +59,7 @@ public class AddChalet extends AppCompatActivity {
         firebaseStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mChaletName = (EditText) findViewById(R.id.chaletName);
-        mChaletPrice = (EditText) findViewById(R.id.chaletPrice);
+        mChaletPrice = (EditText) findViewById(R.id.normalPrice);
         submitChalet = (Button) findViewById(R.id.submitChalet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference reference = mDatabase.child("users").child(user.getUid()).child("nbChalets");
@@ -94,6 +93,7 @@ public class AddChalet extends AppCompatActivity {
                 hashMap.put("chaletNm", String.valueOf(chaletCount));
                 hashMap.put("promotion", "0"); // 0 no promoted, 1 promoted
                 mDatabase.child("chalets").push().setValue(hashMap);
+                mDatabase.child("chalets").push().getKey();
                 startActivity(new Intent(AddChalet.this, MyChalets.class));
             }
         });
@@ -147,9 +147,6 @@ public class AddChalet extends AppCompatActivity {
                                 @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
                                 String content = downloadUrl.toString();
                                 if (content.length() > 0) {
-                                    Random rand = new Random();
-                                    int n = rand.nextInt(50) + 1;
-                                    //++chaletCount;
                                     firebaseStorage.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(chaletCount)).child(String.valueOf(imgName));
                                 }
                             }
