@@ -50,4 +50,7 @@
         <item>Owner</item>
     </string-array>
 
+    <string name="google_maps_key">AIzaSyC3kyuKrNC7kLK6eEzoK94JmxjrHl1tRDw</string>
+    <string name="title_activity_maps">Map</string>
+
 </resources>

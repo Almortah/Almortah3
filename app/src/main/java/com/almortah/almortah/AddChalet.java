@@ -1,14 +1,33 @@
 package com.almortah.almortah;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,11 +47,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class AddChalet extends AppCompatActivity {
+public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
 
     private StorageReference storageRef;
     private FirebaseApp app;
     private FirebaseStorage storage;
+    private GoogleMap mGoogleMap;
+    private Marker marker;
+    private LocationManager locationManager;
+    private String provider;
 
     private Button mUploadImage;
     private StorageReference firebaseStorage;
@@ -44,9 +67,36 @@ public class AddChalet extends AppCompatActivity {
     private Chalet chalet;
     private int chaletCount;
     private int imgName;
+    private String lat;
+    private String lng;
+    private String chaletLocation;
+    private Location location;
 
 
     static final int PICK_CONTACT_REQUEST = 1;
+    static final int MY_PERMISSIONS_REQUEST=1;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (permissions.length == 1 &&
+                permissions[0] == android.Manifest.permission.ACCESS_FINE_LOCATION &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+
+        } else {
+            // Permission was denied. Display an error message.
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +104,19 @@ public class AddChalet extends AppCompatActivity {
         setContentView(R.layout.activity_add_chalet);
         app = FirebaseApp.getInstance();
         storage = FirebaseStorage.getInstance(app);
+        int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)){
+                return;
+            }
+            else{
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},MY_PERMISSIONS_REQUEST);
+                return ;
+
+            }
+        }
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
@@ -93,7 +156,9 @@ public class AddChalet extends AppCompatActivity {
                 hashMap.put("ImageUrl", firebaseStorage.child(user.getUid()).child(String.valueOf(chaletCount)).getPath());
                 hashMap.put("chaletNm", String.valueOf(chaletCount));
                 hashMap.put("promotion", "0"); // 0 no promoted, 1 promoted
+                hashMap.put("Location",chaletLocation);
                 mDatabase.child("chalets").push().setValue(hashMap);
+
                 startActivity(new Intent(AddChalet.this, MyChalets.class));
             }
         });
@@ -121,7 +186,128 @@ public class AddChalet extends AppCompatActivity {
         });
 
 
+        //MAP
+
+        if (googleServiceAvail() == true) {
+            initMap();
+        }
+
+
     }
+
+    private void initMap() {
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapFragment);
+        mapFragment.getMapAsync(this);
+    }
+
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mGoogleMap = googleMap;
+
+        mGoogleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener(){
+
+
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+
+                chaletLocation = marker.getPosition().toString();
+
+
+            }
+        });
+
+        if (marker != null) {
+            marker.remove();
+        }
+        permmision();
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        provider = locationManager.getBestProvider(new Criteria(), false);
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mGoogleMap.setMyLocationEnabled(true);
+
+        location = locationManager.getLastKnownLocation(provider);
+        LatLng userPostion = new LatLng(location.getLatitude(), location.getAltitude());
+
+
+
+        MarkerOptions options = new MarkerOptions().position(userPostion).draggable(true);
+        marker = mGoogleMap.addMarker(options);
+        chaletLocation=marker.getPosition().toString();
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+    }
+
+    public void permmision(){
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION);
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION);
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+    }
+
+    public boolean googleServiceAvail(){
+        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+        int isAvailable = api.isGooglePlayServicesAvailable(this);
+        if(isAvailable == ConnectionResult.SUCCESS){
+            return true;
+        } else if(api.isUserResolvableError(isAvailable)){
+            Dialog dialog = api.getErrorDialog(this,isAvailable,0);
+            dialog.show();
+
+        }else{
+            Toast.makeText(this,"Cant connect to service",Toast.LENGTH_LONG);
+        }
+        return false;
+
+    }
+
+    //MAP
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -159,4 +345,7 @@ public class AddChalet extends AppCompatActivity {
             }
         }
     }
+
+
+
 }

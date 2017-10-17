@@ -39,8 +39,11 @@
         android:text="@string/submit"
         android:id="@+id/submitChalet"/>
 
-
-
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

@@ -1,10 +1,14 @@
 package com.almortah.almortah;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -142,6 +146,7 @@ public class AlmortahDB extends Activity {
     public FirebaseAuth getmAuth() {
         return mAuth;
     }
+
 
 
 }
