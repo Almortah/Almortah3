@@ -123,7 +123,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
         firebaseStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mChaletName = (EditText) findViewById(R.id.chaletName);
-        mChaletPrice = (EditText) findViewById(R.id.chaletPrice);
+        mChaletPrice = (EditText) findViewById(R.id.normalPrice);
         submitChalet = (Button) findViewById(R.id.submitChalet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference reference = mDatabase.child("users").child(user.getUid()).child("nbChalets");
