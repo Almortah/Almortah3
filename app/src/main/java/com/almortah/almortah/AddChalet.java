@@ -1,12 +1,10 @@
 package com.almortah.almortah;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -71,6 +69,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     private String lng;
     private String chaletLocation;
     private Location location;
+    private int imgNb = 0;
 
 
     static final int PICK_CONTACT_REQUEST = 1;
@@ -157,6 +156,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 hashMap.put("chaletNm", String.valueOf(chaletCount));
                 hashMap.put("promotion", "0"); // 0 no promoted, 1 promoted
                 hashMap.put("Location",chaletLocation);
+                hashMap.put("nbImages", String.valueOf(imgNb));
                 mDatabase.child("chalets").push().setValue(hashMap);
 
                 startActivity(new Intent(AddChalet.this, MyChalets.class));
@@ -319,9 +319,11 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
         if (data == null) {
             return;
         }
+
         if (requestCode == PickConfig.PICK_PHOTO_DATA) {
             ArrayList<String> selectPaths = (ArrayList<String>) data.getSerializableExtra(PickConfig.INTENT_IMG_LIST_SELECT);
             imgName = 1;
+            imgNb = selectPaths.size();
             for (int i = 0; i < selectPaths.size(); i++) {
                 final Uri[] uri = new Uri[selectPaths.size()];
                 uri[i] = Uri.parse("file://" + selectPaths.get(i));

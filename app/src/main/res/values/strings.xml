@@ -9,6 +9,7 @@
     <string name="register">Register</string>
     <string name="submit">Submit</string>
     <string name="userType">Who are you?</string>
+    <string name="afterSignup">Kindly login with your email/password</string>
 
     <!-- Error messages -->
     <string name="erVerifyPassword">Password not match</string>
@@ -35,6 +36,7 @@
     <string name="email">Valid Email</string>
     <string name="password">Password (More than 6 characteristics)</string>
     <string name="verifyPassword">Verify Password</string>
+    <string name="searchChalet">Search for rest-house/chalet</string>
 
 
     <!-- Strange strings!! -->

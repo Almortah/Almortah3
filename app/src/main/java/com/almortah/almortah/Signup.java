@@ -64,8 +64,7 @@ public class Signup extends AppCompatActivity {
                 } else {
                         almortahDB.signup(fullname, username, phone, email, password, type);
                         Toast.makeText(getApplicationContext(),"YREEE",Toast.LENGTH_LONG).show();
-
-                    startActivity(new Intent(Signup.this, login.class));
+                         startActivity(new Intent(Signup.this, login.class));
 
                 }
             }

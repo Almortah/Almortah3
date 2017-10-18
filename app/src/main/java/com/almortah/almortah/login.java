@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -115,7 +114,7 @@ public class login extends AppCompatActivity  {
 
 
         } else {
-            Toast.makeText(this,"Wrong Email or Password",Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,"Wrong Email or Password",Toast.LENGTH_LONG).show();
         }
     }
 

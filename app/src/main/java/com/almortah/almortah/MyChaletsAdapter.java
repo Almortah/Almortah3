@@ -98,6 +98,7 @@ public class MyChaletsAdapter extends ArrayAdapter<Chalet> {
             }
         }
 
+
         img1.setMaxHeight(50);
         img2.setMaxHeight(50);
         img3.setMaxHeight(50);

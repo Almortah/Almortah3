@@ -1,6 +1,7 @@
 package com.almortah.almortah;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -29,9 +30,9 @@ public class ChaletAdapter extends ArrayAdapter<Chalet> {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.chalet_list_item, parent, false);
         }
-        Chalet chalet = getItem(position);
+        final Chalet chalet = getItem(position);
 
-        TextView chaletName = (TextView) listItemView.findViewById(R.id.chaletName);
+        final TextView chaletName = (TextView) listItemView.findViewById(R.id.chaletName);
         chaletName.setText(chalet.getName());
 
         TextView price = (TextView) listItemView.findViewById(R.id.normalPrice);
@@ -39,6 +40,21 @@ public class ChaletAdapter extends ArrayAdapter<Chalet> {
         //chaletRating.setText(""+chalet.getChaletRating());
         TextView chaletLocation = (TextView) listItemView.findViewById(R.id.chaletLocation);
         chaletLocation.setText(chalet.getPromotion());
+
+        final View finalListItemView = listItemView;
+        listItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toChaletInfo = new Intent(finalListItemView.getContext(),ChaletInfoCustomer.class);
+                toChaletInfo.putExtra("name",chalet.getName());
+                toChaletInfo.putExtra("normalPrice",chalet.getNormalPrice());
+                toChaletInfo.putExtra("weekendPrice",chalet.getWeekendPrice());
+                toChaletInfo.putExtra("eidPrice",chalet.getEidPrice());
+                toChaletInfo.putExtra("images",chalet.getChaletNm());
+
+            }
+        }
+        );
 
         return listItemView;
 
