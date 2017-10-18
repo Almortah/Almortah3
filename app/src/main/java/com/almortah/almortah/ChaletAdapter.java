@@ -33,7 +33,9 @@ public class ChaletAdapter extends ArrayAdapter<Chalet> {
 
         TextView chaletName = (TextView) listItemView.findViewById(R.id.chaletName);
         chaletName.setText(chalet.getName());
-      //  TextView chaletRating = (TextView) listItemView.findViewById(R.id.chaletRating);
+
+        TextView price = (TextView) listItemView.findViewById(R.id.normalPrice);
+        price.setText(chalet.getNormalPrice());
         //chaletRating.setText(""+chalet.getChaletRating());
         TextView chaletLocation = (TextView) listItemView.findViewById(R.id.chaletLocation);
         chaletLocation.setText(chalet.getPromotion());

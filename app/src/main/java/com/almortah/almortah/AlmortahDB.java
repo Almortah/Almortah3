@@ -62,7 +62,24 @@ public class AlmortahDB extends Activity {
     }
 
     public ArrayList<Chalet> getAllChalets() {
-        return null;
+        final ArrayList<Chalet> chalets = new ArrayList<>();
+        DatabaseReference reference = almortahDB.child("chalets");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                while ((iterator.hasNext())) {
+                    Chalet chalet = iterator.next().getValue(Chalet.class);
+                        chalets.add(chalet);
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        return chalets;
     }
 
     public ArrayList<Chalet> getMyChalets(final String ownerID){

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="chaletName">اسم الشاليه</string>
-    <string name="chaletOwner">مالك الشاليه</string>
+    <string name="chaletName">اسم الشاليه/الإستراحة</string>
+    <string name="chaletOwner">مالك الشاليه/الإستراحة</string>
     <string name="customer">الزبون</string>
     <string name="erVerifyEmail">لم يتم تأكيد الايميل</string>
     <string name="owner">مالك</string>
@@ -11,6 +11,11 @@
         <item>الزبون</item>
         <item>المالك</item>
     </string-array>
+    <string name="newChalet">اضف شالية جديد</string>
+    <string name="promotion">الترويج</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="signAlmortah">الإستراحات و الشاليهات الآن أقرب</string>
+    <string name="guest">إستمر كزائر</string>
 
 
 </resources>

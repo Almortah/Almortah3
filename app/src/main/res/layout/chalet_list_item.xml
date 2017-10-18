@@ -80,7 +80,7 @@
                     tools:text="Alwadi" />
 
                 <TextView
-                    android:id="@+id/chaletPrice"
+                    android:id="@+id/normalPrice"
                     android:layout_width="80dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="130dp"
@@ -95,7 +95,7 @@
                     android:id="@+id/priceLogo"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_alignEnd="@+id/chaletPrice"
+                    android:layout_alignEnd="@+id/normalPrice"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="35dp"
                     android:layout_marginRight="45dp"

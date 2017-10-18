@@ -9,21 +9,44 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ChaletListActivity extends AppCompatActivity {
 
     private AlmortahDB almortahDB = new AlmortahDB(this);
+    private ArrayList<Chalet> chalets;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chalet_list);
         Bundle user = getIntent().getExtras();
-        ArrayList<Chalet> chalets= new ArrayList<>();
-        ChaletAdapter adapter = new ChaletAdapter(this,chalets);
-        ListView listView= (ListView) findViewById(R.id.chalet_list);
-        listView.setAdapter(adapter);
+        chalets = new ArrayList<>();
+        DatabaseReference reference = almortahDB.getAlmortahDB().child("chalets");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                while ((iterator.hasNext())) {
+                    Chalet chalet = iterator.next().getValue(Chalet.class);
+                    chalets.add(chalet);
+
+                }
+                ChaletAdapter adapter = new ChaletAdapter(ChaletListActivity.this,chalets);
+                ListView listView= (ListView) findViewById(R.id.chalet_list);
+                listView.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
 
 

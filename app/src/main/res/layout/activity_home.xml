@@ -9,22 +9,22 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/white_noname"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="62dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        tools:layout_constraintLeft_creator="1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginBottom="42dp"
         android:layout_marginLeft="62dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintHorizontal_bias="0.023"
-        app:layout_constraintVertical_bias="0.99" />
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/white_noname"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <TextView
         android:id="@+id/textView2"
@@ -35,7 +35,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="140dp"
         android:paddingLeft="60dp"
-        android:text="ALMORTAH"
+        android:text="@string/app_name"
         android:textColor="@color/colorWhite"
         android:textSize="44sp"
         app:layout_constraintBottom_toBottomOf="@+id/guestButton"
@@ -44,12 +44,12 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        app:layout_constraintVertical_bias="0.62"
+        app:layout_constraintVertical_bias="1.0"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.362" />
 
     <TextView
         android:id="@+id/textView"
@@ -59,7 +59,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:paddingLeft="15dp"
-        android:text="Rest-houses and Chalets now closer"
+        android:text="@string/signAlmortah"
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
         app:layout_constraintHorizontal_bias="0.433"
@@ -78,7 +78,7 @@
         android:layout_marginBottom="19dp"
 
         android:backgroundTint="@color/colorBlue"
-        android:text="CONTINUE AS GUEST"
+        android:text="@string/guest"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/signinButton"
         app:layout_constraintHorizontal_bias="0.0"
@@ -94,7 +94,7 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:id="@+id/signinButton"
-        android:text="LOGIN"
+        android:text="@string/login"
         android:textColor="@color/colorWhite"
         android:backgroundTint="@color/colorGreen"
         tools:layout_constraintRight_creator="1"
@@ -115,7 +115,7 @@
 
         android:layout_marginStart="67dp"
         android:backgroundTint="@color/colorDarkGrey"
-        android:text="SIGN UP"
+        android:text="@string/register"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
