@@ -16,6 +16,7 @@
     <string name="logout">تسجيل الخروج</string>
     <string name="signAlmortah">الإستراحات و الشاليهات الآن أقرب</string>
     <string name="guest">إستمر كزائر</string>
+    <string name="title_activity_maps">خريطة</string>
 
 
 </resources>

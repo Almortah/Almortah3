@@ -190,6 +190,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
 
         if (googleServiceAvail() == true) {
             initMap();
+           // onMapReady(mGoogleMap);
         }
 
 
