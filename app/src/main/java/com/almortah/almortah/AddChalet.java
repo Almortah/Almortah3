@@ -23,7 +23,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -103,7 +102,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_chalet);
-        SupportMapFragment googleMap = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         app = FirebaseApp.getInstance();
         storage = FirebaseStorage.getInstance(app);
         int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -161,6 +159,11 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 hashMap.put("Location",chaletLocation);
                 hashMap.put("nbImages", String.valueOf(imgNb));
                 mDatabase.child("chalets").push().setValue(hashMap);
+
+                HashMap<String,String> dateHashMap = new HashMap<String, String>();
+                dateHashMap.put("busyOn","");
+                mDatabase.child("busyDates").child(chaletOwnerId).child(String.valueOf(chaletCount)).
+                        child("busyOn").setValue("");
 
                 startActivity(new Intent(AddChalet.this, MyChalets.class));
             }

@@ -1,8 +1,11 @@
 package com.almortah.almortah;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +26,6 @@ public class ChaletInfoCustomer extends AppCompatActivity {
     private StorageReference storageReference ;
 
     private String images;
-    private String chaletNm;
     private String eidPrice;
     private String name;
     private String normalPrice;
@@ -132,6 +134,19 @@ public class ChaletInfoCustomer extends AppCompatActivity {
                 });
             }
         }
+
+        Button book = (Button) findViewById(R.id.book);
+        book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toBooking = new Intent(ChaletInfoCustomer.this, BookingAChalet.class);
+                toBooking.putExtra("ownerID",ownerID);
+                toBooking.putExtra("chaletNb",chaletNb);
+                startActivity(toBooking);
+
+
+            }
+        });
         /*
         img1.setOnClickListener(new View.OnClickListener() {
             @Override

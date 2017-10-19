@@ -40,7 +40,6 @@ public class ChaletListActivity extends AppCompatActivity {
                 while ((iterator.hasNext())) {
                     Chalet chalet = iterator.next().getValue(Chalet.class);
                     chalets.add(chalet);
-
                 }
                 ChaletAdapter adapter = new ChaletAdapter(ChaletListActivity.this, chalets);
                 ListView listView = (ListView) findViewById(R.id.chalet_list);

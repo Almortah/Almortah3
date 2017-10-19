@@ -38,6 +38,7 @@
     <string name="verifyPassword">Verify Password</string>
     <string name="searchChalet">Search for rest-house/chalet</string>
     <string name="chaletRate">Rate this chalet</string>
+    <string name="freeDate">This rest-house/chalet is free at </string>
 
 
     <!-- Strange strings!! -->

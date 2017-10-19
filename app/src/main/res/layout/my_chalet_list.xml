@@ -10,36 +10,42 @@
         android:id="@+id/chaletName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_marginLeft="120dp"
+        android:layout_marginRight="120dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="10dp"/>
+        android:text="TextView"
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/chaletImg2"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="270dp"
         android:layout_below="@+id/chaletName"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toEndOf="@+id/chaletImg1"
         app:srcCompat="@mipmap/logo_noname" />
 
     <ImageView
         android:id="@+id/chaletImg3"
         android:layout_width="100dp"
         android:layout_height="100dp"
-       android:layout_marginLeft="150dp"
         android:layout_below="@+id/chaletName"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toEndOf="@+id/chaletImg2"
         app:srcCompat="@mipmap/logo_noname" />
 
     <ImageView
         android:id="@+id/chaletImg1"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginLeft="30dp"
-        app:srcCompat="@mipmap/logo_noname"
-        android:layout_below="@+id/chaletName" />
+        android:layout_below="@+id/chaletName"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:srcCompat="@mipmap/logo_noname" />
 
     <Button
         android:id="@+id/promotion"
