@@ -37,6 +37,7 @@
     <string name="password">Password (More than 6 characteristics)</string>
     <string name="verifyPassword">Verify Password</string>
     <string name="searchChalet">Search for rest-house/chalet</string>
+    <string name="chaletRate">Rate this chalet</string>
 
 
     <!-- Strange strings!! -->
@@ -57,5 +58,6 @@
 
     <string name="google_maps_key">AIzaSyC3kyuKrNC7kLK6eEzoK94JmxjrHl1tRDw</string>
     <string name="title_activity_maps">Map</string>
+    <string name="reservation">Reservation</string>
 
 </resources>

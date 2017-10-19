@@ -6,9 +6,8 @@ package com.almortah.almortah;
 
 public class Chalet {
 
-
-
     private String images;
+    private String Location;
     private String chaletNm;
     private String eidPrice;
     private String name;
@@ -29,6 +28,11 @@ public class Chalet {
         this.promotion = promotion;
         this.weekendPrice = weekendPrice;
     }
+
+    public String getLocation() {
+        return Location;
+    }
+
     public void setImages(String images) { this.images = images; }
 
     public String getImages() {

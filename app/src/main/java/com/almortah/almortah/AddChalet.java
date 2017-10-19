@@ -23,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -70,6 +71,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     private String chaletLocation;
     private Location location;
     private int imgNb = 0;
+    double lat1 =0, lng1=0;
 
 
     static final int PICK_CONTACT_REQUEST = 1;
@@ -101,6 +103,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_chalet);
+        SupportMapFragment googleMap = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         app = FirebaseApp.getInstance();
         storage = FirebaseStorage.getInstance(app);
         int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -111,7 +114,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 return;
             }
             else{
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},MY_PERMISSIONS_REQUEST);
+              ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},MY_PERMISSIONS_REQUEST);
                 return ;
 
             }
@@ -207,7 +210,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-
+        permmision();
         mGoogleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener(){
 
 
@@ -229,11 +232,10 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
 
             }
         });
-
         if (marker != null) {
             marker.remove();
         }
-        permmision();
+       permmision();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
@@ -293,6 +295,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
         }
 
     }
+
+
 
     public boolean googleServiceAvail(){
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();

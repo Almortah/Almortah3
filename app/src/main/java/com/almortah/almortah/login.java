@@ -92,15 +92,17 @@ public class login extends AppCompatActivity  {
             type.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    String typeValue = dataSnapshot.getValue().toString();
-                    Log.i("TYPE",typeValue);
-                    if(typeValue.equals("1")){
-                        Intent intent = new Intent(login.this,ChaletListActivity.class);
+                    if (dataSnapshot.exists()) {
+                        String typeValue = dataSnapshot.getValue().toString().trim();
+                    Log.i("TYPE", typeValue);
+                    if (typeValue.equals("1")) {
+                        Intent intent = new Intent(login.this, ChaletListActivity.class);
                         startActivity(intent);
                     }
-                    if(typeValue.equals("2")){
-                        startActivity(new Intent(login.this,MyChalets.class));
+                    if (typeValue.equals("2")) {
+                        startActivity(new Intent(login.this, MyChalets.class));
                     }
+                }
 
                 }
 
