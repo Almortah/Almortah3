@@ -1,6 +1,7 @@
 package com.almortah.almortah;
 
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,7 @@ public class BookingAChalet extends AppCompatActivity {
     private TextView t;
     private DatabaseReference reference;
 
-    private boolean isBusy;
+    private boolean isBusy = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +35,13 @@ public class BookingAChalet extends AppCompatActivity {
         Bundle info = getIntent().getExtras();
         final String ownerID = info.getString("ownerID");
         final String chaletNb = info.getString("chaletNb");
-        isBusy = false;
-
 
 
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
-        calendarView.setFirstDayOfWeek(1);
+        calendarView.setFirstDayOfWeek(Calendar.SUNDAY);
+        calendarView.setMinDate(System.currentTimeMillis());
+
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -63,6 +64,23 @@ public class BookingAChalet extends AppCompatActivity {
                             if(busyDates[i].equals(date))
                                 isBusy = true;
                         }
+                        if(!isBusy) {
+                            Toast.makeText(BookingAChalet.this,"EMPTY",Toast.LENGTH_SHORT).show();
+                            Intent toConfirm = new Intent(BookingAChalet.this,ConfirmBooking.class);
+                            toConfirm.putExtra("date",date);
+                            toConfirm.putExtra("ownerID",ownerID);
+                            toConfirm.putExtra("chaletNb",chaletNb);
+                            if(finalDates == null)
+                                finalDates = "";
+                            toConfirm.putExtra("finalDate",finalDates);
+                            startActivity(toConfirm);
+
+                        }
+                        else {
+                            Toast.makeText(BookingAChalet.this,"Not Available",Toast.LENGTH_SHORT).show();
+                            isBusy = false;
+
+                        }
                     }
 
                     @Override
@@ -70,20 +88,6 @@ public class BookingAChalet extends AppCompatActivity {
 
                     }
                 });
-
-                if(!isBusy) {
-                    Toast.makeText(BookingAChalet.this,"EMPTY",Toast.LENGTH_SHORT).show();
-                    Intent toConfirm = new Intent(BookingAChalet.this,ConfirmBooking.class);
-                    toConfirm.putExtra("date",date);
-                    toConfirm.putExtra("ownerID",ownerID);
-                    toConfirm.putExtra("chaletNb",chaletNb);
-                    toConfirm.putExtra("finalDate",finalDates);
-                    startActivity(toConfirm);
-
-                }
-                else {
-                    Toast.makeText(BookingAChalet.this,"Not Available",Toast.LENGTH_SHORT).show();
-                }
 
 
             }
