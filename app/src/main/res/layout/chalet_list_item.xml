@@ -2,20 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/cardview_shadow_start_color"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
     android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    >
+    android:paddingBottom="8dp">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/lightGray">
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="10dp"
+        app:cardBackgroundColor="@color/pick_light">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,21 +44,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="72dp"
                     android:layout_marginLeft="80dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:textSize="24sp"
-                    tools:text="Hello" />
+                    tools:text="Hello"
+                    android:textColor="@color/cardview_dark_background"/>
             </RelativeLayout>
 
             <ImageView
+                android:id="@+id/chaletImg"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/testchalet" />
+                android:background="@drawable/gray_border"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -63,65 +70,58 @@
 
                 <ImageView
                     android:id="@+id/locationLogo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="30dp"
-                    android:layout_alignParentStart="true"
-                    app:srcCompat="@drawable/location_icon" />
+                    app:srcCompat="@drawable/location_icon"
+                    android:layout_marginStart="39dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:id="@+id/chaletLocation"
                     android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingTop="25dp"
+                    android:layout_height="30dp"
                     android:textSize="20sp"
-                    tools:text="Alwadi" />
+                    tools:text="Alwadi"
+                    android:layout_alignBaseline="@+id/normalPrice"
+                    android:layout_alignBottom="@+id/normalPrice"
+                    android:layout_toEndOf="@+id/locationLogo" />
 
                 <TextView
                     android:id="@+id/normalPrice"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:layout_marginLeft="130dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/chaletLocation"
-                    android:paddingEnd="10dp"
-                    android:paddingTop="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="11dp"
+                    android:gravity="center"
                     android:text="300 S.R"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/priceLogo"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_alignEnd="@+id/normalPrice"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="35dp"
+                    android:layout_marginEnd="78dp"
                     android:layout_marginRight="45dp"
                     android:paddingRight="10dp"
-                    app:srcCompat="@drawable/price_icon" />
+                    app:srcCompat="@drawable/price_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="40dp"
+                android:gravity="center"
              >
 
                 <RatingBar
+                    android:id="@+id/chaletRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
                     android:numStars="5"
-                    />
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:background="@drawable/green_border"
-                    android:textColor="@color/colorWhite"
-                    android:text="Reserve" />
+                    android:isIndicator="true"/>
 
             </LinearLayout>
 

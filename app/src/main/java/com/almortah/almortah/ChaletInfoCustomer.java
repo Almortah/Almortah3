@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -139,9 +140,15 @@ public class ChaletInfoCustomer extends AppCompatActivity {
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mAuth.getCurrentUser() == null) {
+                    Toast.makeText(getApplicationContext(),R.string.bookVistor,Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent toBooking = new Intent(ChaletInfoCustomer.this, BookingAChalet.class);
                 toBooking.putExtra("ownerID",ownerID);
                 toBooking.putExtra("chaletNb",chaletNb);
+                toBooking.putExtra("normalPrice",normalPrice);
+                toBooking.putExtra("weekendPrice",weekendPrice);
                 startActivity(toBooking);
 
 

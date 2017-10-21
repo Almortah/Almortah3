@@ -1,6 +1,6 @@
 <resources>
     <!-- General strings  -->
-    <string name="app_name">AlMortah</string>
+    <string name="app_name">ALMORTAH</string>
     <string name="Price">Price</string>
     <string name="title_activity_chalet_list">Rest-houses and chalets</string>
 
@@ -10,6 +10,7 @@
     <string name="submit">Submit</string>
     <string name="userType">Who are you?</string>
     <string name="afterSignup">Kindly login with your email/password</string>
+    <string name="bookVistor">Kindly login to reserve this chalet</string>
 
     <!-- Error messages -->
     <string name="erVerifyPassword">Password not match</string>
@@ -39,6 +40,11 @@
     <string name="searchChalet">Search for rest-house/chalet</string>
     <string name="chaletRate">Rate this chalet</string>
     <string name="freeDate">This rest-house/chalet is free at </string>
+    <string name="checkin">Check-in time</string>
+    <string name="checkout">Check-out time at 2:00 after midnight</string>
+    <string name="cash">Pay cash</string>
+    <string name="visa">Pay by credit card</string>
+    <string name="confirm">Confirm reservation</string>
 
 
     <!-- Strange strings!! -->

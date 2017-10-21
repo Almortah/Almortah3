@@ -24,6 +24,8 @@ public class ChaletListActivity extends AppCompatActivity {
 
     private AlmortahDB almortahDB = new AlmortahDB(this);
     private ArrayList<Chalet> chalets;
+    private ListView listView;
+    private ListView vipListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +41,11 @@ public class ChaletListActivity extends AppCompatActivity {
                 Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
                 while ((iterator.hasNext())) {
                     Chalet chalet = iterator.next().getValue(Chalet.class);
+
                     chalets.add(chalet);
                 }
                 ChaletAdapter adapter = new ChaletAdapter(ChaletListActivity.this, chalets);
-                ListView listView = (ListView) findViewById(R.id.chalet_list);
+                listView = (ListView) findViewById(R.id.chalet_list);
                 listView.setAdapter(adapter);
             }
 
@@ -50,7 +53,6 @@ public class ChaletListActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
 
     }
 

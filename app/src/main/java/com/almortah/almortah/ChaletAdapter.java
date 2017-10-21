@@ -3,13 +3,22 @@ package com.almortah.almortah;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -19,6 +28,10 @@ import java.util.ArrayList;
 
 public class ChaletAdapter extends ArrayAdapter<Chalet> {
     private Context context;
+    private RatingBar chaletRating;
+    private ImageView img1;
+    private boolean zoomOut =  false;
+
 
     public ChaletAdapter(Activity context, ArrayList<Chalet> chalets){
         super(context,0,chalets);
@@ -35,8 +48,36 @@ public class ChaletAdapter extends ArrayAdapter<Chalet> {
         }
         final Chalet chalet = getItem(position);
 
+
+
         final TextView chaletName = (TextView) listItemView.findViewById(R.id.chaletName);
         chaletName.setText(chalet.getName());
+        img1 = (ImageView) listItemView.findViewById(R.id.chaletImg);
+        chaletRating = (RatingBar) listItemView.findViewById(R.id.chaletRating);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
+        StorageReference tmp = storageReference.child(String.valueOf(1));
+        tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(context)
+                        .load(uri)
+                        .into(img1);
+            }
+        });
+        img1.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        if(zoomOut) {
+                                            img1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 150));
+                                             img1.setScaleType(ImageView.ScaleType.FIT_XY);
+                                            zoomOut =false;
+                                        }else{
+                                            img1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                                            img1.setScaleType(ImageView.ScaleType.FIT_XY);
+                                            zoomOut = true;
+                                        }
+                                    }
+                                });
 
         TextView price = (TextView) listItemView.findViewById(R.id.normalPrice);
         price.setText(chalet.getNormalPrice());

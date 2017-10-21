@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    tools:context="com.almortah.almortah.MyReservation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp"
+    >
+
+
+    <TableRow
+        android:id="@+id/tr_header"
+        android:background="@drawable/table_row_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_product"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/table_cell_bg"
+            android:paddingRight="10dp"
+            android:text="NO" />
+
+        <TextView
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/table_cell_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Date" />
+
+        <TextView
+            android:id="@+id/tv_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/table_cell_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Chalet name" />
+
+        <TextView
+            android:id="@+id/tv_unit_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/table_cell_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Your Rating" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contrl"
+            android:paddingLeft="10dp"
+            />
+    </TableRow>
+    <TableRow
+        android:id="@+id/tr_item_1"
+        android:background="@drawable/table_row_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_product_item_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/table_cell_bg"
+            android:paddingRight="10dp"
+            android:text="test" />
+        <TextView
+            android:id="@+id/tv_author_item_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20-2-2017"
+            android:background="@drawable/table_cell_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            />
+        <TextView
+            android:id="@+id/tv_quantity_item_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="King"
+            android:background="@drawable/table_cell_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="50dp"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/tv_unit_price_item_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$36.00"
+            android:background="@drawable/table_cell_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_gravity="right"
+            />
+        <TextView
+            android:id="@+id/tv_price_item_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$72.00"
+            android:paddingLeft="10dp"
+            android:layout_gravity="right"
+            />
+    </TableRow>
+    <TableRow
+        android:id="@+id/tr_item_2"
+        android:background="@drawable/table_row_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_product_item_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/table_cell_bg"
+            android:paddingRight="10dp"
+            android:text="test" />
+        <TextView
+            android:id="@+id/tv_author_item_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20-7-2017"
+            android:background="@drawable/table_cell_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            />
+        <TextView
+            android:id="@+id/tv_quantity_item_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cool"
+            android:background="@drawable/table_cell_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="50dp"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/tv_unit_price_item_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$44.99"
+            android:background="@drawable/table_cell_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_gravity="right"
+            />
+    </TableRow>
+    <TableRow
+        android:id="@+id/tr_total"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/table_row_last_bg"
+        android:padding="5dp"
+        >
+        <!-- layout_span is table column span -->
+        <TextView
+            android:id="@+id/tv_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total = $206.97"
+            android:layout_span="5"
+            android:layout_gravity="right"
+            android:textStyle="italic"
+            />
+    </TableRow>
+
+</TableLayout>

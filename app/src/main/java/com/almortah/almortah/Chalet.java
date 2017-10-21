@@ -15,11 +15,13 @@ public class Chalet {
     private String ownerID;
     private String promotion;
     private String weekendPrice;
+    private String nbOfImages;
 
     public Chalet(){}
 
-    public Chalet(String images, String chaletNm, String eidPrice, String name, String normalPrice, String ownerID, String promotion, String weekendPrice) {
+    public Chalet(String images, String location, String chaletNm, String eidPrice, String name, String normalPrice, String ownerID, String promotion, String weekendPrice, String nbOfImages) {
         this.images = images;
+        Location = location;
         this.chaletNm = chaletNm;
         this.eidPrice = eidPrice;
         this.name = name;
@@ -27,6 +29,7 @@ public class Chalet {
         this.ownerID = ownerID;
         this.promotion = promotion;
         this.weekendPrice = weekendPrice;
+        this.nbOfImages = nbOfImages;
     }
 
     public String getLocation() {
@@ -65,5 +68,9 @@ public class Chalet {
 
     public String getWeekendPrice() {
         return weekendPrice;
+    }
+
+    public String getNbOfImages() {
+        return nbOfImages;
     }
 }

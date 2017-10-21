@@ -36,6 +36,9 @@ public class BookingAChalet extends AppCompatActivity {
         final String ownerID = info.getString("ownerID");
         final String chaletNb = info.getString("chaletNb");
 
+        final String normalPrice = info.getString("normalPrice");
+        final String weekendPrice = info.getString("weekendPrice");
+
 
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
@@ -72,6 +75,7 @@ public class BookingAChalet extends AppCompatActivity {
                             toConfirm.putExtra("chaletNb",chaletNb);
                             if(finalDates == null)
                                 finalDates = "";
+                            toConfirm.putExtra("price",normalPrice);
                             toConfirm.putExtra("finalDate",finalDates);
                             startActivity(toConfirm);
 

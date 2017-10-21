@@ -85,15 +85,18 @@ public class MyChalets extends AppCompatActivity {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot singleChalet : dataSnapshot.getChildren()) {
-                        Chalet chalet = singleChalet.getValue(Chalet.class);
-                        if(chalet.getOwnerID().equals(userID)) {
-                            myChalets.add(chalet);
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot singleChalet : dataSnapshot.getChildren()) {
+                            Chalet chalet = singleChalet.getValue(Chalet.class);
+                            if (chalet.getOwnerID().equals(userID)) {
+                                myChalets.add(chalet);
+                            }
                         }
                     }
-                    MyChaletsAdapter myChaletsAdapter = new MyChaletsAdapter(MyChalets.this, myChalets);
-                    listView.setAdapter(myChaletsAdapter);
-                }
+                        MyChaletsAdapter myChaletsAdapter = new MyChaletsAdapter(MyChalets.this, myChalets);
+                        listView.setAdapter(myChaletsAdapter);
+                    }
+
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {

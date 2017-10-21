@@ -105,7 +105,7 @@
         android:text="Many chalets in the European Alps were originally used as seasonal farms for dairy cattle which would be brought up from the lowland pastures during the summer months. The herders would live in the chalet and make butter and cheese in order to preserve the milk produced. These products would then be taken, with the cattle, back to the low valleys before the onset of the alpine winter." />
 
     <TextView
-        android:id="@+id/price"
+        android:id="@+id/finalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/description"
@@ -119,8 +119,8 @@
         android:id="@+id/normalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/price"
-        android:layout_below="@+id/price"
+        android:layout_alignStart="@+id/finalPrice"
+        android:layout_below="@+id/finalPrice"
         android:layout_marginTop="13dp"
         android:text="TextView" />
 
