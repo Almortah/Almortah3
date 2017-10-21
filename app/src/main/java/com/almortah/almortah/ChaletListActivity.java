@@ -90,6 +90,9 @@ public class ChaletListActivity extends AppCompatActivity {
             case R.id.register:
                 startActivity(new Intent(this,Signup.class));
                 return true;
+            case R.id.history:
+                startActivity(new Intent(this,MyReservation.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

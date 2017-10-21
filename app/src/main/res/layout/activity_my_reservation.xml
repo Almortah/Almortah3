@@ -1,13 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
+<RelativeLayout
     tools:context="com.almortah.almortah.MyReservation"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:padding="16dp"
+    android:orientation="horizontal"
+    android:weightSum="3"
+    android:padding="5dp"
     >
 
-</TableLayout>
+
+    <TextView
+        android:id="@+id/titleHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:text="Reservation History" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll"
+        android:layout_below="@id/titleHistory"
+        android:layout_marginTop="5dp">
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="@drawable/table_cell_bg"
+        android:text="Date" />
+
+    <TextView
+        android:id="@+id/action_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Chalet Name"
+        android:gravity="center"
+        android:background="@drawable/table_cell_bg"
+        android:layout_weight="1"/>
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Rate/Delete"
+        android:gravity="center"
+        android:layout_weight="1"
+        />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/myHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll"
+        android:layout_marginTop="5dp"/>
+
+
+</RelativeLayout>

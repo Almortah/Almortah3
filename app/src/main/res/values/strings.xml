@@ -45,6 +45,7 @@
     <string name="cash">Pay cash</string>
     <string name="visa">Pay by credit card</string>
     <string name="confirm">Confirm reservation</string>
+    <string name="history">My reservation history</string>
 
 
     <!-- Strange strings!! -->

@@ -35,6 +35,7 @@ public class BookingAChalet extends AppCompatActivity {
         Bundle info = getIntent().getExtras();
         final String ownerID = info.getString("ownerID");
         final String chaletNb = info.getString("chaletNb");
+        final String name = info.getString("name");
 
         final String normalPrice = info.getString("normalPrice");
         final String weekendPrice = info.getString("weekendPrice");
@@ -43,8 +44,7 @@ public class BookingAChalet extends AppCompatActivity {
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         calendarView.setFirstDayOfWeek(Calendar.SUNDAY);
-        calendarView.setMinDate(System.currentTimeMillis());
-
+      //  calendarView.setMinDate(System.currentTimeMillis());
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -61,11 +61,13 @@ public class BookingAChalet extends AppCompatActivity {
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        finalDates = dataSnapshot.getValue().toString();
-                        String[] busyDates = dataSnapshot.getValue().toString().split(",");
-                        for (int i = 0; i < busyDates.length; i++) {
-                            if(busyDates[i].equals(date))
-                                isBusy = true;
+                        if(dataSnapshot.exists()) {
+                            finalDates = dataSnapshot.getValue().toString();
+                            String[] busyDates = dataSnapshot.getValue().toString().split(",");
+                            for (int i = 0; i < busyDates.length; i++) {
+                                if (busyDates[i].equals(date))
+                                    isBusy = true;
+                            }
                         }
                         if(!isBusy) {
                             Toast.makeText(BookingAChalet.this,"EMPTY",Toast.LENGTH_SHORT).show();
@@ -77,6 +79,7 @@ public class BookingAChalet extends AppCompatActivity {
                                 finalDates = "";
                             toConfirm.putExtra("price",normalPrice);
                             toConfirm.putExtra("finalDate",finalDates);
+                            toConfirm.putExtra("name",name);
                             startActivity(toConfirm);
 
                         }

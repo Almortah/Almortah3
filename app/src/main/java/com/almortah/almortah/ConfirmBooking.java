@@ -37,6 +37,7 @@ public class ConfirmBooking extends AppCompatActivity {
     private TimePicker inTime;
     private String price;
     private String payment;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class ConfirmBooking extends AppCompatActivity {
         chaletNb = info.getString("chaletNb");
         finalDates = info.getString("finalDates");
         price = info.getString("price");
+        name = info.getString("name");
 
         inTime = (TimePicker) findViewById(R.id.checkin);
         upDate = finalDates+","+date;
@@ -84,6 +86,7 @@ public class ConfirmBooking extends AppCompatActivity {
                 map.put("check-out","2:00");
                 map.put("payment",payment);
                 map.put("price",price);
+                map.put("chaletName",name);
                 mDatabase.child("reservation").push().setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

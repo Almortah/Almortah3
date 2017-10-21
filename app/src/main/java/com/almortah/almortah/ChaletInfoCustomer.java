@@ -149,6 +149,7 @@ public class ChaletInfoCustomer extends AppCompatActivity {
                 toBooking.putExtra("chaletNb",chaletNb);
                 toBooking.putExtra("normalPrice",normalPrice);
                 toBooking.putExtra("weekendPrice",weekendPrice);
+                toBooking.putExtra("name",name);
                 startActivity(toBooking);
 
 
