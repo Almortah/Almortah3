@@ -83,7 +83,7 @@ public class ChaletAdapter extends ArrayAdapter<Chalet> {
         price.setText(chalet.getNormalPrice());
         //chaletRating.setText(""+chalet.getChaletRating());
         TextView chaletLocation = (TextView) listItemView.findViewById(R.id.chaletLocation);
-        chaletLocation.setText(chalet.getLocation());
+        chaletLocation.setText(""+chalet.getLatitude() + chalet.getLongitude());
 
        final View finalListItemView = listItemView;
         finalListItemView.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +96,9 @@ public class ChaletAdapter extends ArrayAdapter<Chalet> {
                 toChaletInfo.putExtra("eidPrice",chalet.getEidPrice());
                 toChaletInfo.putExtra("images",chalet.getChaletNm());
                 toChaletInfo.putExtra("ownerID",chalet.getOwnerID());
-                toChaletInfo.putExtra("location",chalet.getLocation());
+                toChaletInfo.putExtra("latitude",chalet.getLatitude());
+                toChaletInfo.putExtra("longitude",chalet.getLongitude());
+
                 toChaletInfo.putExtra("chaletNb",chalet.getChaletNm());
                 context.startActivity(toChaletInfo);
             }

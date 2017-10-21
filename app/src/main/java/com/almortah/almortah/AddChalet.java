@@ -69,8 +69,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     private Chalet chalet;
     private int chaletCount;
     private int imgName;
-    private String lat;
-    private String lng;
+    private String latitude;
+    private String longitude;
     private String chaletLocation;
     private Location location;
     private int imgNb = 0;
@@ -169,7 +169,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 hashMap.put("ImageUrl", firebaseStorage.child(user.getUid()).child(String.valueOf(chaletCount)).getPath());
                 hashMap.put("chaletNm", String.valueOf(chaletCount));
                 hashMap.put("promotion", "0"); // 0 no promoted, 1 promoted
-                hashMap.put("Location",chaletLocation);
+                hashMap.put("latitude",latitude);
+                hashMap.put("longitude",longitude);
                 hashMap.put("nbImages", String.valueOf(imgNb));
                 mDatabase.child("chalets").push().setValue(hashMap);
 
@@ -243,7 +244,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public void onMarkerDragEnd(Marker marker) {
 
-                chaletLocation = marker.getPosition().toString();
+                latitude =(""+marker.getPosition().latitude);
+                longitude = (""+marker.getPosition().longitude);
 
 
             }
@@ -269,7 +271,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
         mGoogleMap.setMyLocationEnabled(true);
 
         location = locationManager.getLastKnownLocation(provider);
-        LatLng userPostion = new LatLng(location.getLatitude(), location.getAltitude());
+        LatLng userPostion = new LatLng(24.78, 46.6);
 
 
 

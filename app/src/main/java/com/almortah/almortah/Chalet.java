@@ -7,7 +7,11 @@ package com.almortah.almortah;
 public class Chalet {
 
     private String images;
-    private String Location;
+    private String latitude;
+
+
+
+    private String longitude;
     private String chaletNm;
     private String eidPrice;
     private String name;
@@ -19,9 +23,10 @@ public class Chalet {
 
     public Chalet(){}
 
-    public Chalet(String images, String location, String chaletNm, String eidPrice, String name, String normalPrice, String ownerID, String promotion, String weekendPrice, String nbOfImages) {
+    public Chalet(String images, String latitude, String longitude, String chaletNm, String eidPrice, String name, String normalPrice, String ownerID, String promotion, String weekendPrice, String nbOfImages) {
         this.images = images;
-        Location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.chaletNm = chaletNm;
         this.eidPrice = eidPrice;
         this.name = name;
@@ -32,8 +37,12 @@ public class Chalet {
         this.nbOfImages = nbOfImages;
     }
 
-    public String getLocation() {
-        return Location;
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
     }
 
     public void setImages(String images) { this.images = images; }

@@ -74,7 +74,8 @@
         <activity android:name=".ChaletInfoCustomer" />
         <activity android:name=".BookingAChalet" />
         <activity android:name=".ConfirmBooking" />
-        <activity android:name=".MyReservation"></activity>
+        <activity android:name=".MyReservation" />
+        <activity android:name=".MapActivity"></activity>
     </application>
 
 </manifest>
