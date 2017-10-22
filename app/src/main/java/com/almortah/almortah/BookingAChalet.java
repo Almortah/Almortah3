@@ -22,7 +22,7 @@ public class BookingAChalet extends AppCompatActivity {
     private CalendarView calendarView;
     private Button checkBusy;
     private String date;
-    private String finalDates;
+    private String finalDates = "";
     private TextView t;
     private DatabaseReference reference;
 
@@ -44,19 +44,26 @@ public class BookingAChalet extends AppCompatActivity {
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         calendarView.setFirstDayOfWeek(Calendar.SUNDAY);
-      //  calendarView.setMinDate(System.currentTimeMillis());
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                date = dayOfMonth+ "-" + month + "-" + year;
-            }
-        });
+       // calendarView.setMinDate(System.currentTimeMillis());
+
 
         t = (TextView) findViewById(R.id.dateChoose);
         checkBusy = (Button) findViewById(R.id.checkBusy);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                date = dayOfMonth+ "-" + (month+1) + "-" + year;
+            }
+        });
+
+
         checkBusy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+  //              long milliseconds = calendarView.getDate();
+      //          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    //            Date today = new Date(milliseconds);
+//                date = sdf.format(today);
                 reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(ownerID).child(chaletNb).child("busyOn");
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

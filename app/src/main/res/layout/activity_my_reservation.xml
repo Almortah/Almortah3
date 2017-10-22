@@ -34,7 +34,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:background="@drawable/table_cell_bg"
-        android:text="Date" />
+        android:text="Date"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/action_type"
@@ -43,14 +44,16 @@
         android:text="Chalet Name"
         android:gravity="center"
         android:background="@drawable/table_cell_bg"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/amount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Rate/Delete"
+        android:text="Rate/Cancel"
         android:gravity="center"
         android:layout_weight="1"
+        android:textStyle="bold"
         />
     </LinearLayout>
 
