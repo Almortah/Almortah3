@@ -131,6 +131,10 @@ public class MyChalets extends AppCompatActivity {
                 mAuth.signOut();
                 startActivity(new Intent(this,HomeActivity.class));
                 return true;
+            case R.id.map:
+                startActivity(new Intent(this,MapActivity.class));
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

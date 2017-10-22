@@ -77,7 +77,7 @@ public class BookingAChalet extends AppCompatActivity {
                             }
                         }
                         if(!isBusy) {
-                            Toast.makeText(BookingAChalet.this,"EMPTY",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BookingAChalet.this, R.string.freeDay,Toast.LENGTH_SHORT).show();
                             Intent toConfirm = new Intent(BookingAChalet.this,ConfirmBooking.class);
                             toConfirm.putExtra("date",date);
                             toConfirm.putExtra("ownerID",ownerID);
@@ -91,7 +91,7 @@ public class BookingAChalet extends AppCompatActivity {
 
                         }
                         else {
-                            Toast.makeText(BookingAChalet.this,"Not Available",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BookingAChalet.this,R.string.busyDay,Toast.LENGTH_SHORT).show();
                             isBusy = false;
 
                         }

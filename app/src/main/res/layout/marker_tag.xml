@@ -13,8 +13,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:srcCompat="@drawable/logo_noname" />
+            android:layout_marginTop="5dp" />
 
     </LinearLayout>
 

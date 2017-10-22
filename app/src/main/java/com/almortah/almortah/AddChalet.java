@@ -1,6 +1,5 @@
 package com.almortah.almortah;
 
-import android.*;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
@@ -288,7 +287,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
         mGoogleMap.setMyLocationEnabled(true);
 
         location = locationManager.getLastKnownLocation(provider);
-        LatLng userPostion = new LatLng(24.78, 46.6);
+        LatLng userPostion = new LatLng(24.593976, 46.670161);
 
 
 

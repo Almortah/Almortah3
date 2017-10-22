@@ -1,21 +1,9 @@
 package com.almortah.almortah;
 
-import android.*;
 import android.app.Dialog;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
-import android.support.annotation.DrawableRes;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -23,7 +11,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -113,10 +100,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 for (DataSnapshot snapm: dataSnapshot.getChildren()) {
                     Chalet chalet = snapm.getValue(Chalet.class);
                     latitudeString = snapm.child("latitude").getValue(String.class);
-                    Log.i("Latitude",latitudeString);
-                    double latitude =Double.parseDouble(latitudeString);
+                 //   Log.i("Latitude",latitudeString);
+                    double latitude = Double.parseDouble(latitudeString);
                     longitudeString = snapm.child("longitude").getValue(String.class);
-                    Log.i("Latitude",longitudeString);
+                   // Log.i("Latitude",longitudeString);
                     double longitude=Double.parseDouble(longitudeString);
                     LatLng newLocation = new LatLng(latitude,longitude);
                     chalets.add(chalet);

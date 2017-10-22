@@ -100,7 +100,7 @@ public class login extends AppCompatActivity  {
                         startActivity(intent);
                     }
                     if (typeValue.equals("2")) {
-                        startActivity(new Intent(login.this, MapActivity.class));
+                        startActivity(new Intent(login.this,  MyChalets.class));
                     }
                 }
 

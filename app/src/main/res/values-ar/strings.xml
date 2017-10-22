@@ -17,6 +17,23 @@
     <string name="signAlmortah">الإستراحات و الشاليهات الآن أقرب</string>
     <string name="guest">إستمر كزائر</string>
     <string name="title_activity_maps">خريطة</string>
+    <string name="bookVistor">فضلا قم بتسجيل الدخول لتتمكن من حجز هذه الاستراحة</string>
+    <string name="cash">دفع نقدي عند الوصول</string>
+    <string name="chaletRate">قيم هذه الاستراحة/الشالية</string>
+    <string name="afterSignup">فضلا قم بتسجيل الدخول عن طريق الايميل/كلمة المرور</string>
+    <string name="checkin">وقت الوصول</string>
+    <string name="checkout">وقت المغادرة سوف يكون الساعة 2:00 بعد منتصف الليل</string>
+    <string name="confirm">تاكيد الحجز</string>
+    <string name="freeDate">"هذه الاستراحة/الشالية متاحة في "</string>
+    <string name="history">سجل الحجوزات الخاصة بي</string>
+    <string name="reservation">احجز</string>
+    <string name="searchChalet">ابحث عن استراحة/شالية</string>
+    <string name="visa">الدفع عن طريق البطاقة الائتمانية</string>
+    <string name="mapView">اعرض بواسطة الخرائط</string>
+    <string name="checkAv">تحقق من التوفر</string>
+    <string name="checkAvText">اختر يوماً</string>
+    <string name="busyDay">عذراً هذا اليوم محجوز مسبقاً</string>
+    <string name="freeDay">هذا اليوم متاح</string>
 
 
 </resources>

@@ -28,6 +28,7 @@
     <string name="chaletName">Chalet Name</string>
     <string name="promotion">Promotion</string>
     <string name="newChalet">Add a new chalet</string>
+    <string name="mapView">Show by map</string>
 
     <!-- Customer strings -->
     <string name="customer">Customer</string>
@@ -46,6 +47,10 @@
     <string name="visa">Pay by credit card</string>
     <string name="confirm">Confirm reservation</string>
     <string name="history">My reservation history</string>
+    <string name="checkAv">Check the availability</string>
+    <string name="checkAvText">Choose the date</string>
+    <string name="busyDay">Sorry this day is booked!</string>
+    <string name="freeDay">This day is available</string>
 
 
     <!-- Strange strings!! -->
@@ -67,5 +72,6 @@
     <string name="google_maps_key">AIzaSyC3kyuKrNC7kLK6eEzoK94JmxjrHl1tRDw</string>
     <string name="title_activity_maps">Map</string>
     <string name="reservation">Reservation</string>
+
 
 </resources>

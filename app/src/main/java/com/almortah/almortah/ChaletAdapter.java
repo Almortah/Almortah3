@@ -68,7 +68,7 @@ public class ChaletAdapter extends ArrayAdapter<Chalet> {
                                     @Override
                                     public void onClick(View v) {
                                         if(zoomOut) {
-                                            img1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 150));
+                                            img1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200));
                                              img1.setScaleType(ImageView.ScaleType.FIT_XY);
                                             zoomOut =false;
                                         }else{
