@@ -228,7 +228,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         permmision();
-        mGoogleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener(){
+       /* mGoogleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener(){
 
 
             @Override
@@ -249,10 +249,27 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
 
 
             }
+        }); */
+
+        mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (marker != null) {
+                    marker.remove();
+                }
+
+                MarkerOptions options = new MarkerOptions().position(latLng);
+                marker = mGoogleMap.addMarker(options);
+                latitude =(""+marker.getPosition().latitude);
+                longitude = (""+marker.getPosition().longitude);
+
+            }
         });
-        if (marker != null) {
-            marker.remove();
-        }
+
+
+
+
        permmision();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

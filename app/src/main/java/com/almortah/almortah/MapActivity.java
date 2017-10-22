@@ -2,9 +2,20 @@ package com.almortah.almortah;
 
 import android.*;
 import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -12,6 +23,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -22,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
@@ -36,12 +49,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private LocationManager locationManager;
     private String provider;
     private DatabaseReference mDatabase;
+    private ArrayList<Chalet> chalets;
+    private ArrayList<String> img;
+    private StorageReference storageReference;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        chalets = new ArrayList<>();
 
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
@@ -94,16 +111,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String latitudeString;
                 String longitudeString;
                 for (DataSnapshot snapm: dataSnapshot.getChildren()) {
-                   // Chalet chalet = snapm.getValue(Chalet.class);
+                    Chalet chalet = snapm.getValue(Chalet.class);
                     latitudeString = snapm.child("latitude").getValue(String.class);
+                    Log.i("Latitude",latitudeString);
                     double latitude =Double.parseDouble(latitudeString);
                     longitudeString = snapm.child("longitude").getValue(String.class);
+                    Log.i("Latitude",longitudeString);
                     double longitude=Double.parseDouble(longitudeString);
                     LatLng newLocation = new LatLng(latitude,longitude);
-                    mGoogleMap.addMarker(new MarkerOptions()
-                            .position(newLocation));
+                    chalets.add(chalet);
+                   // img.add(snapm.child("ImageUrl").toString());
+                    //mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
 
                 }
+                for (int i=0;i<chalets.size();i++){
+                    mGoogleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude()))))
+
+                            .setTitle(chalets.get(i).getName().toString());
+
+                }
+
             }
 
             @Override
@@ -129,4 +157,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return false;
 
     }
+  /*  private Bitmap getMarkerBitmapFromView() {
+
+        View customMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.marker_tag, null);
+        ImageView markerImageView = (ImageView) customMarkerView.findViewById(R.id.chaletImg);
+        markerImageView.setImageResource(resId);
+        customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        customMarkerView.layout(0, 0, customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight());
+        customMarkerView.buildDrawingCache();
+        Bitmap returnedBitmap = Bitmap.createBitmap(customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        canvas.drawColor(Color.WHITE, PorterDuff.Mode.SRC_IN);
+        Drawable drawable = customMarkerView.getBackground();
+        if (drawable != null)
+            drawable.draw(canvas);
+        customMarkerView.draw(canvas);
+        return returnedBitmap;
+    }*/
+
 }
