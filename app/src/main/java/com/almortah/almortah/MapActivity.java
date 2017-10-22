@@ -1,16 +1,34 @@
 package com.almortah.almortah;
 
+import android.*;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.location.Criteria;
+import android.location.Location;
 import android.location.LocationManager;
-import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -39,6 +57,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ArrayList<Chalet> chalets;
     private ArrayList<String> img;
     private StorageReference storageReference;
+    private Location location;
 
 
     @Override
@@ -50,12 +69,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(getApplicationContext(),"Permissions Granted",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Permissions Granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(getApplicationContext(),"Permissions Denied"+deniedPermissions.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Permissions Denied" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
 
             }
         };
@@ -71,7 +90,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .setGotoSettingButtonText("Allow")
                 .setPermissions(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 .check();
-        mDatabase= FirebaseDatabase.getInstance().getReference().child("chalets");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("chalets");
 
 
         if (googleServiceAvail() == true) {
@@ -90,6 +109,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        provider = locationManager.getBestProvider(new Criteria(), false);
+
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mGoogleMap.setMyLocationEnabled(true);
+        location = locationManager.getLastKnownLocation(provider);
+        LatLng userPostion = new LatLng(location.getLatitude(), location.getLongitude());
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+
         mGoogleMap = googleMap;
         mDatabase.addValueEventListener(new ValueEventListener() {
 
@@ -100,10 +139,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 for (DataSnapshot snapm: dataSnapshot.getChildren()) {
                     Chalet chalet = snapm.getValue(Chalet.class);
                     latitudeString = snapm.child("latitude").getValue(String.class);
-                 //   Log.i("Latitude",latitudeString);
-                    double latitude = Double.parseDouble(latitudeString);
+                    Log.i("Latitude",latitudeString);
+                    double latitude =Double.parseDouble(latitudeString);
                     longitudeString = snapm.child("longitude").getValue(String.class);
-                   // Log.i("Latitude",longitudeString);
+                    Log.i("Latitude",longitudeString);
                     double longitude=Double.parseDouble(longitudeString);
                     LatLng newLocation = new LatLng(latitude,longitude);
                     chalets.add(chalet);
