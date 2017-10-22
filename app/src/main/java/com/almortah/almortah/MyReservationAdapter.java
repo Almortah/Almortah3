@@ -45,14 +45,22 @@ public class MyReservationAdapter extends ArrayAdapter<Reservation> {
         chaletName.setText(reservation.getChaletName());
 
         long yourmilliseconds = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date today = new Date(yourmilliseconds);
 
-        String s = sdf.format(today);
+        String isFuture = sdf.format(today);
 
-        if(s.compareTo(reservation.getDate()) < 0) {
-            control.setText("Delete");
+        String check[] = isFuture.split("-");
+        String reservDate[] = reservation.getDate().split("-");
+        if(Integer.parseInt(check[1]) < Integer.parseInt(reservDate[1]) || Integer.parseInt(check[2]) < Integer.parseInt(reservDate[2]) ) {
+            control.setText("Cancel");
             control.setBackgroundColor(listItemView.getResources().getColor(R.color.colorDarkGrey));
+        }
+        else if (Integer.parseInt(check[1]) == Integer.parseInt(reservDate[1]) && Integer.parseInt(check[2]) == Integer.parseInt(reservDate[2])  ) {
+            if(Integer.parseInt(check[0]) < Integer.parseInt(reservDate[0]) ) {
+                control.setText("Cancel");
+                control.setBackgroundColor(listItemView.getResources().getColor(R.color.colorDarkGrey));
+            }
         }
 
 
