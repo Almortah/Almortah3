@@ -12,6 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +46,9 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import static com.almortah.almortah.R.id.map;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -58,6 +63,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private ArrayList<String> img;
     private StorageReference storageReference;
     private Location location;
+    private HashMap<String, Uri> images=new HashMap<String, Uri>();
+
+
+   /* public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+
+        private final View myContentsView;
+
+        public MapInfoWindowAdapter() {
+            myContentsView = getLayoutInflater().inflate(R.layout.marker_tag, null);
+
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+
+            ImageView img = (ImageView) myContentsView.findViewById(R.id.chaletImg);
+            img
+        }
+    }*/
+
+
 
 
     @Override
@@ -123,13 +149,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+        mGoogleMap = googleMap;
         mGoogleMap.setMyLocationEnabled(true);
         location = locationManager.getLastKnownLocation(provider);
         LatLng userPostion = new LatLng(location.getLatitude(), location.getLongitude());
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 
-        mGoogleMap = googleMap;
+        mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,
+                getLayoutInflater(),
+                images));
+
         mDatabase.addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -151,9 +181,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 }
                 for (int i=0;i<chalets.size();i++){
+                    //addMarker(mGoogleMap);
                     mGoogleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude()))))
-
                             .setTitle(chalets.get(i).getName().toString());
 
                 }
@@ -166,7 +196,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
+
     }
+
 
     public boolean googleServiceAvail(){
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
@@ -201,5 +233,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         customMarkerView.draw(canvas);
         return returnedBitmap;
     }*/
+
+    private void addMarker(GoogleMap map, double lat, double lon,
+                           int title, int snippet, String image) {
+        Marker marker=
+                map.addMarker(new MarkerOptions().position(new LatLng(lat, lon))
+                        .title(getString(title)));
+
+        if (image != null) {
+            images.put(marker.getId(),
+                    Uri.parse("http://misc.commonsware.com/mapsv2/"
+                            + image));
+        }
+    }
+
 
 }
