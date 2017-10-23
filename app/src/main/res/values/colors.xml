@@ -4,8 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FAFAFA</color>
-    <color name="colorGreen">#62ba60</color>
-    <color name="colorBlue">#00a8e5</color>
+    <color name="colorGreen">#78b077</color>
+    <color name="colorBlue">#5ebbff</color>
     <color name="colorDarkGrey">#4c4d4f</color>
     <color name="lightGray">#b2b2b2</color>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="cardColor">#b1959595</color>
 </resources>

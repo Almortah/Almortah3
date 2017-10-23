@@ -3,6 +3,9 @@ package com.almortah.almortah;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,16 +26,33 @@ import java.util.Iterator;
 public class ChaletListActivity extends AppCompatActivity {
 
     private AlmortahDB almortahDB = new AlmortahDB(this);
-    private ArrayList<Chalet> chalets;
+    private ArrayList<Chalet> chalets = new ArrayList<>();
     private ListView listView;
     private ListView vipListView;
+
+    private RecyclerView recyclerView;
+    private ChaletListRV mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chalet_list);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       //setSupportActionBar(toolbar);
+
+
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        mAdapter = new ChaletListRV(this,chalets);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
+
         Bundle user = getIntent().getExtras();
-        chalets = new ArrayList<>();
+        //chalets = new ArrayList<>();
         DatabaseReference reference = almortahDB.getAlmortahDB().child("chalets");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -41,12 +61,9 @@ public class ChaletListActivity extends AppCompatActivity {
                 Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
                 while ((iterator.hasNext())) {
                     Chalet chalet = iterator.next().getValue(Chalet.class);
-
                     chalets.add(chalet);
                 }
-                ChaletAdapter adapter = new ChaletAdapter(ChaletListActivity.this, chalets);
-                listView = (ListView) findViewById(R.id.chalet_list);
-                listView.setAdapter(adapter);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override

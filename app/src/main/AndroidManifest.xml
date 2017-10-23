@@ -28,7 +28,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_noname"
         android:supportsRtl="true"
-        android:theme="@style/Base.V7.Theme.AppCompat.Light">
+        android:theme="@style/Base.V7.Theme.AppCompat">
         <activity android:name=".Signup" />
         <activity android:name=".login" />
         <activity android:name=".HomeActivity">
@@ -75,7 +75,12 @@
         <activity android:name=".BookingAChalet" />
         <activity android:name=".ConfirmBooking" />
         <activity android:name=".MyReservation" />
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
+        <activity
+            android:name=".FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"></activity>
     </application>
 
 </manifest>

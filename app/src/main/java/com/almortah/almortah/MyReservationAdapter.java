@@ -53,12 +53,12 @@ public class MyReservationAdapter extends ArrayAdapter<Reservation> {
         String check[] = isFuture.split("-");
         String reservDate[] = reservation.getDate().split("-");
         if(Integer.parseInt(check[1]) < Integer.parseInt(reservDate[1]) || Integer.parseInt(check[2]) < Integer.parseInt(reservDate[2]) ) {
-            control.setText("Cancel");
+            control.setText(R.string.cancel);
             control.setBackgroundColor(listItemView.getResources().getColor(R.color.colorDarkGrey));
         }
         else if (Integer.parseInt(check[1]) == Integer.parseInt(reservDate[1]) && Integer.parseInt(check[2]) == Integer.parseInt(reservDate[2])  ) {
             if(Integer.parseInt(check[0]) < Integer.parseInt(reservDate[0]) ) {
-                control.setText("Cancel");
+                control.setText(R.string.cancel);
                 control.setBackgroundColor(listItemView.getResources().getColor(R.color.colorDarkGrey));
             }
         }

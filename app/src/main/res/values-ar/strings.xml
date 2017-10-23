@@ -34,6 +34,10 @@
     <string name="checkAvText">اختر يوماً</string>
     <string name="busyDay">عذراً هذا اليوم محجوز مسبقاً</string>
     <string name="freeDay">هذا اليوم متاح</string>
+    <string name="date">التاريخ</string>
+    <string name="cancel">الغاء الحجز</string>
+    <string name="delete_rate">الالغاء/التقييم</string>
+    <string name="rate">قيّم</string>
 
 
 </resources>

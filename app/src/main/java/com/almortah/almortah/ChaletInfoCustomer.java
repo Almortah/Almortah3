@@ -107,34 +107,59 @@ public class ChaletInfoCustomer extends AppCompatActivity {
                 StorageReference tmp = storageReference.child(String.valueOf(i));
                 tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onSuccess(Uri uri) {
+                    public void onSuccess(final Uri uri) {
                         Glide.with(ChaletInfoCustomer.this)
                                 .load(uri)
                                 .into(img1);
+                        img1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(ChaletInfoCustomer.this, FullscreenActivity.class);
+                                intent.putExtra("img", uri );
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
             } else if (i == 2) {
                 StorageReference tmp = storageReference.child(String.valueOf(i));
                 tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onSuccess(Uri uri) {
+                    public void onSuccess(final Uri uri) {
                         Glide.with(ChaletInfoCustomer.this)
                                 .load(uri)
                                 .into(img2);
+                        img2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(ChaletInfoCustomer.this, FullscreenActivity.class);
+                                intent.putExtra("img", uri );
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
             } else {
                 StorageReference tmp = storageReference.child(String.valueOf(i));
                 tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onSuccess(Uri uri) {
-                        Glide.with(ChaletInfoCustomer.this)
+                    public void onSuccess(final Uri uri) {
+                                Glide.with(ChaletInfoCustomer.this)
                                 .load(uri)
                                 .into(img3);
+                        img3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(ChaletInfoCustomer.this, FullscreenActivity.class);
+                                intent.putExtra("img", uri );
+                                startActivity(intent);
+                            }
+                        });
                     }
                 });
             }
         }
+
 
         Button book = (Button) findViewById(R.id.book);
         book.setOnClickListener(new View.OnClickListener() {

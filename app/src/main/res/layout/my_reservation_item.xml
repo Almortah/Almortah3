@@ -28,7 +28,7 @@
         android:id="@+id/control"
         android:layout_width="0dp"
         android:layout_height="18dp"
-        android:text="Rate"
+        android:text="@string/rate"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
