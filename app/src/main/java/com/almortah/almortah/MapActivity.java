@@ -154,11 +154,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         location = locationManager.getLastKnownLocation(provider);
         LatLng userPostion = new LatLng(location.getLatitude(), location.getLongitude());
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
-        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(5));
 
-        mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,
-                getLayoutInflater(),
-                images));
+       // mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,
+         //       getLayoutInflater(),
+           //     images));
 
         mDatabase.addValueEventListener(new ValueEventListener() {
 
@@ -177,14 +177,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     LatLng newLocation = new LatLng(latitude,longitude);
                     chalets.add(chalet);
                    // img.add(snapm.child("ImageUrl").toString());
-                    //mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
+                    // mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
 
                 }
                 for (int i=0;i<chalets.size();i++){
                     //addMarker(mGoogleMap);
                     mGoogleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude()))))
-                            .setTitle(chalets.get(i).getName().toString());
+                            .setTitle(chalets.get(i).getName());
+                            Log.i("Name " ,chalets.get(i).getName());
 
                 }
 
