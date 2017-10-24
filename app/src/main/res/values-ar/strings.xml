@@ -38,6 +38,8 @@
     <string name="cancel">الغاء الحجز</string>
     <string name="delete_rate">الالغاء/التقييم</string>
     <string name="rate">قيّم</string>
+    <string name="list">عرض بواسطة قائمة</string>
+    <string name="map">عرض بواسطة الخرائط</string>
 
 
 </resources>

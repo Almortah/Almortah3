@@ -3,6 +3,8 @@
     <string name="app_name">ALMORTAH</string>
     <string name="Price">Price</string>
     <string name="title_activity_chalet_list">Rest-houses and chalets</string>
+    <string name="list">View by list</string>
+    <string name="map">View by Maps</string>
 
     <!-- Strings related to Settings -->
     <string name="login">Login</string>

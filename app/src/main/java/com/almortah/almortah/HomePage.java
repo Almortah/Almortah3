@@ -20,16 +20,16 @@ public class HomePage extends AppCompatActivity {
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ChaletsListFragment(), "List");
-        adapter.addFragment(new ChaletcMapFragment(), "Map");
+        adapter.addFragment(new ChaletsListFragment(), getString(R.string.list) );
+        adapter.addFragment(new ChaletcMapFragment(), getString(R.string.map) );
         viewPager.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
 
     }
-
 
 
     // Adapter for the viewpager using FragmentPagerAdapter

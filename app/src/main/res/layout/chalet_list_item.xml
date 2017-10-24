@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:cardBackgroundColor="@color/cardColor"
-        app:cardCornerRadius="25dp">
+        app:cardBackgroundColor="@color/cardview_shadow_start_color"
+        app:cardCornerRadius="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +36,8 @@
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:background="@drawable/gray_border"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                     />
 
                 <ImageView
                     android:id="@+id/logoNoName"
@@ -46,6 +47,20 @@
                     android:layout_weight="0.39"
                     app:srcCompat="@drawable/logo_noname" />
 
+                <TextView
+                    android:id="@+id/chaletName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="serif"
+                    android:gravity="center"
+                    android:paddingStart="5dp"
+                    android:paddingTop="85dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/pick_white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="Hello" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -53,21 +68,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp">
 
-                <TextView
-                    android:id="@+id/chaletName"
+                <RatingBar
+                    android:id="@+id/chaletRating"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignTop="@+id/normalPrice"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="36dp"
-                    android:fontFamily="serif"
-                    android:gravity="center"
-                    android:textAllCaps="true"
-                    android:textColor="@color/pick_black"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    tools:text="Hello" />
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="5dp"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:rating="3.5"
+                    android:stepSize="0" />
 
                 <ImageView
                     android:id="@+id/locationLogo"
@@ -94,7 +105,7 @@
                     android:layout_width="25dp"
                     android:layout_height="20dp"
                     android:layout_below="@+id/locationLogo"
-                    android:layout_marginTop="11dp"
+                    android:layout_marginTop="10dp"
                     android:layout_toStartOf="@+id/normalPrice"
                     app:srcCompat="@drawable/price_icon" />
 
@@ -108,21 +119,6 @@
                     android:text="Alswaidi"
                     android:textSize="18sp" />
             </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:weightSum="1">
-
-                <RatingBar
-                    android:id="@+id/chaletRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:isIndicator="true"
-                    android:numStars="5" />
-
-            </LinearLayout>
 
 
         </LinearLayout>

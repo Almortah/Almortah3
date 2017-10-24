@@ -73,8 +73,9 @@ public class ChaletsListFragment extends Fragment {
             }
         });
 
-        mAdapter.notifyDataSetChanged();
         return view;
     }
+
+    
 
 }
