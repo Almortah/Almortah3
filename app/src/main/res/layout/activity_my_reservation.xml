@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:background="@drawable/table_cell_bg"
             android:gravity="center"
-            android:text="@string/chaletName"
+            android:text="@string/chaletNameHistory"
             android:textStyle="bold" />
 
         <TextView

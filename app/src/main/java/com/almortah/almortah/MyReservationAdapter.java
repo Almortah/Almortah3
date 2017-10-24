@@ -50,8 +50,8 @@ public class MyReservationAdapter extends ArrayAdapter<Reservation> {
 
         String isFuture = sdf.format(today);
 
-        String check[] = isFuture.split("-");
-        String reservDate[] = reservation.getDate().split("-");
+        final String check[] = isFuture.split("-");
+        final String reservDate[] = reservation.getDate().split("-");
         if(Integer.parseInt(check[1]) < Integer.parseInt(reservDate[1]) || Integer.parseInt(check[2]) < Integer.parseInt(reservDate[2]) ) {
             control.setText(R.string.cancel);
             control.setBackgroundColor(listItemView.getResources().getColor(R.color.colorDarkGrey));

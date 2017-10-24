@@ -53,6 +53,7 @@
     <string name="checkAvText">Choose the date</string>
     <string name="busyDay">Sorry this day is booked!</string>
     <string name="freeDay">This day is available</string>
+    <string name="chaletNameHistory">Rest-house/Chalet</string>
 
 
     <!-- Strange strings!! -->

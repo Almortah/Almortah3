@@ -6,12 +6,9 @@
         android:id="@+id/searchChaleh"
         android:title="@string/searchChalet" />
     <item
-        android:id="@+id/logout"
-        android:title="@string/logout" />
-    <item
         android:id="@+id/history"
         android:title="@string/history" />
     <item
-        android:id="@+id/mapView"
-        android:title="@string/mapView" />
+        android:id="@+id/logout"
+        android:title="@string/logout" />
 </menu>

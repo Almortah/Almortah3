@@ -110,9 +110,6 @@ public class ChaletListActivity extends AppCompatActivity {
             case R.id.history:
                 startActivity(new Intent(this,MyReservation.class));
                 return true;
-            case R.id.mapView:
-                startActivity(new Intent(this,MapActivity.class));
-                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
