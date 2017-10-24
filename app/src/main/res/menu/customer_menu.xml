@@ -11,4 +11,7 @@
     <item
         android:id="@+id/history"
         android:title="@string/history" />
+    <item
+        android:id="@+id/mapView"
+        android:title="@string/mapView" />
 </menu>

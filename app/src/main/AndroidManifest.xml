@@ -28,7 +28,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_noname"
         android:supportsRtl="true"
-        android:theme="@style/Base.V7.Theme.AppCompat">
+        android:theme="@style/AlmortahTheme">
         <activity android:name=".Signup" />
         <activity android:name=".login" />
         <activity android:name=".HomeActivity">
@@ -80,7 +80,8 @@
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+        <activity android:name=".HomePage"></activity>
     </application>
 
 </manifest>

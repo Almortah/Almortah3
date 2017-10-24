@@ -64,9 +64,9 @@
                     android:fontFamily="serif"
                     android:gravity="center"
                     android:textAllCaps="true"
-                    android:textColor="@color/pick_placeholder"
+                    android:textColor="@color/pick_black"
                     android:textSize="24sp"
-                    android:textStyle="bold|italic"
+                    android:textStyle="bold"
                     tools:text="Hello" />
 
                 <ImageView
