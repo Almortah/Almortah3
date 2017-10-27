@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.almortah.almortah"
         minSdkVersion 21
@@ -51,6 +51,15 @@ repositories {
     maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
 }
 
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+dependencies {
+    compile 'com.github.firdausmaulan:GlideSlider:1.0.2'
+}
+
 dependencies {
     compile 'com.github.bumptech.glide:glide:4.2.0'
     compile 'com.werb.pickphotoview:pickphotoview:0.3.0'
@@ -68,7 +77,6 @@ dependencies {
     //noinspection GradleCompatible
     compile 'com.android.support:recyclerview-v7:23.1.1'
 }
-
 
 dependencies {
     compile 'com.google.gms:google-services:3.0.0'

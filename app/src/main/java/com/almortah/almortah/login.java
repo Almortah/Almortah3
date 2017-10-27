@@ -96,7 +96,7 @@ public class login extends AppCompatActivity  {
                         String typeValue = dataSnapshot.getValue().toString().trim();
                     Log.i("TYPE", typeValue);
                     if (typeValue.equals("1")) {
-                        Intent intent = new Intent(login.this, ChaletListActivity.class);
+                        Intent intent = new Intent(login.this, HomePage.class);
                         startActivity(intent);
                     }
                     if (typeValue.equals("2")) {

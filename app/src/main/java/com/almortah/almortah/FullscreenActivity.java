@@ -3,7 +3,7 @@ package com.almortah.almortah;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,9 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -97,26 +94,18 @@ public class FullscreenActivity extends Activity {
 
         setContentView(R.layout.activity_fullscreen);
 
+
+
+
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = (ImageView) findViewById(R.id.fullscreen_content);
+        Bitmap myBitmap;
         Bundle tmp = getIntent().getExtras();
-        Uri uri = (Uri) tmp.get("img");
-        InputStream inputStream = null;
-        try {
-            inputStream = getContentResolver().openInputStream(uri);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(inputStream, null, options);
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
-
+        String uri = tmp.getString("img");
         Glide.with(getBaseContext())
-                .load(uri).thumbnail(0.9f)
-                .into((ImageView) mContentView);
+                .load(Uri.parse(uri))
+                        .into((ImageView) mContentView);
 
        // (ImageView) mContentView.s
 

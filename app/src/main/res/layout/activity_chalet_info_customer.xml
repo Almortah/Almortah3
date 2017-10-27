@@ -12,106 +12,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="140dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="0.03"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.01"
         android:gravity="center"
         android:text="Chalet Name"
         android:textColor="@color/colorDarkGrey"
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/img1C"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/chaletName"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="0.02"
-        android:elevation="4dp"
-        android:adjustViewBounds="true"
-        app:srcCompat="@drawable/logo_noname" />
-
-    <ImageView
-        android:id="@+id/img2C"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/chaletName"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/img1C"
-        android:layout_weight="0.02"
-        app:srcCompat="@drawable/logo_noname" />
-
-    <ImageView
-        android:id="@+id/img3C"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/chaletName"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/img2C"
-        android:layout_weight="0.02"
-        app:srcCompat="@drawable/logo_noname" />
-
-    <ImageView
-        android:id="@+id/img4C"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/chaletName"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/img3C"
-        android:layout_weight="0.02"
-        app:srcCompat="@drawable/logo_noname" />
-
-    <ImageView
-        android:id="@+id/img5C"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/chaletName"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/img4C"
-        android:layout_weight="0.02"
-        app:srcCompat="@drawable/logo_noname" />
+    <com.glide.slider.library.SliderLayout
+        android:id="@+id/slider"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/chaletName"/>
 
     <ImageView
         android:id="@+id/chaletLocation"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_alignStart="@+id/img1C"
-        android:layout_below="@+id/img1C"
-        android:layout_marginTop="20dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="9dp"
+        android:layout_below="@id/slider"
         app:srcCompat="@drawable/location_icon" />
 
     <TextView
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/chaletLocation"
-        android:layout_marginStart="10dp"
+        android:layout_alignTop="@+id/chaletLocation"
         android:layout_toEndOf="@+id/chaletLocation"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/chaletLocation"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_below="@+id/chaletLocation"
-        android:layout_marginEnd="35dp"
-        android:layout_marginTop="35dp"
         android:text="Many chalets in the European Alps were originally used as seasonal farms for dairy cattle which would be brought up from the lowland pastures during the summer months. The herders would live in the chalet and make butter and cheese in order to preserve the milk produced. These products would then be taken, with the cattle, back to the low valleys before the onset of the alpine winter." />
 
     <TextView
         android:id="@+id/finalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/description"
         android:layout_below="@+id/description"
-        android:layout_marginTop="26dp"
-        android:text="@string/Price"
+        android:layout_toEndOf="@+id/priceLogo"
+        android:paddingLeft="5dp"
+        android:text="@string/prices"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -120,18 +70,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/finalPrice"
-        android:layout_below="@+id/finalPrice"
-        android:layout_marginTop="13dp"
+        android:layout_below="@id/finalPrice"
         android:text="TextView" />
 
     <TextView
         android:id="@+id/weekendPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:layout_alignBaseline="@+id/normalPrice"
         android:layout_alignBottom="@+id/normalPrice"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignEnd="@+id/chaletName"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/eidPrice"
@@ -147,11 +96,11 @@
         android:id="@+id/book"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/green_border"
-        android:text="@string/reservation"
+        android:layout_alignEnd="@+id/description"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/normalPrice"
-        android:layout_marginBottom="28dp" />
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/green_border"
+        android:text="@string/reservation" />
 
     <Button
         android:id="@+id/rate"
@@ -159,26 +108,17 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/book"
         android:layout_alignBottom="@+id/book"
-        android:layout_alignEnd="@+id/img5C"
-        android:layout_marginRight="10dp"
+        android:layout_alignStart="@+id/description"
         android:background="@drawable/blue_border"
         android:text="@string/chaletRate" />
 
     <ImageView
-        android:id="@+id/ownerIcon"
+        android:id="@+id/priceLogo"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_alignEnd="@+id/weekendPrice"
-        android:layout_alignTop="@+id/chaletLocation"
-        app:srcCompat="@mipmap/owner_icon" />
-
-    <TextView
-        android:id="@+id/ownerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/location"
-        android:layout_toEndOf="@+id/ownerIcon"
-        android:layout_toStartOf="@+id/img5C"
-        android:text="TextView" />
+        android:layout_marginTop="10dp"
+        android:layout_alignEnd="@+id/chaletLocation"
+        android:layout_alignTop="@+id/finalPrice"
+        app:srcCompat="@drawable/price_icon" />
 
 </RelativeLayout>

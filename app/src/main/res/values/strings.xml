@@ -1,7 +1,6 @@
 <resources>
     <!-- General strings  -->
     <string name="app_name">ALMORTAH</string>
-    <string name="Price">Price</string>
     <string name="title_activity_chalet_list">Rest-houses and chalets</string>
     <string name="list">View by list</string>
     <string name="map">View by Maps</string>
@@ -31,6 +30,7 @@
     <string name="promotion">Promotion</string>
     <string name="newChalet">Add a new chalet</string>
     <string name="mapView">Show by map</string>
+    <string name="doneUpload">Upload successfully!</string>
 
     <!-- Customer strings -->
     <string name="customer">Customer</string>
@@ -83,6 +83,8 @@
     <string name="delete_rate">Cancel/Rate</string>
     <string name="rate">Rate</string>
     <string name="cancel">Cancel</string>
+    <string name="price">Price</string>
+    <string name="prices">Prices</string>
 
 
 </resources>

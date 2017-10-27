@@ -41,6 +41,7 @@
     <string name="list">عرض بواسطة قائمة</string>
     <string name="map">عرض بواسطة الخرائط</string>
     <string name="chaletNameHistory">الإستراحة/الشالية</string>
+    <string name="doneUpload">تم الرفع بنجاح</string>
 
 
 </resources>

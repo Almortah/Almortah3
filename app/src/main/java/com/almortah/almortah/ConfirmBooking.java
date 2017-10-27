@@ -176,4 +176,11 @@ public class ConfirmBooking extends AppCompatActivity {
         return super.onMenuOpened(featureId, menu);
     }
 
+    @Override
+    public void onBackPressed() {
+        // your code.
+        startActivity(new Intent(this,HomePage.class));
+    }
+
+
 }

@@ -15,7 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.glide.slider.library.Animations.DescriptionAnimation;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.SliderTypes.BaseSliderView;
+import com.glide.slider.library.SliderTypes.TextSliderView;
+import com.glide.slider.library.Tricks.ViewPagerEx;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,8 +32,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
-public class ChaletInfoCustomer extends AppCompatActivity {
+public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
     private FirebaseAuth mAuth ;
     private FirebaseDatabase mDatabase ;
     private StorageReference storageReference ;
@@ -55,9 +61,7 @@ public class ChaletInfoCustomer extends AppCompatActivity {
     private ImageView img3;
     private ImageView img4;
     private ImageView img5;
-
-    boolean isImageFitToScreen;
-
+    private SliderLayout mDemoSlider;
 
 
     @Override
@@ -95,27 +99,39 @@ public class ChaletInfoCustomer extends AppCompatActivity {
         weekendPriceView = (TextView) findViewById(R.id.weekendPrice);
         eidPriceView = (TextView) findViewById(R.id.eidPrice);
         locationView = (TextView) findViewById(R.id.location);
-        owner = (TextView) findViewById(R.id.ownerName);
-        img1 = (ImageView) findViewById(R.id.img1C);
-        img2 = (ImageView) findViewById(R.id.img2C);
-        img3 = (ImageView) findViewById(R.id.img3C);
-        img4 = (ImageView) findViewById(R.id.img4C);
-        img5 = (ImageView) findViewById(R.id.img5C);
+       // owner = (TextView) findViewById(R.id.ownerName);
+
+        mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+
+        final ArrayList<String> listUrl = new ArrayList<String>();
+
+
+
 
         nameView.setText(name);
         normalPriceView.setText(normalPrice);
         weekendPriceView.setText(weekendPrice);
         eidPriceView.setText(eidPrice);
         locationView.setText(location);
-        owner.setText(ownerName);
+//        owner.setText(ownerName);
 
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i < 6; i++) {
             if (i == 1) {
                 StorageReference tmp = storageReference.child(String.valueOf(i));
                 tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(final Uri uri) {
-                        Glide.with(ChaletInfoCustomer.this)
+                        TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(chaletNb)
+                                .image(uri.toString())
+                                .setBitmapTransformation(new CenterCrop())
+                                .setOnSliderClickListener(ChaletInfoCustomer.this);
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle().putString("extra","!!!!!!");
+                        mDemoSlider.addSlider(textSliderView);                        /* Glide.with(ChaletInfoCustomer.this)
                                 .load(uri)
                                 .into(img1);
                         img1.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +141,7 @@ public class ChaletInfoCustomer extends AppCompatActivity {
                                 intent.putExtra("img", uri );
                                 startActivity(intent);
                             }
-                        });
+                        });*/
                     }
                 });
             } else if (i == 2) {
@@ -133,7 +149,18 @@ public class ChaletInfoCustomer extends AppCompatActivity {
                 tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(final Uri uri) {
-                        Glide.with(ChaletInfoCustomer.this)
+                        TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(chaletNb)
+                                .image(uri.toString())
+                                .setBitmapTransformation(new CenterCrop())
+                                .setOnSliderClickListener(ChaletInfoCustomer.this);
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle().putString("extra","!!!!!!");
+                        mDemoSlider.addSlider(textSliderView);
+                        /*Glide.with(ChaletInfoCustomer.this)
                                 .load(uri)
                                 .into(img2);
                         img2.setOnClickListener(new View.OnClickListener() {
@@ -143,15 +170,27 @@ public class ChaletInfoCustomer extends AppCompatActivity {
                                 intent.putExtra("img", uri );
                                 startActivity(intent);
                             }
-                        });
+                        });*/
                     }
                 });
-            } else {
+            }  else if (i == 3) {
                 StorageReference tmp = storageReference.child(String.valueOf(i));
                 tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(final Uri uri) {
-                                Glide.with(ChaletInfoCustomer.this)
+
+                        TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(chaletNb)
+                                .image(uri.toString())
+                                .setBitmapTransformation(new CenterCrop())
+                                .setOnSliderClickListener(ChaletInfoCustomer.this);
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle().putString("extra","!!!!!!");
+                        mDemoSlider.addSlider(textSliderView);
+                       /* Glide.with(ChaletInfoCustomer.this)
                                 .load(uri)
                                 .into(img3);
                         img3.setOnClickListener(new View.OnClickListener() {
@@ -161,12 +200,66 @@ public class ChaletInfoCustomer extends AppCompatActivity {
                                 intent.putExtra("img", uri );
                                 startActivity(intent);
                             }
-                        });
+                        });*/
                     }
                 });
             }
-        }
+            else if (i == 4) {
+                StorageReference tmp = storageReference.child(String.valueOf(i));
+                tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(final Uri uri) {
 
+                        TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(name)
+                                .image(uri.toString())
+                                .setBitmapTransformation(new CenterCrop())
+                                .setOnSliderClickListener(ChaletInfoCustomer.this);
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle().putString("extra","!!!!!!");
+                        mDemoSlider.addSlider(textSliderView);                       /* Glide.with(ChaletInfoCustomer.this)
+                                .load(uri)
+                                .into(img4);
+                        img4.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(ChaletInfoCustomer.this, FullscreenActivity.class);
+                                intent.putExtra("img", uri );
+                                startActivity(intent);
+                            }
+                        });*/
+                    }
+                });
+            }
+            else {
+
+                //StorageReference tmp = storageReference.child(String.valueOf(i));
+                //tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+               //     @Override
+                 //   public void onSuccess(final Uri uri) {
+                                /*Glide.with(ChaletInfoCustomer.this)
+                                .load(uri)
+                                .into(img5);
+                        img5.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(ChaletInfoCustomer.this, FullscreenActivity.class);
+                                intent.putExtra("img", uri );
+                                startActivity(intent);
+                            }
+                        });*/
+              //      }
+            //    });
+            }
+        }
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+        mDemoSlider.addOnPageChangeListener(ChaletInfoCustomer.this);
 
         Button book = (Button) findViewById(R.id.book);
         book.setOnClickListener(new View.OnClickListener() {
@@ -264,6 +357,35 @@ public class ChaletInfoCustomer extends AppCompatActivity {
             }
         }
         return super.onMenuOpened(featureId, menu);
+    }
+
+    @Override
+    protected void onStop() {
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        mDemoSlider.stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        Intent intent = new Intent(ChaletInfoCustomer.this, FullscreenActivity.class);
+        intent.putExtra("img", slider.getUrl() );
+        startActivity(intent);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
 }

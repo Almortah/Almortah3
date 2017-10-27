@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId())
         {
             case R.id.guestButton :
-                Intent intent = new Intent(this,HomePage.class);
+                Intent intent = new Intent(this,ChaletListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.signinButton :

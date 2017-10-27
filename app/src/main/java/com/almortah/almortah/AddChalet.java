@@ -177,6 +177,9 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 hashMap.put("latitude",latitude);
                 hashMap.put("longitude",longitude);
                 hashMap.put("nbImages", String.valueOf(imgNb));
+                if(latitude.isEmpty() || longitude.isEmpty()) {
+                    return;
+                }
                 mDatabase.child("chalets").push().setValue(hashMap);
 
                 HashMap<String,String> dateHashMap = new HashMap<String, String>();
@@ -392,6 +395,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 imgName++;
                 // do something u want
             }
+            Toast.makeText(getApplicationContext(),R.string.doneUpload,Toast.LENGTH_SHORT).show();
         }
     }
 
