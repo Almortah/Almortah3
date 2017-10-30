@@ -9,7 +9,7 @@
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
     tools:context="com.almortah.almortah.login"
-    android:background="@drawable/light_lines">
+    android:background="@drawable/design">
 
     <TextView
         android:layout_width="wrap_content"
