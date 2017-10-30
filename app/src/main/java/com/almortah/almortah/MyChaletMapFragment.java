@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,10 +41,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by ALMAHRI on 10/24/17.
+ * Created by ALMAHRI on 10/28/17.
  */
 
-public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
+public class MyChaletMapFragment extends Fragment implements OnMapReadyCallback {
 
     private FirebaseApp app;
     private FirebaseStorage storage;
@@ -57,8 +58,9 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
     private StorageReference storageReference;
     private Location location;
     private HashMap<String, Uri> images=new HashMap<String, Uri>();
+    private String ownerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    public ChaletcMapFragment() {
+    public MyChaletMapFragment() {
         // Required empty public constructor
     }
 
@@ -78,7 +80,7 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-              //  Toast.makeText(view.getContext(), "Permissions Granted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Permissions Granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -160,7 +162,9 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                     Log.i("Latitude",longitudeString);
                     double longitude=Double.parseDouble(longitudeString);
                     LatLng newLocation = new LatLng(latitude,longitude);
+                    if(chalet.getOwnerID().equals(ownerID))
                     chalets.add(chalet);
+
                     // img.add(snapm.child("ImageUrl").toString());
                     // mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
 

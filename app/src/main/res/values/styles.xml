@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorGreen</item>
+        <item name="colorPrimary">#52bb6c</item>
+        <item name="colorPrimaryDark">#4c4d4f</item>
+        <item name="colorAccent">#0083D7</item>
 
     </style>
 
@@ -28,7 +28,7 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="AlmortahTheme" parent="Theme.AppCompat.Light" >
+    <style name="AlmortahTheme" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="colorPrimary">@color/colorWhite</item>
         <item name="colorAccent">@color/colorGreen</item>
         <item name="android:statusBarColor">?attr/colorPrimaryDark</item>

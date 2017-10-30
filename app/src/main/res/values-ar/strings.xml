@@ -42,6 +42,12 @@
     <string name="map">عرض بواسطة الخرائط</string>
     <string name="chaletNameHistory">الإستراحة/الشالية</string>
     <string name="doneUpload">تم الرفع بنجاح</string>
+    <string name="drawer_open">Open</string>
+    <string name="price">السعر</string>
+    <string name="prices">الأسعار</string>
+    <string name="drawer_close">اغلاق</string>
+    <string name="downChalet">تحميل الشاليهات</string>
+    <string name="wait">فضلاً انتظر...</string>
 
 
 </resources>

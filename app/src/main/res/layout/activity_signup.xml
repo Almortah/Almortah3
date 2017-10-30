@@ -3,7 +3,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/signup"
+        android:background="@drawable/light_lines"
         android:orientation="vertical"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="@string/register"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorDarkGrey"
             android:textSize="40sp" />
 
     <EditText
@@ -95,7 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="left"
-        android:backgroundTint="#62BA60"
+        android:backgroundTint="@color/colorDarkGrey"
         android:gravity="center"
         android:text="@string/submit"
         android:textColor="@color/colorWhite" />

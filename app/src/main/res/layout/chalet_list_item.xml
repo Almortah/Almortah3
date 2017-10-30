@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:cardBackgroundColor="@color/cardview_shadow_start_color"
-        app:cardCornerRadius="20dp">
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                     android:layout_height="120dp"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
-                    android:background="@drawable/gray_border"
+                    android:background="@drawable/color_logo"
                     android:scaleType="centerCrop"
                      />
 
@@ -73,8 +73,9 @@
                     style="@style/Widget.AppCompat.RatingBar.Indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
                     android:isIndicator="true"
                     android:numStars="5"
                     android:rating="3.5"
@@ -84,40 +85,23 @@
                     android:id="@+id/locationLogo"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_toStartOf="@+id/normalPrice"
-                    app:srcCompat="@drawable/location_icon" />
+                    android:layout_toEndOf="@id/chaletRating"
+                    android:layout_marginStart="10dp"
+                    android:layout_centerVertical="true"
 
-                <TextView
-                    android:id="@+id/normalPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/priceLogo"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="34dp"
-                    android:gravity="center"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="20dp"
-                    android:text="300 S.R"
-                    android:textSize="18sp" />
+                    app:srcCompat="@drawable/ic_location_on_black_24dp" />
 
-                <ImageView
-                    android:id="@+id/priceLogo"
-                    android:layout_width="25dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@+id/locationLogo"
-                    android:layout_marginTop="10dp"
-                    android:layout_toStartOf="@+id/normalPrice"
-                    app:srcCompat="@drawable/price_icon" />
 
                 <TextView
                     android:id="@+id/chaletLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/locationLogo"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toEndOf="@+id/locationLogo"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/locationLogo"
+                    android:layout_marginEnd="12dp"
                     android:text="Alswaidi"
-                    android:textSize="18sp" />
+                    android:textSize="13sp"
+                    android:textStyle="italic|bold"/>
             </RelativeLayout>
 
 

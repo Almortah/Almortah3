@@ -2,6 +2,8 @@ package com.almortah.almortah;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +19,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by ALMAHRI on 10/23/17.
@@ -30,14 +34,12 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
        public TextView chaletName;
         public ImageView img1;
         public RatingBar chaletRating;
-        public TextView price;
        public TextView chaletLocation;
 
         public MyViewHolder(View view) {
             super(view);
             chaletName = (TextView) view.findViewById(R.id.chaletName);
             img1 = (ImageView) view.findViewById(R.id.chaletImg);
-            price = (TextView) view.findViewById(R.id.normalPrice);
             chaletLocation = (TextView) view.findViewById(R.id.chaletLocation);
             chaletRating = (RatingBar) view.findViewById(R.id.chaletRating);
         }
@@ -88,9 +90,24 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                 holder.img1.invalidate();
             }
         });
+        try {
+            Geocoder geo = new Geocoder(context.getApplicationContext(), Locale.getDefault());
+            List<Address> addresses = geo.getFromLocation(Double.parseDouble(chalet.getLatitude()), Double.parseDouble(chalet.getLongitude()), 1);
+            if (addresses.isEmpty()) {
+                holder.chaletLocation.setText("Waiting for Location");
 
-        holder.price.setText(chalet.getNormalPrice());
-        holder.chaletLocation.setText("" + chalet.getLatitude() + chalet.getLongitude());
+            }
+            else {
+                if (addresses.size() > 0) {
+                    holder.chaletLocation.setText(addresses.get(0).getSubLocality() + ", " + addresses.get(0).getLocality());
+                    //Toast.makeText(getApplicationContext(), "Address:- " + addresses.get(0).getFeatureName() + addresses.get(0).getAdminArea() + addresses.get(0).getLocality(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace(); // getFromLocation() may sometimes fail
+        }
+        //holder.chaletLocation.setText("");
 
        // final View finalListItemView = listItemView;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +128,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                                                  }
                                              }
         );
+
     }
 
     @Override

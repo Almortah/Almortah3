@@ -2,8 +2,18 @@
     <!-- General strings  -->
     <string name="app_name">ALMORTAH</string>
     <string name="title_activity_chalet_list">Rest-houses and chalets</string>
-    <string name="list">View by list</string>
-    <string name="map">View by Maps</string>
+    <string name="list">View By List</string>
+    <string name="map">View By Maps</string>
+    <string name="date">Date</string>
+    <string name="delete_rate">Cancel/Rate</string>
+    <string name="rate">Rate</string>
+    <string name="cancel">Cancel</string>
+    <string name="price">Price</string>
+    <string name="prices">Prices</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <string name="downChalet">Downloading Chalets</string>
+    <string name="wait">Please wait</string>
 
     <!-- Strings related to Settings -->
     <string name="login">Login</string>
@@ -29,7 +39,7 @@
     <string name="chaletName">Chalet Name</string>
     <string name="promotion">Promotion</string>
     <string name="newChalet">Add a new chalet</string>
-    <string name="mapView">Show by map</string>
+    <string name="mapView">Show By Maps</string>
     <string name="doneUpload">Upload successfully!</string>
 
     <!-- Customer strings -->
@@ -79,12 +89,6 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="date">Date</string>
-    <string name="delete_rate">Cancel/Rate</string>
-    <string name="rate">Rate</string>
-    <string name="cancel">Cancel</string>
-    <string name="price">Price</string>
-    <string name="prices">Prices</string>
 
 
 </resources>

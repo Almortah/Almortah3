@@ -8,9 +8,6 @@ public class Chalet {
 
     private String images;
     private String latitude;
-
-
-
     private String longitude;
     private String chaletNm;
     private String eidPrice;
@@ -82,4 +79,5 @@ public class Chalet {
     public String getNbOfImages() {
         return nbOfImages;
     }
+
 }
