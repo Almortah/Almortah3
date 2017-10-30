@@ -87,7 +87,6 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_toEndOf="@id/chaletRating"
-                    android:layout_marginStart="5dp"
                     android:layout_centerVertical="true"
 
                     app:srcCompat="@drawable/ic_location_on_black_24dp" />
