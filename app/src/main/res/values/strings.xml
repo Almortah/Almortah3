@@ -46,7 +46,7 @@
     <string name="customer">Customer</string>
     <string name="username">Username</string>
     <string name="fullname">Full name</string>
-    <string name="phone">Phone number</string>
+    <string name="phone">Phone number. ex:05xxxxxxxx</string>
     <string name="email">Valid Email</string>
     <string name="password">Password (More than 6 characteristics)</string>
     <string name="verifyPassword">Verify Password</string>
@@ -89,6 +89,7 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="home">Home page</string>
 
 
 </resources>

@@ -37,13 +37,17 @@
             android:hint="@string/fullname"
             android:textColor="@color/colorWhite" />
 
-        <EditText
-            android:id="@+id/phone"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:hint="@string/phone"
-            android:inputType="phone" />
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/phone"
+        android:inputType="phone"
+        android:maxLength="10"
+        android:minEms="10"
+        android:minLines="10"
+        android:digits="0123456789"/>
 
         <EditText
             android:id="@+id/email"
