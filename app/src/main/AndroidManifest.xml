@@ -41,7 +41,8 @@
         <activity
             android:name=".ChaletListActivity"
             android:label="@string/title_activity_chalet_list" />
-        <activity android:name=".MyChalets" />
+        <activity android:name=".MyChalets"
+            android:label="@string/myChalets"/>
         <activity android:name=".AddChalet" />
 
         <provider

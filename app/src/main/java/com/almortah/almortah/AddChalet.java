@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -52,6 +54,8 @@ import com.werb.pickphotoview.util.PickConfig;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
@@ -63,6 +67,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     private Marker marker;
     private LocationManager locationManager;
     private String provider;
+    private String address;
 
     private Button mUploadImage;
     private StorageReference firebaseStorage;
@@ -80,16 +85,21 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     private Location location;
     private int imgNb = 0;
     double lat1 =0, lng1=0;
+    private Geocoder geo;
+    private List<Address> addresses;
 
 
     static final int PICK_CONTACT_REQUEST = 1;
     static final int MY_PERMISSIONS_REQUEST=1;
+    private Geocoder geoAr;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_chalet);
+        geo = new Geocoder(AddChalet.this, Locale.ENGLISH);
+        geoAr = new Geocoder(AddChalet.this, Locale.getDefault());
 
 
         PermissionListener permissionlistener = new PermissionListener() {
@@ -164,6 +174,9 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 String chaletName = mChaletName.getText().toString().trim();
                 String chaletPrice = mChaletPrice.getText().toString().trim();
                 String chaletOwnerId = user.getUid().toString();
+                if(latitude == null || longitude == null) {
+                    return;
+                }
                 // chaletCount++;
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("ownerID", chaletOwnerId);
@@ -177,9 +190,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 hashMap.put("latitude",latitude);
                 hashMap.put("longitude",longitude);
                 hashMap.put("nbImages", String.valueOf(imgNb));
-                if(latitude.isEmpty() || longitude.isEmpty()) {
-                    return;
-                }
                 mDatabase.child("chalets").push().setValue(hashMap);
 
                 HashMap<String,String> dateHashMap = new HashMap<String, String>();
@@ -424,9 +434,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
             case R.id.logout:
                 mAuth.signOut();
                 startActivity(new Intent(this,HomeActivity.class));
-                return true;
-            case R.id.map:
-                startActivity(new Intent(this,MapActivity.class));
                 return true;
 
             default:

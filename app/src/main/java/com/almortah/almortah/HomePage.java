@@ -15,11 +15,6 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout drawerLayout;
-    private DrawerLayout mDrawer;
-    private NavigationView nvDrawer;
-    private Toolbar toolbar;
-
     private ViewPager viewPager;
     private DrawerLayout drawer;
     private TabLayout tabLayout;

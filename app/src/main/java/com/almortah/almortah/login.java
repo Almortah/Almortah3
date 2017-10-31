@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +44,9 @@ public class login extends AppCompatActivity  {
         mAuth = FirebaseAuth.getInstance();
 
         // Check if user is signed in
-        onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null)
+        updateUI(currentUser);
 
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,8 +61,7 @@ public class login extends AppCompatActivity  {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+
     }
 
 
@@ -116,7 +118,7 @@ public class login extends AppCompatActivity  {
 
 
         } else {
-            //Toast.makeText(this,"Wrong Email or Password",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.erEmailPass, Toast.LENGTH_LONG).show();
         }
     }
 

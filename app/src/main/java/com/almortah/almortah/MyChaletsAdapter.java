@@ -2,18 +2,14 @@ package com.almortah.almortah;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -51,51 +47,6 @@ public class MyChaletsAdapter extends ArrayAdapter<Chalet> {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(ownerID).child(chaletNb);
 
         // ImageView in your Activity
-        final ImageView img1 = (ImageView) listItemView.findViewById(R.id.chaletImg1);
-        final ImageView img2 = (ImageView) listItemView.findViewById(R.id.chaletImg2);
-        final ImageView img3 = (ImageView) listItemView.findViewById(R.id.chaletImg3);
-
-        for (int i = 1; i < 4; i++) {
-            if (i == 1) {
-                StorageReference tmp = storageReference.child(String.valueOf(i));
-                tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Glide.with(context)
-                                .load(uri)
-                                .into(img1);
-                    }
-                });
-            } else if (i == 2) {
-                StorageReference tmp = storageReference.child(String.valueOf(i));
-                tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Glide.with(context)
-                                .load(uri)
-                                .into(img2);
-                    }
-                });
-            } else {
-                StorageReference tmp = storageReference.child(String.valueOf(i));
-                tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Glide.with(context)
-                                .load(uri)
-                                .into(img3);
-                    }
-                });
-            }
-        }
-
-
-        img1.setMaxHeight(50);
-        img2.setMaxHeight(50);
-        img3.setMaxHeight(50);
-        img1.setMaxWidth(50);
-        img2.setMaxWidth(50);
-        img3.setMaxWidth(50);
 
 
         return listItemView;

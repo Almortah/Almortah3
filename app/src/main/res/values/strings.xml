@@ -46,7 +46,7 @@
     <string name="customer">Customer</string>
     <string name="username">Username</string>
     <string name="fullname">Full name</string>
-    <string name="phone">Phone number. ex:05xxxxxxxx</string>
+    <string name="phone">Phone number. ex:512345678</string>
     <string name="email">Valid Email</string>
     <string name="password">Password (More than 6 characteristics)</string>
     <string name="verifyPassword">Verify Password</string>
@@ -90,6 +90,18 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="home">Home page</string>
+    <string name="badPhone">Phone number is not correct</string>
+    <string name="Price">Price</string>
+    <string name="badPas">Password must be more than 6 characteristics</string>
+    <string name="viewStat">Statistics</string>
+    <string name="manage">Manage</string>
+    <string name="erEmailPass">Wrong email or password</string>
+    <string name="feedback">Feedback</string>
+    <string name="about">About us</string>
+    <string name="notify">Notifications</string>
+    <string name="allStat">All Statistics</string>
+    <string name="rateCustomer">Rate a customer</string>
+    <string name="myChalets">My Rest-houses/Chalets</string>
 
 
 </resources>

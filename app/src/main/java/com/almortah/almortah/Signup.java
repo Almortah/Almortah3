@@ -61,15 +61,16 @@ public class Signup extends AppCompatActivity {
                 } else if (!(password.equals(passowrd2))) {
                     Toast.makeText(Signup.this, R.string.erVerifyPassword, Toast.LENGTH_LONG).show();
                     return;
-                } else if (phone.length() < 10 || !phone.startsWith("05")) {
-                    Toast.makeText(Signup.this, "Bad phone", Toast.LENGTH_LONG).show();
+                } else if (phone.length() < 9 || !phone.startsWith("5")) {
+                    Toast.makeText(Signup.this, R.string.badPhone, Toast.LENGTH_LONG).show();
+                } else if (password.length() < 6) {
+                    Toast.makeText(getApplicationContext(),R.string.badPas,Toast.LENGTH_LONG).show();
+                    return;
                 }
 
                 else {
                         almortahDB.signup(fullname, username, phone, email, password, type);
-                        Toast.makeText(getApplicationContext(),"YREEE",Toast.LENGTH_LONG).show();
                          startActivity(new Intent(Signup.this, login.class));
-
                 }
             }
         });

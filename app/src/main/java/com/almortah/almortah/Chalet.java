@@ -17,8 +17,8 @@ public class Chalet {
     private String promotion;
     private String weekendPrice;
     private String nbOfImages;
-
-    public Chalet(){}
+    public Chalet() {
+    }
 
     public Chalet(String images, String latitude, String longitude, String chaletNm, String eidPrice, String name, String normalPrice, String ownerID, String promotion, String weekendPrice, String nbOfImages) {
         this.images = images;
@@ -34,6 +34,9 @@ public class Chalet {
         this.nbOfImages = nbOfImages;
     }
 
+    public Chalet(Chalet chalet) {
+    }
+
     public String getLatitude() {
         return latitude;
     }
@@ -42,7 +45,9 @@ public class Chalet {
         return longitude;
     }
 
-    public void setImages(String images) { this.images = images; }
+    public void setImages(String images) {
+        this.images = images;
+    }
 
     public String getImages() {
         return images;
@@ -79,5 +84,4 @@ public class Chalet {
     public String getNbOfImages() {
         return nbOfImages;
     }
-
 }

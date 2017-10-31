@@ -9,8 +9,11 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -23,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,9 +40,11 @@ import com.gun0912.tedpermission.TedPermission;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//import static com.almortah.almortah.R.id.map;
+/**
+ * Created by ALMAHRI on 11/1/17.
+ */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MyChaletcMapFragment extends Fragment implements OnMapReadyCallback {
 
     private FirebaseApp app;
     private FirebaseStorage storage;
@@ -52,49 +58,40 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private StorageReference storageReference;
     private Location location;
     private HashMap<String, Uri> images=new HashMap<String, Uri>();
+    private String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-
-   /* public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-
-        private final View myContentsView;
-
-        public MapInfoWindowAdapter() {
-            myContentsView = getLayoutInflater().inflate(R.layout.marker_tag, null);
-
-        }
-
-        @Override
-        public View getInfoContents(Marker marker) {
-
-            ImageView img = (ImageView) myContentsView.findViewById(R.id.chaletImg);
-            img
-        }
-    }*/
-
-
-
+    public MyChaletcMapFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        final View view = inflater.inflate(R.layout.activity_map, container, false);
+
         chalets = new ArrayList<>();
 
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(getApplicationContext(), "Permissions Granted", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(view.getContext(), "Permissions Granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(getApplicationContext(), "Permissions Denied" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Permissions Denied" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
 
             }
         };
 
 
-        TedPermission.with(this)
+        TedPermission.with(view.getContext())
                 .setPermissionListener(permissionlistener)
                 .setRationaleTitle("Allow Permissions")
                 .setRationaleMessage("Allow This app to access location")
@@ -113,21 +110,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
 
+        return view;
     }
-
     private void initMap() {
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapFragment);
+        MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
 
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -140,13 +137,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mGoogleMap = googleMap;
         mGoogleMap.setMyLocationEnabled(true);
         location = locationManager.getLastKnownLocation(provider);
-        LatLng userPostion = new LatLng(location.getLatitude(), location.getLongitude());
+        LatLng userPostion = new LatLng(24,40);
+        if(location != null)
+            userPostion = new LatLng(location.getLatitude(), location.getLongitude());
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(5));
 
-       // mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,
-         //       getLayoutInflater(),
-           //     images));
+        // mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,
+        //       getLayoutInflater(),
+        //     images));
 
         mDatabase.addValueEventListener(new ValueEventListener() {
 
@@ -163,8 +162,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     Log.i("Latitude",longitudeString);
                     double longitude=Double.parseDouble(longitudeString);
                     LatLng newLocation = new LatLng(latitude,longitude);
+                    if(chalet.getOwnerID().equals(id))
                     chalets.add(chalet);
-                   // img.add(snapm.child("ImageUrl").toString());
+                    // img.add(snapm.child("ImageUrl").toString());
                     // mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
 
                 }
@@ -173,7 +173,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     mGoogleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude()))))
                             .setTitle(chalets.get(i).getName());
-                            Log.i("Name " ,chalets.get(i).getName());
+                    Log.i("Name " ,chalets.get(i).getName());
 
                 }
 
@@ -191,15 +191,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     public boolean googleServiceAvail(){
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
-        int isAvailable = api.isGooglePlayServicesAvailable(this);
+        int isAvailable = api.isGooglePlayServicesAvailable(getContext());
         if(isAvailable == ConnectionResult.SUCCESS){
             return true;
         } else if(api.isUserResolvableError(isAvailable)){
-            Dialog dialog = api.getErrorDialog(this,isAvailable,0);
+            Dialog dialog = api.getErrorDialog(getActivity(),isAvailable,0);
             dialog.show();
 
         }else{
-            Toast.makeText(this,"Cant connect to service",Toast.LENGTH_LONG);
+            Toast.makeText(getContext(),"Cant connect to service",Toast.LENGTH_LONG);
         }
         return false;
 

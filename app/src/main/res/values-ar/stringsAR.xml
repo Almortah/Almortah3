@@ -28,8 +28,8 @@
     <!-- Customer strings -->
     <string name="username">اسم المستخدم</string>
     <string name="fullname">الإسم الكامل</string>
-    <string name="phone">رقم الجوال</string>
-    <string name="email">بريد إكتروني حقيقي</string>
+    <string name="phone">رقم الجوال مثال : 512345678</string>
+    <string name="email">البريد الاكتروني</string>
     <string name="password">رقم المرور (أكثر من 6 حروف او أرقام)</string>
     <string name="verifyPassword">تأكيد رقم المرور</string>
 

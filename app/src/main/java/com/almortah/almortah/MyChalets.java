@@ -2,26 +2,22 @@ package com.almortah.almortah;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.Window;
-import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class MyChalets extends AppCompatActivity {
+public class MyChalets extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
     private AlmortahDB almortahDB;
@@ -34,6 +30,11 @@ public class MyChalets extends AppCompatActivity {
     private String ownerID;
     private String weekendPrice;
     private ArrayList<Chalet> ownerChalets = new ArrayList<>();
+
+    private ViewPager viewPager;
+    private DrawerLayout drawer;
+    private TabLayout tabLayout;
+    private String[] pageTitle;
 
 
     public ArrayList<Chalet> getOwnerChalets() {
@@ -50,6 +51,70 @@ public class MyChalets extends AppCompatActivity {
       //  ownerChalets = almortahDB.getMyChalets(mAuth.getCurrentUser().getUid());
         final String userID = user.getUid();
         final String userId = user.getProviderId();
+
+
+
+        pageTitle = new String[]{getString(R.string.list), getString(R.string.map)};
+
+
+
+        viewPager = (ViewPager)findViewById(R.id.view_pager);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        setSupportActionBar(toolbar);
+
+        //create default navigation drawer toggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+
+        //setting Tab layout (number of Tabs = number of ViewPager pages)
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        for (int i = 0; i < 2; i++) {
+            tabLayout.addTab(tabLayout.newTab().setText(pageTitle[i]));
+        }
+
+        //set gravity for tab bar
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        //handling navigation view item event
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+            navigationView.inflateMenu(R.menu.owner_menu);
+        else
+            navigationView.inflateMenu(R.menu.visitor_menu);
+
+        //set viewpager adapter
+        MyViewPagerAdapter pagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+
+        //change Tab selection when swipe ViewPager
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        //change ViewPager page when tab selected
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
 
 
@@ -78,7 +143,7 @@ public class MyChalets extends AppCompatActivity {
            // MyChaletsAdapter myChaletsAdapter = new MyChaletsAdapter(this, getOwnerChalets());
             //yChalest.setAdapter(myChaletsAdapter);
 
-
+/*
             final ListView listView = (ListView) findViewById(R.id.myChalets);
             final ArrayList<Chalet> myChalets = new ArrayList<>();
            DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("chalets");
@@ -103,62 +168,46 @@ public class MyChalets extends AppCompatActivity {
 
                 }
 
-            });
+            });*/
         }
 
 
 
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.owner_menu, menu);
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.newChalet:
+                startActivity(new Intent(this,AddChalet.class));
+                break;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this,HomeActivity.class));
+                break;
+            case R.id.login:
+                startActivity(new Intent(this,login.class));
+                break;
+            case R.id.register:
+                startActivity(new Intent(this,Signup.class));
+                break;
+            case R.id.history:
+                startActivity(new Intent(this,MyReservation.class));
+                break;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    /**
-     * Event Handling for Individual visitor_menu item selected
-     * Identify single visitor_menu item by it's id
-     * */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId()) {
-            case R.id.newChalet:
-                startActivity(new Intent(this, AddChalet.class));
-                return true;
-            case R.id.logout:
-                mAuth.signOut();
-                startActivity(new Intent(this,HomeActivity.class));
-                return true;
-            case R.id.map:
-                startActivity(new Intent(this,MapActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+    public void onBackPressed() {
+        assert drawer != null;
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
-
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
-            if(menu.getClass().getSimpleName().equals("MenuBuilder")){
-                try{
-                    Method m = menu.getClass().getDeclaredMethod(
-                            "setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    m.invoke(menu, true);
-                }
-                catch(NoSuchMethodException e){
-                    Log.e("MyActivity", "onMenuOpened", e);
-                }
-                catch(Exception e){
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return super.onMenuOpened(featureId, menu);
-    }
-
 }

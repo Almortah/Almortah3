@@ -4,13 +4,42 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:android="http://schemas.android.com/apk/res/android"
 tools:context=".MyChalets">
 
+    <item
+        android:id="@+id/homePage"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home_black_24dp"/>
 <item
     android:id="@+id/newChalet"
-    android:title="@string/newChalet" />
+    android:title="@string/newChalet"
+    android:icon="@drawable/ic_add_box_black_24dp"/>
+    <item
+        android:id="@+id/stat"
+        android:title="@string/allStat"
+        android:icon="@drawable/ic_insert_chart_black_24dp"/>
+    <item
+        android:id="@+id/notify"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/notify"/>
+    <item
+        android:id="@+id/rate"
+        android:icon="@drawable/ic_rate_review_black_24dp"
+        android:title="@string/rateCustomer"/>
+    <item
+        android:id="@+id/feed"
+        android:icon="@drawable/ic_feedback_black_24dp"
+        android:title="@string/feedback" />
+
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_copyright_black_24dp"
+        android:title="@string/about"/>
+
     <item
         android:id="@+id/logout"
+        android:icon="@drawable/ic_exit_to_app_black_24dp"
         android:title="@string/logout" />
     <item
-        android:id="@+id/map"
-        android:title="@string/mapView" />
+        android:id="@+id/close"
+        android:title="@string/drawer_close"
+        android:icon="@drawable/ic_close_black_24dp"/>
 </menu>

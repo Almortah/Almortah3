@@ -29,6 +29,8 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
 
     private ArrayList<Chalet> chalets;
     private Context context;
+    private Geocoder geo;
+    private List<Address> addresses;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
        public TextView chaletName;
@@ -49,6 +51,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
     public ChaletListRV(Context context, ArrayList<Chalet> chalets) {
         this.context = context;
         this.chalets = chalets;
+        geo = new Geocoder(context, Locale.getDefault());
     }
 
     @Override
@@ -69,20 +72,6 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
         tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(final Uri uri) {
-
-               /* InputStream inputStream = null;
-                try {
-                    inputStream = context.getContentResolver().openInputStream(uri);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                final BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = true;
-                BitmapFactory.decodeStream(inputStream, null, options);
-                int imageHeight = options.outHeight;
-                int imageWidth = options.outWidth;*/
-
-
                 Glide.with(context)
                         .load(uri)
                         .into(holder.img1);
@@ -90,26 +79,29 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                 holder.img1.invalidate();
             }
         });
-        try {
-            Geocoder geo = new Geocoder(context.getApplicationContext(), Locale.getDefault());
-            List<Address> addresses = geo.getFromLocation(Double.parseDouble(chalet.getLatitude()), Double.parseDouble(chalet.getLongitude()), 1);
-            if (addresses.isEmpty()) {
-                holder.chaletLocation.setText("Waiting for Location");
 
-            }
-            else {
-                if (addresses.size() > 0) {
-                    holder.chaletLocation.setText(addresses.get(0).getSubLocality() + ", " + addresses.get(0).getLocality());
-                    //Toast.makeText(getApplicationContext(), "Address:- " + addresses.get(0).getFeatureName() + addresses.get(0).getAdminArea() + addresses.get(0).getLocality(), Toast.LENGTH_LONG).show();
+        new Thread() {
+            public void run() {
+                try {
+                    List<Address> addresses = geo.getFromLocation(Double.parseDouble(chalet.getLatitude()), Double.parseDouble(chalet.getLongitude()), 1);
+                    if (addresses.isEmpty()) {
+                        holder.chaletLocation.setText("Waiting for Location");
+
+                    }
+                    else {
+                        if (addresses.size() > 0) {
+                            holder.chaletLocation.setText(addresses.get(0).getSubLocality() + ", " + addresses.get(0).getLocality());
+                            //Toast.makeText(getApplicationContext(), "Address:- " + addresses.get(0).getFeatureName() + addresses.get(0).getAdminArea() + addresses.get(0).getLocality(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace(); // getFromLocation() may sometimes fail
                 }
             }
-        }
-        catch (Exception e) {
-            e.printStackTrace(); // getFromLocation() may sometimes fail
-        }
-        //holder.chaletLocation.setText("");
+        }.start();
 
-       // final View finalListItemView = listItemView;
+       // holder.chaletLocation.setText(chalet.getAddress());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
                                                  @Override
                                                  public void onClick(View v) {
@@ -140,4 +132,6 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
     public int getItemViewType(int position) {
         return position;
     }
+
+
 }
