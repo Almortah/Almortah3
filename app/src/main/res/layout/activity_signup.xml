@@ -11,7 +11,14 @@
         tools:context="com.almortah.almortah.Signup"
         android:weightSum="1">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,8 +81,8 @@
             android:inputType="textPassword" />
 
     <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/type">
         <RadioButton
@@ -93,16 +100,15 @@
             android:id="@+id/ownerType"
             android:textSize="15sp"/>
     </RadioGroup>
-
     <Button
         android:id="@+id/submitCustomer"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="left"
+        android:layout_gravity="center"
         android:backgroundTint="@color/colorDarkGrey"
         android:gravity="center"
         android:text="@string/submit"
         android:textColor="@color/colorWhite" />
-
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

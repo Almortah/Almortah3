@@ -5,10 +5,10 @@
         android:color="@color/colorGreen" />
 
     <!-- Optional, round your corners -->
-    <corners android:bottomLeftRadius="10dp"
-        android:topLeftRadius="10dp"
-        android:bottomRightRadius="10dp"
-        android:topRightRadius="10dp" />
+    <corners android:bottomLeftRadius="0dp"
+        android:topLeftRadius="0dp"
+        android:bottomRightRadius="0dp"
+        android:topRightRadius="0dp" />
 
     <!-- Optional, fill the rest of your background with a color or gradient, use transparent if you only want the green_border to be displayed-->
     <gradient android:startColor="@color/colorGreen"

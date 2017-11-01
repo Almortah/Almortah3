@@ -28,6 +28,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_noname"
         android:supportsRtl="true"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:windowSoftInputMode="adjustResize|adjustPan"
         android:theme="@style/AppTheme">
         <activity android:name=".Signup" />
         <activity android:name=".login" />
@@ -43,7 +45,8 @@
             android:label="@string/title_activity_chalet_list" />
         <activity android:name=".MyChalets"
             android:label="@string/myChalets"/>
-        <activity android:name=".AddChalet" />
+        <activity android:name=".AddChalet"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
 
         <provider
             android:name="com.werb.pickphotoview.provider.PickProvider"

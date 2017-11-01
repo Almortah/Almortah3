@@ -38,12 +38,6 @@
         android:hint="@string/password"
         android:inputType="textPassword" />
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-         />
-
     <Button
         android:id="@+id/login"
         android:layout_width="fill_parent"

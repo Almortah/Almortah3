@@ -1,12 +1,16 @@
 package com.almortah.almortah;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,28 +27,25 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         guestButton = (Button) findViewById(R.id.guestButton);
         signinButton = (Button) findViewById(R.id.signinButton);
         signupButton = (Button) findViewById(R.id.submitOwner);
+        ImageView toArabic = (ImageView) findViewById(R.id.toArabic);
+        ImageView toEnglish = (ImageView) findViewById(R.id.toEnglish);
+        toArabic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocale("ar","SA");
+            }
+        });
+
+        toEnglish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocale("en","UK");
+            }
+        });
 
         guestButton.setOnClickListener(this);
         signinButton.setOnClickListener(this);
         signupButton.setOnClickListener(this);
-
-       /*
-                String lang = "ar";
-
-//create a string for country
-                String country = "SA";
-//use constructor with country
-                Locale locale = new Locale(lang, country);
-
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config,
-                        getBaseContext().getResources().getDisplayMetrics());
-                recreate();
-            */
-
-
     }
 
     @Override
@@ -68,6 +69,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+    }
+
+    public void setLocale(String lang, String country) {
+        //create a string for country
+        //use constructor with country
+        Locale locale = new Locale(lang, country);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+        recreate();
     }
 
 }
