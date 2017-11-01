@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/switchView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switchForActionBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/arab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/switchForActionBar"
+        android:layout_toEndOf="@+id/switchForActionBar"
+        android:text="TextView" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/arab"
+        android:layout_below="@+id/arab"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="54dp"
+        android:max="2"
+        android:progress="5" />
+
+    <TextSwitcher
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/arab"
+        android:layout_below="@+id/seekBar"
+        android:layout_marginTop="30dp" />
+
+</RelativeLayout>

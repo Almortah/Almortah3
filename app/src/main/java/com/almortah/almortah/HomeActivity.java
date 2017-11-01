@@ -1,12 +1,15 @@
 package com.almortah.almortah;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +30,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         guestButton.setOnClickListener(this);
         signinButton.setOnClickListener(this);
         signupButton.setOnClickListener(this);
+
+        Button b = (Button) findViewById(R.id.button2);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String lang = "ar";
+
+//create a string for country
+                String country = "SA";
+//use constructor with country
+                Locale locale = new Locale(lang, country);
+
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+                recreate();
+            }
+        });
 
     }
 
