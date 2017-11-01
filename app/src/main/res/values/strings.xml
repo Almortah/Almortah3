@@ -102,6 +102,7 @@
     <string name="allStat">All Statistics</string>
     <string name="rateCustomer">Rate a customer</string>
     <string name="myChalets">My Rest-houses/Chalets</string>
+    <string name="defLocation">Defining location....</string>
 
 
 </resources>

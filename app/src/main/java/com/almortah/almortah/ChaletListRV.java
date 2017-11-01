@@ -80,6 +80,8 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
             }
         });
 
+        holder.chaletLocation.setText(R.string.defLocation);
+
         new Thread() {
             public void run() {
                 try {

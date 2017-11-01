@@ -60,6 +60,7 @@
     <string name="allStat">جميع الآحصائيات</string>
     <string name="rateCustomer">قيم النزلاء</string>
     <string name="myChalets">إستراحاتي وشاليهاتي</string>
+    <string name="defLocation">جاري تحديد الموقع...</string>
 
 
 </resources>
