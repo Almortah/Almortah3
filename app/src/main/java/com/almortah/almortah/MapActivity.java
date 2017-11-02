@@ -140,13 +140,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mGoogleMap = googleMap;
         mGoogleMap.setMyLocationEnabled(true);
         location = locationManager.getLastKnownLocation(provider);
-        LatLng userPostion = new LatLng(location.getLatitude(), location.getLongitude());
+        LatLng userPostion = new LatLng(24, 46);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(5));
-
-       // mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,
-         //       getLayoutInflater(),
-           //     images));
 
         mDatabase.addValueEventListener(new ValueEventListener() {
 
@@ -184,7 +180,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             }
         });
-
+      //  mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this, getLayoutInflater(), chalets));
+        mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,getLayoutInflater()));
 
     }
 

@@ -169,7 +169,7 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                     //addMarker(mGoogleMap);
                     mGoogleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude()))))
-                            .setTitle(chalets.get(i).getName());
+                            ;
                     Log.i("Name " ,chalets.get(i).getName());
 
                 }
@@ -181,6 +181,9 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
 
             }
         });
+      //  mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,getLayoutInflater()));
+        mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this.getActivity(),getLayoutInflater()));
+
 
 
     }
@@ -218,7 +221,7 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
             drawable.draw(canvas);
         customMarkerView.draw(canvas);
         return returnedBitmap;
-    }*/
+    } */
 
     private void addMarker(GoogleMap map, double lat, double lon,
                            int title, int snippet, String image) {
