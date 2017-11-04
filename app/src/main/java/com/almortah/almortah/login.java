@@ -51,6 +51,8 @@ public class login extends AppCompatActivity  {
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!mEmailField.getText().toString().trim().equals("") || !mPassField.getText().toString().trim().equals("")
+                        || mEmailField.getText() != null || mPassField.getText() != null)
                 signin(mEmailField.getText().toString(),mPassField.getText().toString());
             }
         });

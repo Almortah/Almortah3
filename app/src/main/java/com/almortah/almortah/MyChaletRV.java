@@ -1,6 +1,7 @@
 package com.almortah.almortah;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -81,6 +82,17 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
                 holder.img1.invalidate();
             }
         });
+
+        holder.promotion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toPromot = new Intent(context,Promotion.class);
+                toPromot.putExtra("chalet", chalet);
+                context.startActivity(toPromot);
+            }
+        });
+
+
     }
 
     @Override

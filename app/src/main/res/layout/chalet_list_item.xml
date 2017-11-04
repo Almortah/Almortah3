@@ -44,6 +44,18 @@
                     android:layout_weight="0.39"
                     app:srcCompat="@drawable/logo_noname" />
 
+                <ImageView
+                    android:id="@+id/promotion"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:visibility="invisible"
+                    android:layout_weight="0.39"
+                    app:srcCompat="@drawable/promot" />
+
                 <TextView
                     android:id="@+id/chaletName"
                     android:layout_width="wrap_content"

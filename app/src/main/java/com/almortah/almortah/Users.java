@@ -6,33 +6,37 @@ package com.almortah.almortah;
 
 public class Users {
 
-    private String userName;
     private String name;
     private String email;
-    private String phoneNumebr;
+    private String nbChalets;
+    private String phone;
+    private String type;
+    private String username;
 
-    public Users(String userName,String name, String email, String phoneNumebr) {
-        this.userName=userName;
-        this.name = name;
-        this.email = email;
-        this.phoneNumebr=phoneNumebr;
-    }
+
+    public Users(){}
 
     public String getName() {
         return name;
     }
 
-    public void setName(String Name) {
-        this.name = Name;
-    }
-
-
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getNbChalets() {
+        return nbChalets;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }

@@ -3,6 +3,7 @@ package com.almortah.almortah;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -57,6 +58,7 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
     private StorageReference storageReference;
     private Location location;
     private HashMap<String, Uri> images=new HashMap<String, Uri>();
+    private Bitmap bitmap;
 
     public ChaletcMapFragment() {
         // Required empty public constructor
@@ -141,12 +143,12 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(5));
 
+
         // mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,
         //       getLayoutInflater(),
         //     images));
 
         mDatabase.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String latitudeString;
@@ -165,15 +167,15 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                     // mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
 
                 }
+
                 for (int i=0;i<chalets.size();i++){
                     //addMarker(mGoogleMap);
                     mGoogleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude()))))
-                            ;
+                            .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude()))));
+                    ;
                     Log.i("Name " ,chalets.get(i).getName());
 
                 }
-
             }
 
             @Override
@@ -181,10 +183,9 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
 
             }
         });
-      //  mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,getLayoutInflater()));
-        mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this.getActivity(),getLayoutInflater()));
 
-
+        MapInfoWindowAdapter adapter = new MapInfoWindowAdapter(this.getContext(),getLayoutInflater());
+        mGoogleMap.setInfoWindowAdapter(adapter);
 
     }
 

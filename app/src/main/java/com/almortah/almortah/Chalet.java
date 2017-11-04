@@ -1,10 +1,12 @@
 package com.almortah.almortah;
 
+import java.io.Serializable;
+
 /**
  * Created by ziyadalkhonein on 10/9/17.
  */
 
-public class Chalet {
+public class Chalet implements Serializable {
 
     private String images;
     private String latitude;
@@ -83,5 +85,9 @@ public class Chalet {
 
     public String getNbOfImages() {
         return nbOfImages;
+    }
+
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
     }
 }

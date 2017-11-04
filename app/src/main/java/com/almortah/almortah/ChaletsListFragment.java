@@ -26,6 +26,7 @@ import java.util.Iterator;
 
 public class ChaletsListFragment extends Fragment {
 
+    private ArrayList<Chalet> promotChalets = new ArrayList<>();
     private ArrayList<Chalet> chalets = new ArrayList<>();
     private ArrayList<String> locations = new ArrayList<>();
     private ListView listView;
@@ -34,6 +35,9 @@ public class ChaletsListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ChaletListRV mAdapter;
+
+    private RecyclerView promotView;
+    private ChaletListRV promotAdapter;
     ProgressBar mProgressBar;
     public ChaletsListFragment() {
         // Required empty public constructor
@@ -57,6 +61,33 @@ public class ChaletsListFragment extends Fragment {
         mAdapter = new ChaletListRV(getContext() ,chalets);
         recyclerView.setAdapter(mAdapter);
 
+        promotView = (RecyclerView) view.findViewById(R.id.promotion_view);
+        final RecyclerView.LayoutManager promotLayoutManager = new LinearLayoutManager(view.getContext());
+        promotView.setLayoutManager(promotLayoutManager);
+        promotView.setItemAnimator(new DefaultItemAnimator());
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("promotion");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                Iterable<DataSnapshot> kkk = snapshotIterator.
+
+                Iterator<DataSnapshot> iterator = snapshotIterator.ge
+                while ((iterator.hasNext())) {
+                    Chalet chalet = iterator.next().getValue(Chalet.class);
+                        chalet.setPromotion("1");
+                        promotChalets.add(chalet);
+                }
+                promotAdapter = new ChaletListRV(getContext() ,promotChalets);
+                promotView.setAdapter(promotAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
 
         // You don't need anything here
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("chalets");
@@ -67,7 +98,7 @@ public class ChaletsListFragment extends Fragment {
                         Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
                         while ((iterator.hasNext())) {
                             Chalet chalet = iterator.next().getValue(Chalet.class);
-                            chalets.add(chalet);
+                                chalets.add(chalet);
                         }
                         mAdapter.notifyDataSetChanged();
                     }

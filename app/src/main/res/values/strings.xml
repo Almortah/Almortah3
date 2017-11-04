@@ -41,7 +41,14 @@
     <string name="newChalet">Add a new chalet</string>
     <string name="mapView">Show By Maps</string>
     <string name="doneUpload">Upload successfully!</string>
-
+    <string name="promot">ALMORTAH team will keep the promoted rest-house and chalet always in
+        the top in the home page and we will do our best to keep your rest-house/chalet is the best recommended place.
+    </string>
+    <string name="offer">Offer</string>
+    <string name="per">Period</string>
+    <string name="month">1 Month</string>
+    <string name="week">1 Week</string>
+    <string name="day">1 Day</string>
     <!-- Customer strings -->
     <string name="customer">Customer</string>
     <string name="username">Username</string>
@@ -103,6 +110,7 @@
     <string name="rateCustomer">Rate a customer</string>
     <string name="myChalets">My Rest-houses/Chalets</string>
     <string name="defLocation">Defining location....</string>
+    <string name="payment">Payment</string>
 
 
 </resources>

@@ -37,6 +37,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
         public ImageView img1;
         public RatingBar chaletRating;
        public TextView chaletLocation;
+       public ImageView promot;
 
         public MyViewHolder(View view) {
             super(view);
@@ -44,6 +45,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
             img1 = (ImageView) view.findViewById(R.id.chaletImg);
             chaletLocation = (TextView) view.findViewById(R.id.chaletLocation);
             chaletRating = (RatingBar) view.findViewById(R.id.chaletRating);
+            promot = (ImageView) view.findViewById(R.id.promotion);
         }
     }
 
@@ -51,7 +53,8 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
     public ChaletListRV(Context context, ArrayList<Chalet> chalets) {
         this.context = context;
         this.chalets = chalets;
-        geo = new Geocoder(context, Locale.getDefault());
+         geo = new Geocoder(context, Locale.getDefault());
+
     }
 
     @Override
@@ -65,6 +68,9 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final Chalet chalet = chalets.get(position);
         holder.chaletName.setText(chalet.getName());
+        if(chalet.getPromotion().equals("1"))
+            holder.promot.setVisibility(View.VISIBLE);
+
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
         StorageReference tmp = storageReference.child(String.valueOf(1));
 
