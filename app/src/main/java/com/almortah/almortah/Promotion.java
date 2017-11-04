@@ -10,9 +10,9 @@ import android.widget.RadioGroup;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class Promotion extends AppCompatActivity {
 
@@ -35,9 +35,19 @@ public class Promotion extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface arg0, int arg1) {
                                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                            Map<String, Chalet> chaletMap = new HashMap<>();
-                                            chaletMap.put(chalet.getName(), chalet);
-                                            mDatabase.child("promotion").push().setValue(chaletMap);
+                                            HashMap<String, String> hashMap = new HashMap<String, String>();
+                                            hashMap.put("ownerID", chalet.getOwnerID());
+                                            hashMap.put("name", chalet.getName());
+                                            hashMap.put("normalPrice", chalet.getNormalPrice());
+                                            hashMap.put("weekendPrice", chalet.getWeekendPrice());
+                                            hashMap.put("eidPrice", chalet.getEidPrice());
+                                            hashMap.put("ImageUrl", FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm()).getPath());
+                                            hashMap.put("chaletNm", chalet.getChaletNm());
+                                            hashMap.put("promotion", "1"); // 0 no promoted, 1 promoted
+                                            hashMap.put("latitude",chalet.getLatitude());
+                                            hashMap.put("longitude",chalet.getLongitude());
+                                            hashMap.put("nbImages", chalet.getNbOfImages());
+                                            mDatabase.child("promotion").push().setValue(hashMap);
                                         }
                                     });
 

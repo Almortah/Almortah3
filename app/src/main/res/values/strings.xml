@@ -71,6 +71,7 @@
     <string name="busyDay">Sorry this day is booked!</string>
     <string name="freeDay">This day is available</string>
     <string name="chaletNameHistory">Rest-house/Chalet</string>
+    <string name="bestChalet">Recommended Rest-house/Chalet</string>
 
 
     <!-- Strange strings!! -->

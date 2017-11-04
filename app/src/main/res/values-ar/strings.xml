@@ -61,6 +61,14 @@
     <string name="rateCustomer">قيم النزلاء</string>
     <string name="myChalets">إستراحاتي وشاليهاتي</string>
     <string name="defLocation">جاري تحديد الموقع...</string>
+    <string name="offer">العرض</string>
+    <string name="per">المدة</string>
+    <string name="month">شهر واحد</string>
+    <string name="week">اسبوع واحد</string>
+    <string name="day">يوم واحد</string>
+    <string name="payment">الدفع</string>
+    <string name="bestChalet">آستراحات وشاليهات مميزة</string>
+    <string name="promot">"فريق المرتاح سوف يحاول دائما يبقي الاستراحات والشاليهات المروج لها في المقدمة للزبائن ولايتعهد فريق المرتاح باي ضمانات بعدد المستأجرين ولايحق للمالك إسترجاع مبلغ الترويج بعد الدفع"</string>
 
 
 </resources>

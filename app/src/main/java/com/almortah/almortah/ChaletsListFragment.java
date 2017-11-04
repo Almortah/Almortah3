@@ -65,22 +65,21 @@ public class ChaletsListFragment extends Fragment {
         final RecyclerView.LayoutManager promotLayoutManager = new LinearLayoutManager(view.getContext());
         promotView.setLayoutManager(promotLayoutManager);
         promotView.setItemAnimator(new DefaultItemAnimator());
+        promotAdapter = new ChaletListRV(getContext() ,promotChalets);
+        promotView.setAdapter(promotAdapter);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("promotion");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
-                Iterable<DataSnapshot> kkk = snapshotIterator.
-
-                Iterator<DataSnapshot> iterator = snapshotIterator.ge
+                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
                 while ((iterator.hasNext())) {
                     Chalet chalet = iterator.next().getValue(Chalet.class);
                         chalet.setPromotion("1");
                         promotChalets.add(chalet);
                 }
-                promotAdapter = new ChaletListRV(getContext() ,promotChalets);
-                promotView.setAdapter(promotAdapter);
+                promotAdapter.notifyDataSetChanged();
             }
 
             @Override
