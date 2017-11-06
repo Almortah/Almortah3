@@ -40,11 +40,18 @@
 
     <Button
         android:id="@+id/login"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorGreen"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:backgroundTint="@color/colorGreen"
         android:textColor="@color/colorWhite"
         android:text="@string/login" />
+    <Button
+        android:id="@+id/register"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:backgroundTint="@color/colorDarkGrey"
+        android:text="@string/register"
+        android:textColor="@color/colorWhite" />
 
     <TextView
         android:layout_marginTop="8dp"

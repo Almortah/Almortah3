@@ -7,8 +7,6 @@
     android:orientation="vertical"
     tools:context="com.almortah.almortah.ChaletInfoCustomer">
 
-
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -18,18 +16,29 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:titleTextColor="@android:color/white" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--
     <TextView
         android:id="@+id/chaletName"
         android:layout_width="match_parent"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:gravity="center"
         android:text="Chalet Name"
         android:textColor="@color/colorDarkGrey"
         android:textSize="14sp"
         android:textStyle="bold" />
-
+-->
     <com.glide.slider.library.SliderLayout
         android:id="@+id/slider"
         android:layout_width="match_parent"
@@ -66,7 +75,8 @@
         android:layout_height="wrap_content"
 android:layout_margin="10dp"
         android:layout_below="@+id/chaletLocation"
-        android:text="Many chalets in the European Alps were originally used as seasonal farms for dairy cattle which would be brought up from the lowland pastures during the summer months. The herders would live in the chalet and make butter and cheese in order to preserve the milk produced. These products would then be taken, with the cattle, back to the low valleys before the onset of the alpine winter." />
+        android:text="Situated in Rimal District, 10 km from King Fahd Stadium, Antola features an outdoor pool, barbecue and sun terrace. The accommodation is air conditioned and boasts a private pool, a spa bath and a hot tub. Riyadh Gallery Mall is 21 km from the property. Free private parking is available on site."
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -174,13 +184,14 @@ android:layout_margin="10dp"
         android:layout_margin="10dp"/>
 
     </LinearLayout>
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        />
+        </LinearLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            />
+    </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

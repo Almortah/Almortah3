@@ -115,6 +115,8 @@
     <string name="myChalets">My Rest-houses/Chalets</string>
     <string name="defLocation">Defining location....</string>
     <string name="payment">Payment</string>
+    <string name="back">Back</string>
+    <string name="oneTimeOnly">You just booked this chalet/rest-house</string>
 
 
 </resources>

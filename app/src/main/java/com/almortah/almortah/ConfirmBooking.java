@@ -5,7 +5,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-public class ConfirmBooking extends AppCompatActivity {
+public class ConfirmBooking extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String date;
     private String ownerID;
     private String chaletNb;
@@ -44,6 +49,10 @@ public class ConfirmBooking extends AppCompatActivity {
     private String price;
     private String payment;
     private String name;
+    private int oneTimes = 0;
+
+
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,29 @@ public class ConfirmBooking extends AppCompatActivity {
         price = info.getString("price");
         name = info.getString("name");
 
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        setSupportActionBar(toolbar);
+
+        //create default navigation drawer toggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+            navigationView.inflateMenu(R.menu.customer_menu);
+        else
+            navigationView.inflateMenu(R.menu.visitor_menu);
+
+
+
         inTime = (TimePicker) findViewById(R.id.checkin);
         upDate = finalDates+","+date;
         reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(ownerID).child(chaletNb).child("busyOn");
@@ -64,22 +96,29 @@ public class ConfirmBooking extends AppCompatActivity {
         dateView.setText(dateView.getText().toString()+" "+date);
 
         TextView priceView = (TextView) findViewById(R.id.finalPrice);
-        priceView.setText(R.string.Price +": "+ price);
+        priceView.setText(getString(R.string.price) +": "+ price);
 
 
         //Map<String, Object> update = new HashMap<String, Object>();
         //update.put("busyOn", new String(upDate));
         //reference.updateChildren(update);
-        Toast.makeText(getApplicationContext(),"Now its busy",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(),"Now its busy",Toast.LENGTH_SHORT).show();
 
         Button confirm = (Button) findViewById(R.id.confirm);
         payment = "cash";
         final RadioButton visa = (RadioButton) findViewById(R.id.visa);
 
+
         confirm.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
+                if(oneTimes == 1 || date == null) {
+                    Toast.makeText(getApplicationContext(),R.string.oneTimeOnly,Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getBaseContext(),MyReservation.class));
+                    return;
+                }
+                oneTimes++;
                 if(visa.isChecked())
                     payment = "visa";
                 checkin = String.valueOf(inTime.getHour()+":"+inTime.getMinute());
@@ -177,11 +216,40 @@ public class ConfirmBooking extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        // your code.
-        finish();
-        startActivity(new Intent(this,HomePage.class));
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.searchChaleh:
+                break;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this,HomeActivity.class));
+                break;
+            case R.id.login:
+                startActivity(new Intent(this,login.class));
+                break;
+            case R.id.register:
+                startActivity(new Intent(this,Signup.class));
+                break;
+            case R.id.history:
+                startActivity(new Intent(this,MyReservation.class));
+                break;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        assert drawer != null;
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
 }
+

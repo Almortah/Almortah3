@@ -82,6 +82,7 @@ public class FullscreenActivity extends Activity {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (AUTO_HIDE) {
+                onBackPressed();
                 delayedHide(AUTO_HIDE_DELAY_MILLIS);
             }
             return false;
@@ -116,6 +117,8 @@ public class FullscreenActivity extends Activity {
                 toggle();
             }
         });
+
+        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away

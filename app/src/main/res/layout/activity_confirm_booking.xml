@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.almortah.almortah.ConfirmBooking">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:titleTextColor="@android:color/white" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
@@ -14,7 +34,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginTop="41dp"
+        android:layout_marginTop="100dp"
         android:text="@string/freeDate"
         android:textColor="@color/colorGreen"
         android:textSize="18sp" />
@@ -59,7 +79,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="26dp"
         android:layout_toEndOf="@+id/imageView"
-        android:text="@string/payment"
         android:textColor="@color/colorBlue"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -104,8 +123,18 @@
         android:layout_alignStart="@+id/type"
         android:layout_below="@+id/type"
         android:background="@drawable/blue_border"
+        android:textColor="@color/colorWhite"
         android:text="@string/confirm"
         android:layout_alignEnd="@+id/date" />
 
+    </RelativeLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            />
+    </android.support.v4.widget.DrawerLayout>
 
 </RelativeLayout>

@@ -18,6 +18,7 @@
         android:textStyle="bold"
         android:scaleType="fitCenter"/>
 
+
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout
@@ -34,6 +35,16 @@
             android:background="@color/black_overlay"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
+
+            <Button
+                android:id="@+id/dummy_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorWhite"
+                android:backgroundTint="@color/colorGreen"
+                android:text="@string/back" />
 
         </LinearLayout>
     </FrameLayout>

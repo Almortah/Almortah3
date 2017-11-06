@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
@@ -23,9 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Method;
-
-public class BookingAChalet extends AppCompatActivity {
+public class BookingAChalet extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private CalendarView calendarView;
     private Button checkBusy;
@@ -33,6 +32,8 @@ public class BookingAChalet extends AppCompatActivity {
     private String finalDates = "";
     private TextView t;
     private DatabaseReference reference;
+
+    private DrawerLayout drawer;
 
     private boolean isBusy = false;
 
@@ -49,10 +50,33 @@ public class BookingAChalet extends AppCompatActivity {
         final String weekendPrice = info.getString("weekendPrice");
 
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        setSupportActionBar(toolbar);
+
+        //create default navigation drawer toggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+            navigationView.inflateMenu(R.menu.customer_menu);
+        else
+            navigationView.inflateMenu(R.menu.visitor_menu);
+
+
+
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         calendarView.setFirstDayOfWeek(Calendar.SUNDAY);
-        calendarView.setMinDate(System.currentTimeMillis());
+        Long l = System.currentTimeMillis();
+        calendarView.setMinDate(l);
 
 
         t = (TextView) findViewById(R.id.dateChoose);
@@ -60,6 +84,8 @@ public class BookingAChalet extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                if(view.getDate() == System.currentTimeMillis())
+                    return;
                 date = dayOfMonth+ "-" + (month+1) + "-" + year;
             }
         });
@@ -68,6 +94,8 @@ public class BookingAChalet extends AppCompatActivity {
         checkBusy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(date == null)
+                    return;
   //              long milliseconds = calendarView.getDate();
       //          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     //            Date today = new Date(milliseconds);
@@ -117,65 +145,42 @@ public class BookingAChalet extends AppCompatActivity {
 
     }
 
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            MenuInflater menuInflater = getMenuInflater();
-            menuInflater.inflate(R.menu.visitor_menu, menu);
-        } else {
-            MenuInflater menuInflater = getMenuInflater();
-            menuInflater.inflate(R.menu.customer_menu, menu);
-        }
-
-
-        return true;
-    }
-
-    /**
-     * Event Handling for Individual visitor_menu item selected
-     * Identify single visitor_menu item by it's id
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
             case R.id.searchChaleh:
-                return true;
+                break;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this,HomeActivity.class));
-                return true;
+                break;
             case R.id.login:
                 startActivity(new Intent(this,login.class));
-                return true;
+                break;
             case R.id.register:
                 startActivity(new Intent(this,Signup.class));
-                return true;
+                break;
             case R.id.history:
                 startActivity(new Intent(this,MyReservation.class));
-                return true;
-
+                break;
             default:
-                return super.onOptionsItemSelected(item);
+                super.onOptionsItemSelected(item);
         }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {
-            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
-                try {
-                    Method m = menu.getClass().getDeclaredMethod(
-                            "setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    m.invoke(menu, true);
-                } catch (NoSuchMethodException e) {
-                    Log.e("MyActivity", "onMenuOpened", e);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
+    public void onBackPressed() {
+        assert drawer != null;
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
-        return super.onMenuOpened(featureId, menu);
     }
 
 }
+

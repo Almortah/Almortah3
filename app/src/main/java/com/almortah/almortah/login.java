@@ -40,6 +40,13 @@ public class login extends AppCompatActivity  {
         mEmailField = (EditText) findViewById(R.id.email);
         mPassField = (EditText) findViewById(R.id.password);
         mLogin = (Button) findViewById(R.id.login);
+        Button reg = (Button) findViewById(R.id.register);
+        reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(),Signup.class));
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -51,8 +58,10 @@ public class login extends AppCompatActivity  {
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mEmailField.getText().toString().trim().equals("") || !mPassField.getText().toString().trim().equals("")
-                        || mEmailField.getText() != null || mPassField.getText() != null)
+                if(mEmailField.getText().toString().matches("") || mPassField.getText().toString().matches("")
+                        || mEmailField.getText() == null || mPassField.getText() == null)
+                    return;
+                else
                 signin(mEmailField.getText().toString(),mPassField.getText().toString());
             }
         });

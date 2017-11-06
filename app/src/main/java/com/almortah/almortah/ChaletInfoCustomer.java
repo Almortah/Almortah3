@@ -125,7 +125,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
 
         });
 
-        nameView = (TextView) findViewById(R.id.chaletName);
+        //nameView = (TextView) findViewById(R.id.chaletName);
         normalPriceView = (TextView) findViewById(R.id.normalPrice);
         weekendPriceView = (TextView) findViewById(R.id.weekendPrice);
         eidPriceView = (TextView) findViewById(R.id.eidPrice);
@@ -139,7 +139,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
 
 
 
-        nameView.setText(name);
+        //nameView.setText(name);
         normalPriceView.setText(normalPrice);
         weekendPriceView.setText(weekendPrice);
         eidPriceView.setText(eidPrice);
@@ -155,7 +155,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
                         // initialize a SliderLayout
                         textSliderView
-                                .description(chaletNb)
+                                .description(name)
                                 .image(uri.toString())
                                 .setBitmapTransformation(new CenterCrop())
                                 .setOnSliderClickListener(ChaletInfoCustomer.this);
@@ -183,7 +183,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
                         // initialize a SliderLayout
                         textSliderView
-                                .description(chaletNb)
+                                .description(name)
                                 .image(uri.toString())
                                 .setBitmapTransformation(new CenterCrop())
                                 .setOnSliderClickListener(ChaletInfoCustomer.this);
@@ -213,7 +213,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
                         // initialize a SliderLayout
                         textSliderView
-                                .description(chaletNb)
+                                .description(name)
                                 .image(uri.toString())
                                 .setBitmapTransformation(new CenterCrop())
                                 .setOnSliderClickListener(ChaletInfoCustomer.this);
@@ -298,6 +298,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
             public void onClick(View v) {
                 if(mAuth.getCurrentUser() == null) {
                     Toast.makeText(getApplicationContext(),R.string.bookVistor,Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getBaseContext(),login.class));
                     return;
                 }
                 Intent toBooking = new Intent(ChaletInfoCustomer.this, BookingAChalet.class);
