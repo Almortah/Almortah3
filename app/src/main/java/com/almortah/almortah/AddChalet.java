@@ -174,6 +174,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 String chaletName = mChaletName.getText().toString().trim();
                 String chaletPrice = mChaletPrice.getText().toString().trim();
                 String chaletOwnerId = user.getUid().toString();
+                String id = (chaletOwnerId+"_"+chaletCount);
                 if(latitude == null || longitude == null) {
                     return;
                 }
@@ -190,7 +191,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 hashMap.put("latitude",latitude);
                 hashMap.put("longitude",longitude);
                 hashMap.put("nbImages", String.valueOf(imgNb));
-                mDatabase.child("chalets").push().setValue(hashMap);
+                hashMap.put("id",id);
+                mDatabase.child("chalets").child(id).setValue(hashMap);
 
                 HashMap<String,String> dateHashMap = new HashMap<String, String>();
                 dateHashMap.put("busyOn","");

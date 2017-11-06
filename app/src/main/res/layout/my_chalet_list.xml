@@ -59,7 +59,7 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/view"
+                    android:id="@+id/delete"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_alignEnd="@+id/manage"
@@ -74,7 +74,7 @@
                     android:layout_height="40dp"
                     android:layout_alignEnd="@+id/manage"
                     android:layout_alignStart="@+id/manage"
-                    android:layout_below="@+id/view"
+                    android:layout_below="@+id/delete"
                     android:background="@color/colorDarkGrey"
                     android:text="@string/promotion"
                     android:textColor="@color/pick_white"

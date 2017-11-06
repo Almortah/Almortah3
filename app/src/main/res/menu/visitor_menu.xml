@@ -14,7 +14,7 @@
         tools:ignore="AppCompatResource" />
     <item
         android:id="@+id/register"
-        android:icon="@drawable/ic_assignment_ind_black_24dp"
+        android:icon="@drawable/ic_myinfo"
         android:title="@string/register"
         android:showAsAction="withText"
         app:showAsAction="withText"

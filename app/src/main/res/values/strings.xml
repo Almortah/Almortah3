@@ -117,6 +117,9 @@
     <string name="payment">Payment</string>
     <string name="back">Back</string>
     <string name="oneTimeOnly">You just booked this chalet/rest-house</string>
+    <string name="myInfo">My profile</string>
+    <string name="emailAddress">My email</string>
+    <string name="myPhone">My phone</string>
 
 
 </resources>

@@ -111,6 +111,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.history:
                 startActivity(new Intent(this,MyReservation.class));
                 break;
+            case R.id.myInfo:
+                startActivity(new Intent(this,MyInformation.class));
+                break;
             default:
                 super.onOptionsItemSelected(item);
         }

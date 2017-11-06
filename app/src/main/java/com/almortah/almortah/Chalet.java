@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class Chalet implements Serializable {
 
+    private String id;
     private String images;
     private String latitude;
     private String longitude;
@@ -37,6 +38,11 @@ public class Chalet implements Serializable {
     }
 
     public Chalet(Chalet chalet) {
+    }
+
+
+    public String getId() {
+        return id;
     }
 
     public String getLatitude() {

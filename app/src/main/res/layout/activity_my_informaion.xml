@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.almortah.almortah.ChaletInfoCustomer">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:titleTextColor="@android:color/white" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/chaletName"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/myInfo"
+        android:textColor="@color/colorDarkGrey"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="10dp">
+                <TableRow
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:background="@color/colorBlue"
+                        android:textColor="@color/colorWhite"
+                        android:text="@string/fullname" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/fullname"
+                        android:layout_weight="1"
+                        android:background="#ECEFF1"
+                        android:paddingStart="5dp"
+                        android:textColor="@color/pick_black"
+                        android:text="" />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:background="@color/colorBlue"
+                        android:textColor="@color/colorWhite"
+                        android:paddingStart="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/emailAddress" />
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="#ECEFF1"
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="5dp"
+                        android:text="" />
+                </TableRow>
+
+                <TableRow
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:background="@color/colorBlue"
+                    android:textColor="@color/colorWhite"
+                    android:paddingStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/myPhone" />
+                <TextView
+                    android:layout_weight="1"
+                    android:background="#ECEFF1"
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:text="" />
+            </TableRow>
+
+                <TableRow
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:background="@color/colorBlue"
+                        android:textColor="@color/colorWhite"
+                        android:paddingStart="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/username" />
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="#ECEFF1"
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="5dp"
+                        android:text="" />
+                </TableRow>
+
+                <TableRow
+                    android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:background="@color/colorBlue"
+                        android:textColor="@color/colorWhite"
+                        android:paddingStart="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/userType" />
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="#ECEFF1"
+                        android:id="@+id/type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="5dp"
+                        android:text="" />
+                </TableRow>
+            </TableLayout>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/logo_noname"
+                android:layout_gravity="center"
+                android:layout_margin="30dp"/>
+
+
+        </LinearLayout>
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            />
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

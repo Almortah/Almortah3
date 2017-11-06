@@ -88,7 +88,8 @@
             android:label="@string/title_activity_fullscreen"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
         <activity android:name=".HomePage" />
-        <activity android:name=".Promotion"></activity>
+        <activity android:name=".Promotion" />
+        <activity android:name=".MyInformation"></activity>
     </application>
 
 </manifest>

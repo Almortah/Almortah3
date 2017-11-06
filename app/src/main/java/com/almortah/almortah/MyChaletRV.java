@@ -1,10 +1,12 @@
 package com.almortah.almortah;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -37,7 +40,7 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
         public TextView chaletName;
         public ImageView img1;
         public Button manage;
-        public Button stat;
+        public Button delete;
         public Button promotion;
 
         public MyViewHolder(View view) {
@@ -45,7 +48,7 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
             chaletName = (TextView) view.findViewById(R.id.chaletName);
             img1 = (ImageView) view.findViewById(R.id.chaletImg);
             manage = (Button) view.findViewById(R.id.manage);
-            stat = (Button) view.findViewById(R.id.view);
+            delete = (Button) view.findViewById(R.id.delete);
             promotion = (Button) view.findViewById(R.id.promotion);
         }
     }
@@ -65,7 +68,7 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final MyChaletRV.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyChaletRV.MyViewHolder holder, final int position) {
         final Chalet chalet = chalets.get(position);
         holder.chaletName.setText(chalet.getName());
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
@@ -92,17 +95,46 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
             }
         });
 
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setMessage("Are you sure You wanted to make decision");
+                alertDialogBuilder.setPositiveButton("yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                        FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).removeValue();
+                                        chalets.remove(chalet);
+                                        notifyItemRemoved(position);
+                                        notifyItemRangeChanged(position,getItemCount());
+
+                            }
+                        });
+
+                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+
+
+
+            }
+        });
+
 
     }
 
     @Override
     public int getItemCount() {
         return chalets.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position;
     }
 
 

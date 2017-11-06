@@ -6,7 +6,7 @@ package com.almortah.almortah;
 
 public class Users {
 
-    private String name;
+    private String Name;
     private String email;
     private String nbChalets;
     private String phone;
@@ -17,7 +17,7 @@ public class Users {
     public Users(){}
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public String getEmail() {
