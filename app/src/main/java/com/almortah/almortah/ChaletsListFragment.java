@@ -2,7 +2,6 @@ package com.almortah.almortah;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +18,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import su.j2e.rvjoiner.JoinableAdapter;
+import su.j2e.rvjoiner.JoinableLayout;
+import su.j2e.rvjoiner.RvJoiner;
 
 /**
  * Created by ALMAHRI on 10/24/17.
@@ -39,6 +42,8 @@ public class ChaletsListFragment extends Fragment {
     private RecyclerView promotView;
     private ChaletListRV promotAdapter;
     ProgressBar mProgressBar;
+
+    private RecyclerView rv;
     public ChaletsListFragment() {
         // Required empty public constructor
     }
@@ -54,19 +59,32 @@ public class ChaletsListFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.activity_chalet_list, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        //recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        //final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
+        //recyclerView.setLayoutManager(mLayoutManager);
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new ChaletListRV(getContext() ,chalets);
-        recyclerView.setAdapter(mAdapter);
+        //recyclerView.setAdapter(mAdapter);
 
-        promotView = (RecyclerView) view.findViewById(R.id.promotion_view);
-        final RecyclerView.LayoutManager promotLayoutManager = new LinearLayoutManager(view.getContext());
-        promotView.setLayoutManager(promotLayoutManager);
-        promotView.setItemAnimator(new DefaultItemAnimator());
+        //promotView = (RecyclerView) view.findViewById(R.id.promotion_view);
+        //final RecyclerView.LayoutManager promotLayoutManager = new LinearLayoutManager(view.getContext());
+        //promotView.setLayoutManager(promotLayoutManager);
+        //promotView.setItemAnimator(new DefaultItemAnimator());
         promotAdapter = new ChaletListRV(getContext() ,promotChalets);
-        promotView.setAdapter(promotAdapter);
+        //promotView.setAdapter(promotAdapter);
+
+        rv = (RecyclerView) view.findViewById(R.id.recycler_view);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //construct a joiner
+        RvJoiner rvJoiner = new RvJoiner();
+        rvJoiner.add(new JoinableLayout(R.layout.nav_header));
+        rvJoiner.add(new JoinableAdapter(promotAdapter));
+        rvJoiner.add(new JoinableLayout(R.layout.logo));
+        rvJoiner.add(new JoinableAdapter(mAdapter));
+
+        //set join adapter to your RecyclerView
+        rv.setAdapter(rvJoiner.getAdapter());
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("promotion");
         databaseReference.addValueEventListener(new ValueEventListener() {

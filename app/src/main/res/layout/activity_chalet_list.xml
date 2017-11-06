@@ -9,47 +9,19 @@
     tools:context=".ChaletListActivity"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/bestChalet"
-                android:gravity="center"
-                android:textColor="@color/colorGreen"
-                android:textStyle="bold"
-                android:fontFamily="casual"
-                android:layout_margin="10dp"/>
+                />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/promotion_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-    </android.support.v7.widget.RecyclerView>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:src="@drawable/logo_noname"
-        android:layout_margin="10dp"
-        android:layout_gravity="center"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
-    </ScrollView>
 
 
 </LinearLayout>

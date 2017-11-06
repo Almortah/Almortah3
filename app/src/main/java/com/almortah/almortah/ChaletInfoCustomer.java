@@ -3,7 +3,13 @@ package com.almortah.almortah;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,10 +40,12 @@ import com.google.firebase.storage.StorageReference;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
+public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener , NavigationView.OnNavigationItemSelectedListener{
     private FirebaseAuth mAuth ;
     private FirebaseDatabase mDatabase ;
     private StorageReference storageReference ;
+    private DrawerLayout drawer;
+    private TabLayout tabLayout;
 
     private String images;
     private String eidPrice;
@@ -76,6 +84,29 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         ownerID = chaletInfo.getString("ownerID");
         location = chaletInfo.getString("location");
         chaletNb = chaletInfo.getString("chaletNb");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        setSupportActionBar(toolbar);
+
+        //create default navigation drawer toggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+            navigationView.inflateMenu(R.menu.customer_menu);
+        else
+            navigationView.inflateMenu(R.menu.visitor_menu);
+
+
+
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(ownerID).child(chaletNb);
@@ -386,6 +417,42 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.searchChaleh:
+                break;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this,HomeActivity.class));
+                break;
+            case R.id.login:
+                startActivity(new Intent(this,login.class));
+                break;
+            case R.id.register:
+                startActivity(new Intent(this,Signup.class));
+                break;
+            case R.id.history:
+                startActivity(new Intent(this,MyReservation.class));
+                break;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        assert drawer != null;
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
 }

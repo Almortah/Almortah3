@@ -122,6 +122,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                                                      toChaletInfo.putExtra("ownerID", chalet.getOwnerID());
                                                      toChaletInfo.putExtra("latitude", chalet.getLatitude());
                                                      toChaletInfo.putExtra("longitude", chalet.getLongitude());
+                                                     toChaletInfo.putExtra("location",holder.chaletLocation.getText().toString());
 
                                                      toChaletInfo.putExtra("chaletNb", chalet.getChaletNm());
                                                      context.startActivity(toChaletInfo);
@@ -131,15 +132,18 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
 
     }
 
+
     @Override
     public int getItemCount() {
         return chalets.size();
     }
-
+/*
     @Override
     public int getItemViewType(int position) {
         return position;
     }
+*/
+
 
 
 }

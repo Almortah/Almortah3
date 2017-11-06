@@ -179,6 +179,7 @@ public class ConfirmBooking extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // your code.
+        finish();
         startActivity(new Intent(this,HomePage.class));
     }
 

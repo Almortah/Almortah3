@@ -69,6 +69,9 @@
     <string name="payment">الدفع</string>
     <string name="bestChalet">آستراحات وشاليهات مميزة</string>
     <string name="promot">"فريق المرتاح سوف يحاول دائما يبقي الاستراحات والشاليهات المروج لها في المقدمة للزبائن ولايتعهد فريق المرتاح باي ضمانات بعدد المستأجرين ولايحق للمالك إسترجاع مبلغ الترويج بعد الدفع"</string>
+    <string name="normalPrice">الايام العادية</string>
+    <string name="weekendPrice">نهاية الاسبوع</string>
+    <string name="eidPrice">يوم العيد</string>
 
 
 </resources>
