@@ -84,6 +84,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         ownerID = chaletInfo.getString("ownerID");
         location = chaletInfo.getString("location");
         chaletNb = chaletInfo.getString("chaletNb");
+        final Chalet chalet = (Chalet) getIntent().getSerializableExtra("chalet");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);

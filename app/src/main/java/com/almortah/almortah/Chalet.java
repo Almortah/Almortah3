@@ -11,6 +11,7 @@ public class Chalet implements Serializable {
     private String id;
     private String images;
     private String latitude;
+    private String description;
     private String longitude;
     private String chaletNm;
     private String eidPrice;
@@ -95,5 +96,8 @@ public class Chalet implements Serializable {
 
     public void setPromotion(String promotion) {
         this.promotion = promotion;
+    }
+    public String getDescription() {
+        return description;
     }
 }

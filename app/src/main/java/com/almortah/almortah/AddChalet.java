@@ -7,20 +7,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -51,14 +51,12 @@ import com.gun0912.tedpermission.TedPermission;
 import com.werb.pickphotoview.PickPhotoView;
 import com.werb.pickphotoview.util.PickConfig;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
-public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
+public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
     private StorageReference storageRef;
     private FirebaseApp app;
@@ -68,6 +66,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     private LocationManager locationManager;
     private String provider;
     private String address;
+    private DrawerLayout drawer;
+
 
     private Button mUploadImage;
     private StorageReference firebaseStorage;
@@ -84,64 +84,77 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     private String chaletLocation;
     private Location location;
     private int imgNb = 0;
-    double lat1 =0, lng1=0;
-    private Geocoder geo;
+    double lat1 = 0, lng1 = 0;
     private List<Address> addresses;
 
 
     static final int PICK_CONTACT_REQUEST = 1;
-    static final int MY_PERMISSIONS_REQUEST=1;
-    private Geocoder geoAr;
+    static final int MY_PERMISSIONS_REQUEST = 1;
+    private String descr = "Empty";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_chalet);
-        geo = new Geocoder(AddChalet.this, Locale.ENGLISH);
-        geoAr = new Geocoder(AddChalet.this, Locale.getDefault());
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        setSupportActionBar(toolbar);
+
+        //create default navigation drawer toggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
+        navigationView.setNavigationItemSelectedListener(this);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+            navigationView.inflateMenu(R.menu.owner_menu);
+        else
+            navigationView.inflateMenu(R.menu.visitor_menu);
 
 
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(getApplicationContext(),"Permissions Granted",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Permissions Granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(getApplicationContext(),"Permissions Denied"+deniedPermissions.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Permissions Denied" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
 
             }
         };
 
 
-
         TedPermission.with(this)
-                    .setPermissionListener(permissionlistener)
-                    .setRationaleTitle("Allow Permissions")
-                    .setRationaleMessage("Allow This app to access contacts and location")
-                    .setDeniedTitle("Permission denied")
-                    .setDeniedMessage(
-                            "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                    .setGotoSettingButtonText("Allow")
-                    .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-                    .check();
-
+                .setPermissionListener(permissionlistener)
+                .setRationaleTitle("Allow Permissions")
+                .setRationaleMessage("Allow This app to access contacts and location")
+                .setDeniedTitle("Permission denied")
+                .setDeniedMessage(
+                        "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setGotoSettingButtonText("Allow")
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .check();
 
 
         app = FirebaseApp.getInstance();
         storage = FirebaseStorage.getInstance(app);
         int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        if(permissionCheck!=PackageManager.PERMISSION_GRANTED){
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE)){
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 return;
-            }
-            else{
-              ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},MY_PERMISSIONS_REQUEST);
-                return ;
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST);
+                return;
 
             }
         }
@@ -152,6 +165,10 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mChaletName = (EditText) findViewById(R.id.chaletName);
         mChaletPrice = (EditText) findViewById(R.id.normalPrice);
+        final EditText mWeekend = (EditText) findViewById(R.id.weekendPrice);
+        final EditText mEid = (EditText) findViewById(R.id.eidPrice);
+        final EditText des = (EditText) findViewById(R.id.description);
+
         submitChalet = (Button) findViewById(R.id.submitChalet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference reference = mDatabase.child("users").child(user.getUid()).child("nbChalets");
@@ -173,9 +190,15 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
             public void onClick(View v) {
                 String chaletName = mChaletName.getText().toString().trim();
                 String chaletPrice = mChaletPrice.getText().toString().trim();
+                String weekendPrice = mWeekend.getText().toString().trim();
+                String eidPrice = mEid.getText().toString().trim();
+                descr = des.getText().toString().trim();
                 String chaletOwnerId = user.getUid().toString();
-                String id = (chaletOwnerId+"_"+chaletCount);
-                if(latitude == null || longitude == null) {
+                String id = (chaletOwnerId + "_" + chaletCount);
+                if (latitude == null || longitude == null || chaletName.matches("")
+                        || chaletPrice.matches("") || weekendPrice.matches("")
+                        || eidPrice.matches("") ) {
+                    Toast.makeText(getBaseContext(),R.string.erEmptyField,Toast.LENGTH_SHORT).show();
                     return;
                 }
                 // chaletCount++;
@@ -183,19 +206,20 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 hashMap.put("ownerID", chaletOwnerId);
                 hashMap.put("name", chaletName);
                 hashMap.put("normalPrice", chaletPrice);
-                hashMap.put("weekendPrice", chaletPrice);
-                hashMap.put("eidPrice", chaletPrice);
+                hashMap.put("weekendPrice", weekendPrice);
+                hashMap.put("eidPrice", eidPrice);
+                hashMap.put("description", descr);
                 hashMap.put("ImageUrl", firebaseStorage.child(user.getUid()).child(String.valueOf(chaletCount)).getPath());
                 hashMap.put("chaletNm", String.valueOf(chaletCount));
                 hashMap.put("promotion", "0"); // 0 no promoted, 1 promoted
-                hashMap.put("latitude",latitude);
-                hashMap.put("longitude",longitude);
+                hashMap.put("latitude", latitude);
+                hashMap.put("longitude", longitude);
                 hashMap.put("nbImages", String.valueOf(imgNb));
-                hashMap.put("id",id);
+                hashMap.put("id", id);
                 mDatabase.child("chalets").child(id).setValue(hashMap);
 
-                HashMap<String,String> dateHashMap = new HashMap<String, String>();
-                dateHashMap.put("busyOn","");
+                HashMap<String, String> dateHashMap = new HashMap<String, String>();
+                dateHashMap.put("busyOn", "");
                 mDatabase.child("busyDates").child(chaletOwnerId).child(String.valueOf(chaletCount)).
                         child("busyOn").setValue("");
 
@@ -230,9 +254,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
 
         if (googleServiceAvail() == true) {
             initMap();
-           // onMapReady(mGoogleMap);
+            // onMapReady(mGoogleMap);
         }
-
 
 
     }
@@ -281,16 +304,14 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
 
                 MarkerOptions options = new MarkerOptions().position(latLng);
                 marker = mGoogleMap.addMarker(options);
-                latitude =(""+marker.getPosition().latitude);
-                longitude = (""+marker.getPosition().longitude);
+                latitude = ("" + marker.getPosition().latitude);
+                longitude = ("" + marker.getPosition().longitude);
 
             }
         });
 
 
-
-
-       permmision();
+        permmision();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         provider = locationManager.getBestProvider(new Criteria(), false);
@@ -308,41 +329,48 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
         mGoogleMap.setMyLocationEnabled(true);
 
         location = locationManager.getLastKnownLocation(provider);
-        LatLng userPostion = new LatLng(24.593976, 46.670161);
+        LatLng userPostion;
 
+        if(location.hasAltitude()) {
+            userPostion = new LatLng(location.getLatitude(), location.getLongitude());
+            latitude = String.valueOf(location.getLatitude()); longitude = String.valueOf(location.getLongitude());
+
+        }
+        else
+            userPostion = new LatLng(24.788521290609893,46.790736615657806);
 
 
         MarkerOptions options = new MarkerOptions().position(userPostion).draggable(true);
         marker = mGoogleMap.addMarker(options);
-        chaletLocation=marker.getPosition().toString();
+        chaletLocation = marker.getPosition().toString();
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
 
-    public void permmision(){
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+    public void permmision() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION);
+                ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
         }
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.shouldShowRequestPermissionRationale(this,android.Manifest.permission.ACCESS_FINE_LOCATION);
+                ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
@@ -352,18 +380,17 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
     }
 
 
-
-    public boolean googleServiceAvail(){
+    public boolean googleServiceAvail() {
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
         int isAvailable = api.isGooglePlayServicesAvailable(this);
-        if(isAvailable == ConnectionResult.SUCCESS){
+        if (isAvailable == ConnectionResult.SUCCESS) {
             return true;
-        } else if(api.isUserResolvableError(isAvailable)){
-            Dialog dialog = api.getErrorDialog(this,isAvailable,0);
+        } else if (api.isUserResolvableError(isAvailable)) {
+            Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
             dialog.show();
 
-        }else{
-            Toast.makeText(this,"Cant connect to service",Toast.LENGTH_LONG);
+        } else {
+            Toast.makeText(this, "Cant connect to service", Toast.LENGTH_LONG);
         }
         return false;
 
@@ -407,61 +434,58 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback {
                 imgName++;
                 // do something u want
             }
-            Toast.makeText(getApplicationContext(),R.string.doneUpload,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.doneUpload, Toast.LENGTH_SHORT).show();
         }
     }
 
 
-
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.owner_menu, menu);
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.searchChaleh:
+                break;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, HomeActivity.class));
+                break;
+            case R.id.login:
+                startActivity(new Intent(this, login.class));
+                break;
+            case R.id.register:
+                startActivity(new Intent(this, Signup.class));
+                break;
+            case R.id.history:
+                startActivity(new Intent(this, MyReservation.class));
+                break;
+            case R.id.newChalet:
+                startActivity(new Intent(this, AddChalet.class));
+                break;
+            case R.id.about:
+                startActivity(new Intent(this, MyChalets.class));
+                break;
+            case R.id.homePage:
+                startActivity(new Intent(this, MyChalets.class));
+                break;
+            case R.id.myInfo:
+                startActivity(new Intent(this, MyInformation.class));
+                break;
+
+            default:
+                super.onOptionsItemSelected(item);
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    /**
-     * Event Handling for Individual visitor_menu item selected
-     * Identify single visitor_menu item by it's id
-     * */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId()) {
-            case R.id.newChalet:
-                startActivity(new Intent(this, AddChalet.class));
-                return true;
-            case R.id.logout:
-                mAuth.signOut();
-                startActivity(new Intent(this,HomeActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+    public void onBackPressed() {
+        assert drawer != null;
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu) {
-        if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
-            if(menu.getClass().getSimpleName().equals("MenuBuilder")){
-                try{
-                    Method m = menu.getClass().getDeclaredMethod(
-                            "setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    m.invoke(menu, true);
-                }
-                catch(NoSuchMethodException e){
-                    Log.e("MyActivity", "onMenuOpened", e);
-                }
-                catch(Exception e){
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-        return super.onMenuOpened(featureId, menu);
     }
 
 }

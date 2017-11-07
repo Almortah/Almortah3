@@ -28,9 +28,9 @@ public class Promotion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(offer.getCheckedRadioButtonId() != -1 && payment.getCheckedRadioButtonId() != -1) {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Promotion.this);
-                    alertDialogBuilder.setMessage("Are you sure You wanted to make decision");
-                            alertDialogBuilder.setPositiveButton("yes",
+                    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Promotion.this);
+                    alertDialogBuilder.setMessage(getString(R.string.sure));
+                            alertDialogBuilder.setPositiveButton(getString(R.string.yes),
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface arg0, int arg1) {
@@ -51,10 +51,10 @@ public class Promotion extends AppCompatActivity {
                                         }
                                     });
 
-                    alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setNegativeButton(getString(R.string.no),new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            finish();
+                            dialog.cancel();
                         }
                     });
 

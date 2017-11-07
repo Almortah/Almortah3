@@ -66,7 +66,7 @@
                     android:layout_alignStart="@+id/manage"
                     android:layout_below="@+id/manage"
                     android:background="@color/colorGreen"
-                    android:text="@string/viewStat"
+                    android:text="@string/delete"
                     android:textColor="@color/pick_white"/>
                 <Button
                     android:id="@+id/promotion"

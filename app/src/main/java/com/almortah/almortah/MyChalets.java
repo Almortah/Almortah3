@@ -193,6 +193,15 @@ public class MyChalets extends AppCompatActivity implements NavigationView.OnNav
             case R.id.history:
                 startActivity(new Intent(this,MyReservation.class));
                 break;
+            case R.id.about:
+                startActivity(new Intent(this, MyChalets.class));
+                break;
+            case R.id.homePage:
+                startActivity(new Intent(this, MyChalets.class));
+                break;
+            case R.id.myInfo:
+                startActivity(new Intent(this, MyInformation.class));
+                break;
             default:
                 super.onOptionsItemSelected(item);
         }

@@ -120,6 +120,13 @@
     <string name="myInfo">My profile</string>
     <string name="emailAddress">My email</string>
     <string name="myPhone">My phone</string>
+    <string name="delete">Delete</string>
+    <string name="sure">Are you sure you wanted to make this decision?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="upload">Upload images</string>
+    <string name="description">Chalet description</string>
+    <string name="location">Location</string>
 
 
 </resources>

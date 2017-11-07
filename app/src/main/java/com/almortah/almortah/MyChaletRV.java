@@ -100,8 +100,8 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
             public void onClick(final View v) {
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setMessage("Are you sure You wanted to make decision");
-                alertDialogBuilder.setPositiveButton("yes",
+                alertDialogBuilder.setMessage(context.getString(R.string.sure));
+                alertDialogBuilder.setPositiveButton(context.getString(R.string.yes),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
@@ -113,7 +113,7 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
                             }
                         });
 
-                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton(context.getString(R.string.no),new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

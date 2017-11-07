@@ -114,6 +114,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                                                  @Override
                                                  public void onClick(View v) {
                                                      Intent toChaletInfo = new Intent(context, ChaletInfoCustomer.class);
+                                                     toChaletInfo.putExtra("chalet",chalet);
                                                      toChaletInfo.putExtra("name", chalet.getName());
                                                      toChaletInfo.putExtra("normalPrice", chalet.getNormalPrice());
                                                      toChaletInfo.putExtra("weekendPrice", chalet.getWeekendPrice());
