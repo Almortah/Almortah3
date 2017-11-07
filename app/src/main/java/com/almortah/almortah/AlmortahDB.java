@@ -1,14 +1,11 @@
 package com.almortah.almortah;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,6 +35,7 @@ public class AlmortahDB extends Activity {
     public AlmortahDB(Activity context) {
         this.context = context;
     }
+    public AlmortahDB(){}
 
     public void signup(final String fullname, final String username, final String phone, final String email, String password, final int type) {
         Task<AuthResult> i = mAuth.createUserWithEmailAndPassword(email,password);
@@ -152,6 +150,43 @@ public class AlmortahDB extends Activity {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    public void menu(MenuItem item){
+        switch(item.getItemId()) {
+            case R.id.searchChaleh:
+                break;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                context.startActivity(new Intent(context, HomeActivity.class));
+                break;
+            case R.id.login:
+                context.startActivity(new Intent(context, login.class));
+                break;
+            case R.id.register:
+                context.startActivity(new Intent(context, Signup.class));
+                break;
+            case R.id.history:
+                context.startActivity(new Intent(context, MyReservation.class));
+                break;
+            case R.id.newChalet:
+              context.startActivity(new Intent(context, AddChalet.class));
+                break;
+            case R.id.about:
+                context.startActivity(new Intent(context, About.class));
+                break;
+            case R.id.homePage:
+                context.startActivity(new Intent(context, HomePage.class));
+                break;
+            case R.id.myInfo:
+                context.startActivity(new Intent(context, MyInformation.class));
+                break;
+            case R.id.myChalet:
+                context.startActivity(new Intent(context, MyChalets.class));
+                break;
+            default:
+                super.onOptionsItemSelected(item);
         }
     }
 

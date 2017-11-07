@@ -1,6 +1,5 @@
 package com.almortah.almortah;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -176,36 +175,8 @@ public class MyChalets extends AppCompatActivity implements NavigationView.OnNav
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.newChalet:
-                startActivity(new Intent(this,AddChalet.class));
-                break;
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this,HomeActivity.class));
-                break;
-            case R.id.login:
-                startActivity(new Intent(this,login.class));
-                break;
-            case R.id.register:
-                startActivity(new Intent(this,Signup.class));
-                break;
-            case R.id.history:
-                startActivity(new Intent(this,MyReservation.class));
-                break;
-            case R.id.about:
-                startActivity(new Intent(this, MyChalets.class));
-                break;
-            case R.id.homePage:
-                startActivity(new Intent(this, MyChalets.class));
-                break;
-            case R.id.myInfo:
-                startActivity(new Intent(this, MyInformation.class));
-                break;
-            default:
-                super.onOptionsItemSelected(item);
-        }
-
+        AlmortahDB almortahDB = new AlmortahDB(this);
+        almortahDB.menu(item);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

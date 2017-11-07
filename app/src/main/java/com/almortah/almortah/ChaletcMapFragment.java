@@ -171,7 +171,8 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                 for (int i=0;i<chalets.size();i++){
                     //addMarker(mGoogleMap);
                     mGoogleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude()))));
+                            .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude())))
+                    .title(chalets.get(i).getName()));
                     ;
                     Log.i("Name " ,chalets.get(i).getName());
 
@@ -185,7 +186,7 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
         });
 
         MapInfoWindowAdapter adapter = new MapInfoWindowAdapter(this.getContext(),getLayoutInflater());
-        mGoogleMap.setInfoWindowAdapter(adapter);
+        //mGoogleMap.setInfoWindowAdapter(adapter);
 
     }
 
@@ -228,7 +229,8 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                            int title, int snippet, String image) {
         Marker marker=
                 map.addMarker(new MarkerOptions().position(new LatLng(lat, lon))
-                        .title(getString(title)));
+                        .title(getString(title))
+                );
 
         if (image != null) {
             images.put(marker.getId(),

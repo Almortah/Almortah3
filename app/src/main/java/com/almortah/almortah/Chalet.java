@@ -24,9 +24,15 @@ public class Chalet implements Serializable {
     public Chalet() {
     }
 
-    public Chalet(String images, String latitude, String longitude, String chaletNm, String eidPrice, String name, String normalPrice, String ownerID, String promotion, String weekendPrice, String nbOfImages) {
+
+    public Chalet(String id, String images, String latitude,
+                  String description, String longitude, String chaletNm,
+                  String eidPrice, String name, String normalPrice, String ownerID,
+                  String promotion, String weekendPrice, String nbOfImages) {
+        this.id = id;
         this.images = images;
         this.latitude = latitude;
+        this.description = description;
         this.longitude = longitude;
         this.chaletNm = chaletNm;
         this.eidPrice = eidPrice;

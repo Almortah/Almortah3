@@ -2,7 +2,7 @@
 <resources>
     <string name="chaletName">اسم الشاليه/الإستراحة</string>
     <string name="chaletOwner">مالك الشاليه/الإستراحة</string>
-    <string name="customer">الزبون</string>
+    <string name="customer">زبون</string>
     <string name="erVerifyEmail">لم يتم تأكيد الايميل</string>
     <string name="owner">مالك</string>
     <string name="userType">نوع المستخدم</string>
@@ -72,6 +72,28 @@
     <string name="normalPrice">الايام العادية</string>
     <string name="weekendPrice">نهاية الاسبوع</string>
     <string name="eidPrice">يوم العيد</string>
+    <string name="back">للخلف</string>
+    <string name="oneTimeOnly">لقد حجزت هذه الآستراحة/الشالية بالفعل</string>
+    <string name="myInfo">معلوماتي</string>
+    <string name="emailAddress">بريدي</string>
+    <string name="myPhone">جوالي</string>
+    <string name="delete">حذف</string>
+    <string name="sure">هل انت متأكد انك ترغب باتخاذ هذا الآجراء؟</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="upload">ارفع صور</string>
+    <string name="description">وصف الشالية</string>
+    <string name="location">الموقع</string>
+    <string name="brief">نبذة</string>
+    <string name="idea">فكرة</string>
+    <string name="team"> أعضاء الفريق</string>
+    <string name="start">البداية</string>
+    <string name="startDate">المرتاح هو عمل مشروع تخرج خلال سنة 2017</string>
+    <string name="donePromot">لقد تم ترويج استراحتك/شاليهك بنجاح</string>
+    <string name="ideaName">د/ عبدالعزيز السدحان\nجامعة الملك سعود\nكلية علوم الحاسب والمعلومات
+        \nقسم هندسة البرمجيات</string>
+    <string name="us">عبدالله المهري\nزياد الخنين\nعبدالله الاجرد\nعبدالله المالكي</string>
+    <string name="overview">يهدف هذا المشروع إلى تحسين تجربة المستخدمين عندما يريدون حجز استراحة أو شاليه في المملكة العربية السعودية. المرتاح يتيح للعملاء للبحث عن الاستراحات والشاليهات بكفاءة. وعلاوة على ذلك، فإنه يسمح لمالكي العقار لإدارة عملية الحجز بسهولة، وذلك باستخدام هواتفهم الذكية.</string>
 
 
 </resources>

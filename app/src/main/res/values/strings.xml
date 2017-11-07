@@ -77,6 +77,13 @@
     <string name="eidPrice">Eid</string>
 
 
+    <string name="overview">
+        This project aims to improve users experience when they are aiming to reserve
+        a rest-house or a chalet in Saudi Arabia. It allows customers to search for properties and
+        reserve them efficiently. Moreover, it permits the property’s owners to manage the reservation process,
+        by using their smartphones.
+</string>
+
     <!-- Strange strings!! -->
     <!-- Example General settings -->
 
@@ -127,6 +134,15 @@
     <string name="upload">Upload images</string>
     <string name="description">Chalet description</string>
     <string name="location">Location</string>
+    <string name="brief">Brief</string>
+    <string name="idea">Idea</string>
+    <string name="ideaName">Dr. Abdulaziz Alsadhan\nKing Saud University\nCollege of Computer and Information
+        Sciences\nDept. of Software Engineering</string>
+    <string name="team">Team members</string>
+    <string name="us">Abdullah Almahri\nZiyad AlKhonin\nAbdullah AlAjrid\nAbdullah AlMalki</string>
+    <string name="start">Start</string>
+    <string name="startDate">ALMORTAH is a graduation project during the year of 2017 </string>
+    <string name="donePromot">Your rest-house/chalet has been promoted!</string>
 
 
 </resources>

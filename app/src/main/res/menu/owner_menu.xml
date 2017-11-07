@@ -5,9 +5,10 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 tools:context=".MyChalets">
 
     <item
-        android:id="@+id/homePage"
-        android:title="@string/home"
-        android:icon="@drawable/ic_home_black_24dp"/>
+        android:id="@+id/myChalet"
+        android:title="@string/myChalets"
+        android:icon="@drawable/ic_mychalet"/>
+
 <item
     android:id="@+id/newChalet"
     android:title="@string/newChalet"

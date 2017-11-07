@@ -235,14 +235,14 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
             public void onClick(View v) {
 
                 new PickPhotoView.Builder(AddChalet.this)
-                        .setPickPhotoSize(9)   //select max size
+                        .setPickPhotoSize(5)   //select max size
                         .setShowCamera(true)   //is show camera
                         .setSpanCount(4)       //SpanCount
                         .setLightStatusBar(true)  // custom theme
-                        .setStatusBarColor("#ffffff")   // custom statusBar
-                        .setToolbarColor("#ffffff")   // custom toolbar
-                        .setToolbarIconColor("#000000")   // custom toolbar icon
-                        .setSelectIconColor("#00C07F")  // custom select icon
+                        .setStatusBarColor("#0083D7")   // custom statusBar
+                        .setToolbarColor("#52bb6c")   // custom toolbar
+                        .setToolbarIconColor("#0083D7")   // custom toolbar icon
+                        .setSelectIconColor("#52bb6c")  // custom select icon
                         .start();
 
 
@@ -441,38 +441,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.searchChaleh:
-                break;
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, HomeActivity.class));
-                break;
-            case R.id.login:
-                startActivity(new Intent(this, login.class));
-                break;
-            case R.id.register:
-                startActivity(new Intent(this, Signup.class));
-                break;
-            case R.id.history:
-                startActivity(new Intent(this, MyReservation.class));
-                break;
-            case R.id.newChalet:
-                startActivity(new Intent(this, AddChalet.class));
-                break;
-            case R.id.about:
-                startActivity(new Intent(this, MyChalets.class));
-                break;
-            case R.id.homePage:
-                startActivity(new Intent(this, MyChalets.class));
-                break;
-            case R.id.myInfo:
-                startActivity(new Intent(this, MyInformation.class));
-                break;
-
-            default:
-                super.onOptionsItemSelected(item);
-        }
+        AlmortahDB almortahDB = new AlmortahDB();
+        almortahDB.menu(item);
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

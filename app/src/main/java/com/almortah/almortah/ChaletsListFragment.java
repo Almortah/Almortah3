@@ -85,27 +85,6 @@ public class ChaletsListFragment extends Fragment {
 
         //set join adapter to your RecyclerView
         rv.setAdapter(rvJoiner.getAdapter());
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("promotion");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
-                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                while ((iterator.hasNext())) {
-                    Chalet chalet = iterator.next().getValue(Chalet.class);
-                        chalet.setPromotion("1");
-                        promotChalets.add(chalet);
-                }
-                promotAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-
         // You don't need anything here
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("chalets");
                 reference.addValueEventListener(new ValueEventListener() {
@@ -115,9 +94,12 @@ public class ChaletsListFragment extends Fragment {
                         Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
                         while ((iterator.hasNext())) {
                             Chalet chalet = iterator.next().getValue(Chalet.class);
-                                chalets.add(chalet);
+                            if (chalet.getPromotion().equals("1"))
+                                promotChalets.add(chalet);
+                            chalets.add(chalet);
                         }
                         mAdapter.notifyDataSetChanged();
+                        promotAdapter.notifyDataSetChanged();
                     }
 
                     @Override

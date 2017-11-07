@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -61,7 +60,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         final String log = String.valueOf(latlng.longitude);
         Log.i("MarkerPostion",lat);
 
-        img = (ImageView) v.findViewById(R.id.imgOnMap);
+        //img = (ImageView) v.findViewById(R.id.imgOnMap);
        // final TextView textView = (TextView) v.findViewById(R.id.markerText);
 
 
@@ -84,7 +83,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                 storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Glide.with(context).load(uri).into(img);
+                       // Glide.with(context).load(uri).into(img);
                         //            textView.setText(chalet.getName());
                         Log.i("working","11111");
 

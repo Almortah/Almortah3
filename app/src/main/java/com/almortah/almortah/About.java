@@ -8,27 +8,38 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
-public class MyReservation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private ListView listView;
+public class About extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private int type = -1;
     private DrawerLayout drawer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_reservation);
+        setContentView(R.layout.activity_about);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    type = Integer.parseInt(dataSnapshot.getValue().toString());
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -40,42 +51,21 @@ public class MyReservation extends AppCompatActivity implements NavigationView.O
                 R.string.drawer_open, R.string.drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+        if (type == 1)
             navigationView.inflateMenu(R.menu.customer_menu);
-        else
+        else if(type == -1)
             navigationView.inflateMenu(R.menu.visitor_menu);
-
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        listView = (ListView) findViewById(R.id.myHistory);
-        final ArrayList<Reservation> myHistory = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("reservation");
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
-                        Reservation reservation = singlValue.getValue(Reservation.class);
-                        if (reservation.getCustomerID().equals(user.getUid())) {
-                            myHistory.add(reservation);
-                        }
-                    }
-                }
-                MyReservationAdapter adapter = new MyReservationAdapter(MyReservation.this, myHistory);
-                listView.setAdapter(adapter);
-            }
+        else
+            navigationView.inflateMenu(R.menu.owner_menu);
 
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
     }
+
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -94,4 +84,5 @@ public class MyReservation extends AppCompatActivity implements NavigationView.O
             super.onBackPressed();
         }
     }
+
 }

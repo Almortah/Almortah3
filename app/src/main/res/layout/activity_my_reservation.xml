@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    tools:context="com.almortah.almortah.MyReservation"
+<RelativeLayout tools:context="com.almortah.almortah.MyReservation"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,24 +8,33 @@
     android:weightSum="3"
     android:padding="5dp"
     android:background="@drawable/design"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <TextView
-        android:id="@+id/titleHistory"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:gravity="center"
-        android:text="@string/history"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:titleTextColor="@android:color/white" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ll"
-        android:layout_below="@id/titleHistory"
         android:layout_marginTop="5dp">
 
         <TextView
@@ -67,4 +75,16 @@
         android:layout_marginTop="5dp"/>
 
 
+
 </RelativeLayout>
+<android.support.design.widget.NavigationView
+android:id="@+id/nav_view"
+android:layout_width="wrap_content"
+android:layout_height="match_parent"
+android:layout_gravity="start"
+android:fitsSystemWindows="true"
+    />
+    </android.support.v4.widget.DrawerLayout>
+
+
+    </RelativeLayout>

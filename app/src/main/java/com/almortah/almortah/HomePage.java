@@ -16,6 +16,11 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
@@ -24,6 +29,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     private DrawerLayout drawer;
     private TabLayout tabLayout;
     private String[] pageTitle;
+    private int type = -1;
+    private NavigationView navigationView;
 
 
     @Override
@@ -31,6 +38,34 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         pageTitle = new String[]{getString(R.string.list), getString(R.string.map)};
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    type = Integer.parseInt(dataSnapshot.getValue().toString());
+                    if (type == 1)
+                        navigationView.inflateMenu(R.menu.customer_menu);
+                    else if(type == -1)
+                        navigationView.inflateMenu(R.menu.visitor_menu);
+                    else
+                        navigationView.inflateMenu(R.menu.owner_menu);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+        else {
+            navigationView.inflateMenu(R.menu.visitor_menu);
+        }
+
 
 
 
@@ -57,14 +92,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //handling navigation view item event
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        assert navigationView != null;
-        navigationView.setNavigationItemSelectedListener(this);
-
-        if(FirebaseAuth.getInstance().getCurrentUser() != null)
-            navigationView.inflateMenu(R.menu.customer_menu);
-        else
-            navigationView.inflateMenu(R.menu.visitor_menu);
+        
+        
 
         //set viewpager adapter
         ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -95,29 +124,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.searchChaleh:
-                break;
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this,HomeActivity.class));
-                break;
-            case R.id.login:
-                startActivity(new Intent(this,login.class));
-                break;
-            case R.id.register:
-                startActivity(new Intent(this,Signup.class));
-                break;
-            case R.id.history:
-                startActivity(new Intent(this,MyReservation.class));
-                break;
-            case R.id.myInfo:
-                startActivity(new Intent(this,MyInformation.class));
-                break;
-            default:
-                super.onOptionsItemSelected(item);
-        }
-
+        AlmortahDB almortahDB = new AlmortahDB(this);
+        almortahDB.menu(item);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

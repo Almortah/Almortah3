@@ -19,4 +19,10 @@
         android:showAsAction="withText"
         app:showAsAction="withText"
         tools:ignore="AppCompatResource" />
+
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_copyright_black_24dp"
+        android:title="@string/about"/>
+
 </menu>

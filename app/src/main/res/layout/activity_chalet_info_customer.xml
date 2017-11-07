@@ -73,9 +73,7 @@
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-android:layout_margin="10dp"
-        android:layout_below="@+id/chaletLocation"
-        android:text="Situated in Rimal District, 10 km from King Fahd Stadium, Antola features an outdoor pool, barbecue and sun terrace. The accommodation is air conditioned and boasts a private pool, a spa bath and a hot tub. Riyadh Gallery Mall is 21 km from the property. Free private parking is available on site."
+        android:layout_margin="10dp"
         />
 
     <LinearLayout

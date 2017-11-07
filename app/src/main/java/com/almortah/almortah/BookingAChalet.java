@@ -2,8 +2,10 @@ package com.almortah.almortah;
 
 import android.content.Intent;
 import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -36,6 +38,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
     private DrawerLayout drawer;
 
     private boolean isBusy = false;
+    private boolean isWeekend = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
         final String ownerID = info.getString("ownerID");
         final String chaletNb = info.getString("chaletNb");
         final String name = info.getString("name");
+        final Chalet chalet = (Chalet) getIntent().getSerializableExtra("chalet");
 
         final String normalPrice = info.getString("normalPrice");
         final String weekendPrice = info.getString("weekendPrice");
@@ -65,12 +69,10 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+        if (FirebaseAuth.getInstance().getCurrentUser() != null)
             navigationView.inflateMenu(R.menu.customer_menu);
         else
             navigationView.inflateMenu(R.menu.visitor_menu);
-
-
 
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
@@ -82,11 +84,17 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
         t = (TextView) findViewById(R.id.dateChoose);
         checkBusy = (Button) findViewById(R.id.checkBusy);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                if(view.getDate() == System.currentTimeMillis())
+                if (view.getDate() == System.currentTimeMillis())
                     return;
-                date = dayOfMonth+ "-" + (month+1) + "-" + year;
+                date = dayOfMonth + "-" + (month + 1) + "-" + year;
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                if (dayOfWeek == 5 || dayOfWeek == 6 || dayOfWeek == 7)
+                   isWeekend = true;
             }
         });
 
@@ -94,17 +102,17 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
         checkBusy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(date == null)
+                if (date == null)
                     return;
-  //              long milliseconds = calendarView.getDate();
-      //          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    //            Date today = new Date(milliseconds);
+                //              long milliseconds = calendarView.getDate();
+                //          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                //            Date today = new Date(milliseconds);
 //                date = sdf.format(today);
                 reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(ownerID).child(chaletNb).child("busyOn");
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()) {
+                        if (dataSnapshot.exists()) {
                             finalDates = dataSnapshot.getValue().toString();
                             String[] busyDates = dataSnapshot.getValue().toString().split(",");
                             for (int i = 0; i < busyDates.length; i++) {
@@ -112,22 +120,22 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
                                     isBusy = true;
                             }
                         }
-                        if(!isBusy) {
-                            Toast.makeText(BookingAChalet.this, R.string.freeDay,Toast.LENGTH_SHORT).show();
-                            Intent toConfirm = new Intent(BookingAChalet.this,ConfirmBooking.class);
-                            toConfirm.putExtra("date",date);
-                            toConfirm.putExtra("ownerID",ownerID);
-                            toConfirm.putExtra("chaletNb",chaletNb);
-                            if(finalDates == null)
+                        if (!isBusy) {
+                            Toast.makeText(BookingAChalet.this, R.string.freeDay, Toast.LENGTH_SHORT).show();
+                            Intent toConfirm = new Intent(BookingAChalet.this, ConfirmBooking.class);
+                            toConfirm.putExtra("date", date);
+                            toConfirm.putExtra("ownerID", ownerID);
+                            toConfirm.putExtra("chaletNb", chaletNb);
+                            if (finalDates == null)
                                 finalDates = "";
-                            toConfirm.putExtra("price",normalPrice);
-                            toConfirm.putExtra("finalDate",finalDates);
-                            toConfirm.putExtra("name",name);
+                                toConfirm.putExtra("price", isWeekend);
+                            toConfirm.putExtra("finalDate", finalDates);
+                            toConfirm.putExtra("name", name);
+                            toConfirm.putExtra("chalet",chalet);
                             startActivity(toConfirm);
 
-                        }
-                        else {
-                            Toast.makeText(BookingAChalet.this,R.string.busyDay,Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(BookingAChalet.this, R.string.busyDay, Toast.LENGTH_SHORT).show();
                             isBusy = false;
 
                         }
@@ -148,26 +156,8 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.searchChaleh:
-                break;
-            case R.id.logout:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this,HomeActivity.class));
-                break;
-            case R.id.login:
-                startActivity(new Intent(this,login.class));
-                break;
-            case R.id.register:
-                startActivity(new Intent(this,Signup.class));
-                break;
-            case R.id.history:
-                startActivity(new Intent(this,MyReservation.class));
-                break;
-            default:
-                super.onOptionsItemSelected(item);
-        }
-
+        AlmortahDB almortahDB = new AlmortahDB(this);
+        almortahDB.menu(item);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -183,4 +173,5 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
     }
 
 }
+
 

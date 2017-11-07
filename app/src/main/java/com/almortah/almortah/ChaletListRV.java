@@ -124,6 +124,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                                                      toChaletInfo.putExtra("latitude", chalet.getLatitude());
                                                      toChaletInfo.putExtra("longitude", chalet.getLongitude());
                                                      toChaletInfo.putExtra("location",holder.chaletLocation.getText().toString());
+                                                     toChaletInfo.putExtra("description",chalet.getDescription());
 
                                                      toChaletInfo.putExtra("chaletNb", chalet.getChaletNm());
                                                      context.startActivity(toChaletInfo);
