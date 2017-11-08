@@ -94,6 +94,10 @@
         \nقسم هندسة البرمجيات</string>
     <string name="us">عبدالله المهري\nزياد الخنين\nعبدالله الاجرد\nعبدالله المالكي</string>
     <string name="overview">يهدف هذا المشروع إلى تحسين تجربة المستخدمين عندما يريدون حجز استراحة أو شاليه في المملكة العربية السعودية. المرتاح يتيح للعملاء للبحث عن الاستراحات والشاليهات بكفاءة. وعلاوة على ذلك، فإنه يسمح لمالكي العقار لإدارة عملية الحجز بسهولة، وذلك باستخدام هواتفهم الذكية.</string>
+    <string name="dummy_button">زر</string>
+    <string name="dummy_content">محتوى</string>
+    <string name="title_activity_fullscreen">شاشة كاملة</string>
+    <string name="google_maps_key">AIzaSyC3kyuKrNC7kLK6eEzoK94JmxjrHl1tRDw</string>
 
 
 </resources>
