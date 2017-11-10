@@ -106,6 +106,8 @@
     <string name="owners">مالكي الشاليهات</string>
     <string name="managePromotion">ادارة الترويج</string>
     <string name="restsChalets">الاستراحات و الشاليهات</string>
+    <string name="theEmail">الايميل</string>
+    <string name="phoneNum">رقم الجوال</string>
 
 
 </resources>
