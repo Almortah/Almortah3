@@ -98,6 +98,14 @@
     <string name="dummy_content">محتوى</string>
     <string name="title_activity_fullscreen">شاشة كاملة</string>
     <string name="google_maps_key">AIzaSyC3kyuKrNC7kLK6eEzoK94JmxjrHl1tRDw</string>
+    <string name="viewUsers">الزبائن والمالكين</string>
+    <string name="approve">توثيق مالكي الشاليهات</string>
+    <string name="ban">حظر زبون او مالك شالية</string>
+    <string name="complain">الشكاوي</string>
+    <string name="customers">الزبائن</string>
+    <string name="owners">مالكي الشاليهات</string>
+    <string name="managePromotion">ادارة الترويج</string>
+    <string name="restsChalets">الاستراحات و الشاليهات</string>
 
 
 </resources>

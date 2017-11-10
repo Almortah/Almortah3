@@ -31,8 +31,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustResize|adjustPan">
-        <activity android:name=".Signup" android:label="@string/register" />
-        <activity android:name=".login" android:label="@string/login" />
+        <activity
+            android:name=".Signup"
+            android:label="@string/register" />
+        <activity
+            android:name=".login"
+            android:label="@string/login" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,8 +52,8 @@
             android:label="@string/myChalets" />
         <activity
             android:name=".AddChalet"
-            android:label="@string/newChalet"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/newChalet" />
 
         <provider
             android:name="com.werb.pickphotoview.provider.PickProvider"
@@ -79,19 +83,32 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".ChaletInfoCustomer" />
-        <activity android:name=".BookingAChalet" android:label="@string/reservation" />
-        <activity android:name=".ConfirmBooking" android:label="@string/confirm" />
-        <activity android:name=".MyReservation" android:label="@string/history" />
+        <activity
+            android:name=".BookingAChalet"
+            android:label="@string/reservation" />
+        <activity
+            android:name=".ConfirmBooking"
+            android:label="@string/confirm" />
+        <activity
+            android:name=".MyReservation"
+            android:label="@string/history" />
         <activity android:name=".MapActivity" />
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
-        <activity android:name=".HomePage"  />
-        <activity android:name=".Promotion" android:label="@string/promotion" />
-        <activity android:name=".MyInformation" android:label="@string/myInfo" />
-        <activity android:name=".About" android:label="@string/about"></activity>
+        <activity android:name=".HomePage" />
+        <activity
+            android:name=".Promotion"
+            android:label="@string/promotion" />
+        <activity
+            android:name=".MyInformation"
+            android:label="@string/myInfo" />
+        <activity
+            android:name=".About"
+            android:label="@string/about" />
+        <activity android:name=".AdminPage"></activity>
     </application>
 
 </manifest>

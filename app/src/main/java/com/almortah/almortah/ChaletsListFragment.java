@@ -7,8 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,17 +29,9 @@ public class ChaletsListFragment extends Fragment {
 
     private ArrayList<Chalet> promotChalets = new ArrayList<>();
     private ArrayList<Chalet> chalets = new ArrayList<>();
-    private ArrayList<String> locations = new ArrayList<>();
-    private ListView listView;
-    private ListView vipListView;
     int i = 0;
-
-    private RecyclerView recyclerView;
     private ChaletListRV mAdapter;
-
-    private RecyclerView promotView;
     private ChaletListRV promotAdapter;
-    ProgressBar mProgressBar;
 
     private RecyclerView rv;
     public ChaletsListFragment() {
@@ -58,21 +48,8 @@ public class ChaletsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.activity_chalet_list, container, false);
-
-        //recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        //final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
-        //recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new ChaletListRV(getContext() ,chalets);
-        //recyclerView.setAdapter(mAdapter);
-
-        //promotView = (RecyclerView) view.findViewById(R.id.promotion_view);
-        //final RecyclerView.LayoutManager promotLayoutManager = new LinearLayoutManager(view.getContext());
-        //promotView.setLayoutManager(promotLayoutManager);
-        //promotView.setItemAnimator(new DefaultItemAnimator());
         promotAdapter = new ChaletListRV(getContext() ,promotChalets);
-        //promotView.setAdapter(promotAdapter);
-
         rv = (RecyclerView) view.findViewById(R.id.recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 

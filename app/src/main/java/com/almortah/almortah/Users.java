@@ -16,6 +16,15 @@ public class Users {
 
     public Users(){}
 
+    public Users(String name, String email, String nbChalets, String phone, String type, String username) {
+        Name = name;
+        this.email = email;
+        this.nbChalets = nbChalets;
+        this.phone = phone;
+        this.type = type;
+        this.username = username;
+    }
+
     public String getName() {
         return Name;
     }

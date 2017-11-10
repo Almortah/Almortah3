@@ -93,7 +93,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                 try {
                     List<Address> addresses = geo.getFromLocation(Double.parseDouble(chalet.getLatitude()), Double.parseDouble(chalet.getLongitude()), 1);
                     if (addresses.isEmpty()) {
-                        holder.chaletLocation.setText("Waiting for Location");
+                        ;
 
                     }
                     else {

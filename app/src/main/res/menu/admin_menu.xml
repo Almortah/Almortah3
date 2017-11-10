@@ -2,4 +2,55 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/adminPage"
+        android:title="@string/restsChalets"
+        android:icon="@drawable/ic_home_black_24dp"/>
+
+    <item
+        android:id="@+id/users"
+        android:title="@string/viewUsers"
+        android:icon="@drawable/ic_users"/>
+
+    <item
+        android:id="@+id/approve"
+        android:title="@string/approve"
+        android:icon="@drawable/ic_approve"/>
+
+    <item
+        android:id="@+id/promotion"
+        android:title="@string/managePromotion"
+        android:icon="@drawable/ic_promotional"/>
+
+
+    <item
+        android:id="@+id/ban"
+        android:icon="@drawable/ic_block"
+        android:title="@string/ban"/>
+
+    <item
+        android:id="@+id/notify"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/notify"/>
+
+    <item
+        android:id="@+id/complain"
+        android:icon="@drawable/ic_sentiment_dissatisfied_black_24dp"
+        android:title="@string/complain" />
+
+    <item
+        android:id="@+id/feed"
+        android:icon="@drawable/ic_feedback_black_24dp"
+        android:title="@string/feedback" />
+
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_directions_run_black_24dp"
+        android:title="@string/logout" />
+    <item
+        android:id="@+id/close"
+        android:title="@string/drawer_close"
+        android:icon="@drawable/ic_close_black_24dp"/>
+
 </menu>

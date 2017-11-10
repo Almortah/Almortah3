@@ -199,6 +199,43 @@ public class AlmortahDB extends Activity {
         return mAuth;
     }
 
+    public void adminMenu(MenuItem item){
+        switch(item.getItemId()) {
+            case R.id.searchChaleh:
+                break;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                context.startActivity(new Intent(context, HomeActivity.class));
+                break;
+            case R.id.login:
+                context.startActivity(new Intent(context, login.class));
+                break;
+            case R.id.register:
+                context.startActivity(new Intent(context, Signup.class));
+                break;
+            case R.id.history:
+                context.startActivity(new Intent(context, MyReservation.class));
+                break;
+            case R.id.newChalet:
+                context.startActivity(new Intent(context, AddChalet.class));
+                break;
+            case R.id.about:
+                context.startActivity(new Intent(context, About.class));
+                break;
+            case R.id.homePage:
+                context.startActivity(new Intent(context, HomePage.class));
+                break;
+            case R.id.myInfo:
+                context.startActivity(new Intent(context, MyInformation.class));
+                break;
+            case R.id.myChalet:
+                context.startActivity(new Intent(context, MyChalets.class));
+                break;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+    }
+
 
 
 }

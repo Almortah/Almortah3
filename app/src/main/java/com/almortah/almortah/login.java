@@ -112,8 +112,13 @@ public class login extends AppCompatActivity  {
                         Intent intent = new Intent(login.this, HomePage.class);
                         startActivity(intent);
                     }
-                    if (typeValue.equals("2")) {
+                    else if (typeValue.equals("2")) {
                         startActivity(new Intent(login.this,  MyChalets.class));
+                    }
+
+                    else {
+                        startActivity(new Intent(login.this,  AdminPage.class));
+
                     }
                 }
 

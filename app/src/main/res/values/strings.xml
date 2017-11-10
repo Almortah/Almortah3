@@ -42,7 +42,7 @@
     <string name="mapView">Show By Maps</string>
     <string name="doneUpload">Upload successfully!</string>
     <string name="promot">ALMORTAH team will keep the promoted rest-house and chalet always in
-        the top in the home page and we will do our best to keep your rest-house/chalet is the best recommended place.
+        the top of the home page and we will do our best to keep your rest-house/chalet to be the best recommended place.
     </string>
     <string name="offer">Offer</string>
     <string name="per">Period</string>
@@ -143,6 +143,16 @@
     <string name="start">Start</string>
     <string name="startDate">ALMORTAH is a graduation project during the year of 2017 </string>
     <string name="donePromot">Your rest-house/chalet has been promoted!</string>
+    <string name="viewUsers">Customers and Owners</string>
+    <string name="approve">Approve owners</string>
+    <string name="ban">Ban a customer/owner</string>
+    <string name="complain">Complaints</string>
+    <string name="customers">Customers</string>
+    <string name="owners">Owners</string>
+    <string name="managePromotion">Manage Promotions</string>
+    <string name="restsChalets">Rest-houses/Chalets</string>
+    <string name="theEmail">Email</string>
+    <string name="phoneNum">Phone number</string>
 
 
 </resources>
