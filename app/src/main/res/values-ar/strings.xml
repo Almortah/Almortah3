@@ -108,6 +108,7 @@
     <string name="restsChalets">الاستراحات و الشاليهات</string>
     <string name="theEmail">الايميل</string>
     <string name="phoneNum">رقم الجوال</string>
+    <string name="search">البحث</string>
 
 
 </resources>

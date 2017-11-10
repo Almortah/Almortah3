@@ -153,6 +153,7 @@
     <string name="restsChalets">Rest-houses/Chalets</string>
     <string name="theEmail">Email</string>
     <string name="phoneNum">Phone number</string>
+    <string name="search">Search</string>
 
 
 </resources>
