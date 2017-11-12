@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Chalet implements Serializable {
 
-    private String id;
+    private String chaletID;
     private String images;
     private String latitude;
     private String description;
@@ -29,7 +29,7 @@ public class Chalet implements Serializable {
                   String description, String longitude, String chaletNm,
                   String eidPrice, String name, String normalPrice, String ownerID,
                   String promotion, String weekendPrice, String nbOfImages) {
-        this.id = id;
+        this.chaletID = id;
         this.images = images;
         this.latitude = latitude;
         this.description = description;
@@ -48,8 +48,8 @@ public class Chalet implements Serializable {
     }
 
 
-    public String getId() {
-        return id;
+    public String getChaletID() {
+        return chaletID;
     }
 
     public String getLatitude() {

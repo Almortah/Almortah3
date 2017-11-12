@@ -33,8 +33,6 @@ public class login extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG,"Error");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mEmailField = (EditText) findViewById(R.id.email);
@@ -49,7 +47,6 @@ public class login extends AppCompatActivity  {
         });
 
         mAuth = FirebaseAuth.getInstance();
-
         // Check if user is signed in
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null)
@@ -118,16 +115,18 @@ public class login extends AppCompatActivity  {
 
                     else {
                         startActivity(new Intent(login.this,  AdminPage.class));
-
                     }
                 }
+                else {
+                        startActivity(new Intent(login.this,  Block.class));
+                        Toast.makeText(getBaseContext(),"WHAT?",Toast.LENGTH_SHORT).show();
+                    }
 
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                     Log.i("Error","Error fetch type");
-
                 }
             });
 

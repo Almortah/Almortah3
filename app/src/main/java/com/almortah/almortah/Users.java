@@ -12,17 +12,19 @@ public class Users {
     private String phone;
     private String type;
     private String username;
+    private String userID;
 
 
     public Users(){}
 
-    public Users(String name, String email, String nbChalets, String phone, String type, String username) {
+    public Users(String name, String email, String nbChalets, String phone, String type, String username, String id) {
         Name = name;
         this.email = email;
         this.nbChalets = nbChalets;
         this.phone = phone;
         this.type = type;
         this.username = username;
+        userID = id;
     }
 
     public String getName() {
@@ -47,5 +49,9 @@ public class Users {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 }

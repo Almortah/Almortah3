@@ -23,6 +23,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Locale locale = new Locale("en", "UK");
+        Locale.setDefault(locale);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+
+
         mAuth.signOut();
         guestButton = (Button) findViewById(R.id.guestButton);
         signinButton = (Button) findViewById(R.id.signinButton);
@@ -78,6 +86,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
+        config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config,
                 getBaseContext().getResources().getDisplayMetrics());
         recreate();

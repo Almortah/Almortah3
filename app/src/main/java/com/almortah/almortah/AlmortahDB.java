@@ -52,6 +52,7 @@ public class AlmortahDB extends Activity {
                         hashMap.put("phone", phone);
                         hashMap.put("email", email);
                         hashMap.put("nbChalets","0");
+                        hashMap.put("userID",user.getUid());
                         hashMap.put("type", String.valueOf(type));
                         almortahDB.child("users").child(user.getUid()).setValue(hashMap);
                 }

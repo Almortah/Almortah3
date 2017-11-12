@@ -10,30 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/pick_white"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@color/cardColor">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/chaletImg"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/logo_noname" />
-
-            </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,6 +29,17 @@
                 android:layout_height="wrap_content">
                 <TableRow
                     android:padding="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:text="@string/fullname" />
+
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -61,10 +56,21 @@
                         android:textStyle="bold"
                         android:layout_weight="1"
                         android:text="@string/phoneNum" />
+
+
                 </TableRow>
 
             <TableRow
                 android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fullname"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:gravity="center" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,15 +102,23 @@
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:background="@color/colorBlue"
-                android:text="@string/manage"
+                android:text="@string/detail"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/pick_white"/>
-            <Button
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/logo_noname" />
+
+
+                <Button
                 android:id="@+id/delete"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:background="@color/colorDarkGrey"
-                android:text="@string/delete"
+                android:text="@string/block"
                 android:layout_margin="10dp"
                 android:textColor="@color/pick_white"/>
 

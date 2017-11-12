@@ -109,6 +109,24 @@
     <string name="theEmail">الايميل</string>
     <string name="phoneNum">رقم الجوال</string>
     <string name="search">البحث</string>
+    <string name="block">حظر</string>
+    <string name="info">تفاصيل الحساب</string>
+    <string name="ok">حسنا</string>
+    <string name="type">نوع الحساب</string>
+    <string name="nbChalets">عدد الاملاك</string>
+    <string name="detail">التفاصيل</string>
+    <string name="blockPage">لقد تم حظرك!</string>
+    <string name="blockReson">اسباب الحظر</string>
+    <string name="reson">لماذا تريد منع هذا المستخدم؟</string>
+    <string name="reasons">الآسباب</string>
+    <string name="contact">اتصل بالادارة</string>
+
+    <string-array name="reasons">
+        <item>مستخدم كاذب/غير مرغوب بة</item>
+        <item>السب والشتم</item>
+        <item>كثرة الشكاوي</item>
+        <item>محاولة اختراق التطبيق</item>
+    </string-array>
 
 
 </resources>

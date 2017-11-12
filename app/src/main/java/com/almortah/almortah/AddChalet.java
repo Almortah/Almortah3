@@ -215,7 +215,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("latitude", latitude);
                 hashMap.put("longitude", longitude);
                 hashMap.put("nbImages", String.valueOf(imgNb));
-                hashMap.put("id", id);
+                hashMap.put("chaletID", id);
                 mDatabase.child("chalets").child(id).setValue(hashMap);
 
                 HashMap<String, String> dateHashMap = new HashMap<String, String>();
@@ -240,8 +240,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                         .setSpanCount(4)       //SpanCount
                         .setLightStatusBar(true)  // custom theme
                         .setStatusBarColor("#0083D7")   // custom statusBar
-                        .setToolbarColor("#52bb6c")   // custom toolbar
-                        .setToolbarIconColor("#0083D7")   // custom toolbar icon
+                        // custom toolbar icon
                         .setSelectIconColor("#52bb6c")  // custom select icon
                         .start();
 

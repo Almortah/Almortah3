@@ -31,6 +31,12 @@
 
 
     <!-- Admin strings -->
+    <string-array name="reasons">
+        <item>Spam/Fake user</item>
+        <item>Using hateful/inflammatory language</item>
+        <item>Many complaints</item>
+        <item>Trying to hack or exploit the app</item>
+    </string-array>
 
 
     <!-- Owner strings  -->
@@ -154,6 +160,17 @@
     <string name="theEmail">Email</string>
     <string name="phoneNum">Phone number</string>
     <string name="search">Search</string>
+    <string name="block">Ban</string>
+    <string name="info">User details</string>
+    <string name="ok">OK</string>
+    <string name="type">Type</string>
+    <string name="nbChalets">Number of chalets</string>
+    <string name="detail">Details</string>
+    <string name="blockPage">You have been blocked</string>
+    <string name="blockReson">Block reasons</string>
+    <string name="reson">Why you want to ban this user?</string>
+    <string name="reasons">Reasonos</string>
+    <string name="contact">Contact to admin</string>
 
 
 </resources>

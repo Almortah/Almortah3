@@ -60,7 +60,7 @@ public class Promotion extends AppCompatActivity implements NavigationView.OnNav
                                         @Override
                                         public void onClick(DialogInterface arg0, int arg1) {
                                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                            mDatabase.child("chalets").child(chalet.getId()).child("promotion").setValue("1");
+                                            mDatabase.child("chalets").child(chalet.getChaletID()).child("promotion").setValue("1");
                                             Toast.makeText(getApplicationContext(),R.string.donePromot,Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(getBaseContext(),MyChalets.class));
                                         }
