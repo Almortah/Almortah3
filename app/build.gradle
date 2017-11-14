@@ -48,7 +48,6 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.5'
 
 
-
 }
 
 repositories {
@@ -138,5 +137,11 @@ dependencies {
 }
 dependencies {
     compile 'com.android.support:design:25.2.0'
+}
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:+'
 }
 

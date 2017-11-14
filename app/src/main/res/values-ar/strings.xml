@@ -100,7 +100,6 @@
     <string name="google_maps_key">AIzaSyC3kyuKrNC7kLK6eEzoK94JmxjrHl1tRDw</string>
     <string name="viewUsers">الزبائن والمالكين</string>
     <string name="approve">توثيق مالكي الشاليهات</string>
-    <string name="ban">حظر زبون او مالك شالية</string>
     <string name="complain">الشكاوي</string>
     <string name="customers">الزبائن</string>
     <string name="owners">مالكي الشاليهات</string>
@@ -127,6 +126,11 @@
         <item>كثرة الشكاوي</item>
         <item>محاولة اختراق التطبيق</item>
     </string-array>
+    <string name="ban">الحسابات المحظورة</string>
+    <string name="searchByName">بحث بواسطة آسم الاستراحة/الشالية</string>
+    <string name="filter">آو خصص النتائج بناءً على</string>
+    <string name="maxPrice">الاعلى</string>
+    <string name="minPrice">الاقل</string>
 
 
 </resources>

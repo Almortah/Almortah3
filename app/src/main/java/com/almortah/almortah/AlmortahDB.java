@@ -157,6 +157,7 @@ public class AlmortahDB extends Activity {
     public void menu(MenuItem item){
         switch(item.getItemId()) {
             case R.id.searchChaleh:
+                context.startActivity(new Intent(context, Search.class));
                 break;
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
@@ -214,11 +215,11 @@ public class AlmortahDB extends Activity {
             case R.id.register:
                 context.startActivity(new Intent(context, Signup.class));
                 break;
-            case R.id.history:
-                context.startActivity(new Intent(context, MyReservation.class));
+            case R.id.chalets:
+                context.startActivity(new Intent(context, HomePage.class));
                 break;
-            case R.id.newChalet:
-                context.startActivity(new Intent(context, AddChalet.class));
+            case R.id.users:
+                context.startActivity(new Intent(context, AdminPage.class));
                 break;
             case R.id.about:
                 context.startActivity(new Intent(context, About.class));

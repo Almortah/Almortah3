@@ -245,26 +245,39 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         mDemoSlider.addOnPageChangeListener(ChaletInfoCustomer.this);
 
         Button book = (Button) findViewById(R.id.book);
-        book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mAuth.getCurrentUser() == null) {
-                    Toast.makeText(getApplicationContext(), R.string.bookVistor, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getBaseContext(), login.class));
-                    return;
+
+        if(!FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("abod@admin.com")) {
+            book.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mAuth.getCurrentUser() == null) {
+                        Toast.makeText(getApplicationContext(), R.string.bookVistor, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getBaseContext(), login.class));
+                        return;
+                    }
+                    Intent toBooking = new Intent(ChaletInfoCustomer.this, BookingAChalet.class);
+                    toBooking.putExtra("ownerID", ownerID);
+                    toBooking.putExtra("chaletNb", chaletNb);
+                    toBooking.putExtra("normalPrice", normalPrice);
+                    toBooking.putExtra("weekendPrice", weekendPrice);
+                    toBooking.putExtra("name", name);
+                    toBooking.putExtra("chalet", chalet);
+                    startActivity(toBooking);
+
+
                 }
-                Intent toBooking = new Intent(ChaletInfoCustomer.this, BookingAChalet.class);
-                toBooking.putExtra("ownerID", ownerID);
-                toBooking.putExtra("chaletNb", chaletNb);
-                toBooking.putExtra("normalPrice", normalPrice);
-                toBooking.putExtra("weekendPrice", weekendPrice);
-                toBooking.putExtra("name", name);
-                toBooking.putExtra("chalet",chalet);
-                startActivity(toBooking);
+            });
+        }
+        else {
+            book.setText(R.string.delete);
+            book.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                }
+            });
+        }
 
-            }
-        });
 
     }
 
