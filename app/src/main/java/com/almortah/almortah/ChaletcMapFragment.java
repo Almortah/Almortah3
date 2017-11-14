@@ -163,8 +163,8 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                     double longitude=Double.parseDouble(longitudeString);
                     LatLng newLocation = new LatLng(latitude,longitude);
                     chalets.add(chalet);
-                    // img.add(snapm.child("ImageUrl").toString());
-                    // mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
+
+                   //  mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
 
                 }
 
@@ -172,7 +172,8 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                     //addMarker(mGoogleMap);
                     mGoogleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude())))
-                    .title(chalets.get(i).getName()));
+                    .title(chalets.get(i).getName()))
+                    ;
                     ;
                     Log.i("Name " ,chalets.get(i).getName());
 
@@ -185,8 +186,11 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+
         MapInfoWindowAdapter adapter = new MapInfoWindowAdapter(this.getContext(),getLayoutInflater());
-        //mGoogleMap.setInfoWindowAdapter(adapter);
+        mGoogleMap.setInfoWindowAdapter(adapter);
+
+
 
     }
 
