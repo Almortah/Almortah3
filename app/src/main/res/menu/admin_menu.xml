@@ -4,9 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/adminPage"
+        android:id="@+id/chalets"
         android:title="@string/restsChalets"
-        android:icon="@drawable/ic_home_black_24dp"/>
+        android:icon="@drawable/ic_chaletss"
+        />
 
     <item
         android:id="@+id/users"

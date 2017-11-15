@@ -151,7 +151,7 @@
     <string name="donePromot">Your rest-house/chalet has been promoted!</string>
     <string name="viewUsers">Customers and Owners</string>
     <string name="approve">Approve owners</string>
-    <string name="ban">Ban a customer/owner</string>
+    <string name="ban">Blacklist</string>
     <string name="complain">Complaints</string>
     <string name="customers">Customers</string>
     <string name="owners">Owners</string>
@@ -169,8 +169,12 @@
     <string name="blockPage">You have been blocked</string>
     <string name="blockReson">Block reasons</string>
     <string name="reson">Why you want to ban this user?</string>
-    <string name="reasons">Reasonos</string>
+    <string name="reasons">Reasons</string>
     <string name="contact">Contact to admin</string>
+    <string name="searchByName">Search for specific rest-house/chalet</string>
+    <string name="filter">Or filter your result</string>
+    <string name="maxPrice">Max</string>
+    <string name="minPrice">Min</string>
 
 
 </resources>

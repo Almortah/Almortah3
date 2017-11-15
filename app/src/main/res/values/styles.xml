@@ -34,5 +34,9 @@
         <item name="android:navigationBarColor">@color/pick_bottom</item>
     </style>
 
+    <style name="DatePicker" parent="@android:style/Theme.Holo.Light">
+        <item name="android:datePickerStyle">@android:style/Widget.DatePicker</item>
+    </style>
+
 
 </resources>

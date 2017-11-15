@@ -25,11 +25,11 @@
 
     <application
         android:allowBackup="true"
+        android:configChanges="orientation|screenSize|keyboardHidden"
         android:icon="@mipmap/logo_noname"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_noname"
         android:supportsRtl="true"
-        android:configChanges="locale"
         android:theme="@style/AppTheme">
         <activity
             android:name=".Signup"
@@ -108,8 +108,11 @@
             android:name=".About"
             android:label="@string/about" />
         <activity android:name=".AdminPage" />
-        <activity android:name=".Block"
-            android:label="@string/blockPage"></activity>
+        <activity
+            android:name=".Block"
+            android:label="@string/blockPage" />
+        <activity android:name=".Search" />
+        <activity android:name=".SearchResult"></activity>
     </application>
 
 </manifest>

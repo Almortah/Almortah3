@@ -47,7 +47,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         toEnglish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setLocale("en","UK");
+                setLocale("en","US");
             }
         });
 
@@ -82,13 +82,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void setLocale(String lang, String country) {
         //create a string for country
         //use constructor with country
-        Locale locale = new Locale(lang, country);
+
+        Configuration mainConfig = new Configuration(getResources().getConfiguration());
+        String languageToLoad = lang;
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        mainConfig.setLocale(locale);
+        getResources().updateConfiguration(mainConfig, null);
+
+        /*Locale locale = new Locale(lang, country);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
+                getBaseContext().getResources().getDisplayMetrics());*/
         recreate();
     }
 

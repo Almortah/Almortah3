@@ -1,8 +1,5 @@
 package com.almortah.almortah;
 
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,8 +17,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Locale;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ViewPager viewPager;
@@ -54,7 +48,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     else if(type == -1)
                         navigationView.inflateMenu(R.menu.visitor_menu);
                     else
-                        navigationView.inflateMenu(R.menu.owner_menu);
+                        navigationView.inflateMenu(R.menu.admin_menu);
                 }
 
                 @Override
@@ -138,18 +132,6 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         } else {
             super.onBackPressed();
         }
-    }
-
-    public void setLocale(String lang) {
-        Locale myLocale;
-        myLocale = new Locale(lang);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(this, HomePage.class);
-        startActivity(refresh);
     }
 
 }
