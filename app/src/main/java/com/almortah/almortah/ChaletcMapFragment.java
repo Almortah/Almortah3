@@ -2,6 +2,7 @@ package com.almortah.almortah;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Criteria;
@@ -142,7 +143,49 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
             userPostion = new LatLng(location.getLatitude(), location.getLongitude());
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(5));
+        if (googleMap != null) {
 
+
+            mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(final Marker marker) {
+                    Log.i("heyy","heyy");
+
+                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot snapm : dataSnapshot.getChildren() ){
+
+                                if (snapm.child("name").getValue().toString().equals(marker.getTitle().toString())) {
+                                    Chalet tmp = snapm.getValue(Chalet.class);
+                                    Log.i("heyy","heyy");
+                                    Intent toChaletInfo = new Intent(getContext(), ChaletInfoCustomer.class);
+                                    toChaletInfo.putExtra("chalet",tmp);
+                                    toChaletInfo.putExtra("name", tmp.getName());
+                                    toChaletInfo.putExtra("normalPrice", tmp.getNormalPrice());
+                                    toChaletInfo.putExtra("weekendPrice", tmp.getWeekendPrice());
+                                    toChaletInfo.putExtra("eidPrice", tmp.getEidPrice());
+                                    toChaletInfo.putExtra("images", tmp.getChaletNm());
+                                    toChaletInfo.putExtra("ownerID", tmp.getOwnerID());
+                                    toChaletInfo.putExtra("latitude", tmp.getLatitude());
+                                    toChaletInfo.putExtra("longitude", tmp.getLongitude());
+//                                   toChaletInfo.putExtra("location",holder.chaletLocation.getText().toString());
+                                    toChaletInfo.putExtra("description",tmp.getDescription());
+
+                                    getContext().startActivity(toChaletInfo);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            });
+
+        }
 
         // mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,
         //       getLayoutInflater(),
@@ -171,8 +214,8 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                 for (int i=0;i<chalets.size();i++){
                     //addMarker(mGoogleMap);
                     mGoogleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude())))
-                    .title(chalets.get(i).getName()))
+                            .position(new LatLng(Double.parseDouble(chalets.get(i).getLatitude()),Double.parseDouble(chalets.get(i).getLongitude()))))
+                    .setTitle(chalets.get(i).getName());
                     ;
                     ;
                     Log.i("Name " ,chalets.get(i).getName());
@@ -229,19 +272,8 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
         return returnedBitmap;
     } */
 
-    private void addMarker(GoogleMap map, double lat, double lon,
-                           int title, int snippet, String image) {
-        Marker marker=
-                map.addMarker(new MarkerOptions().position(new LatLng(lat, lon))
-                        .title(getString(title))
-                );
 
-        if (image != null) {
-            images.put(marker.getId(),
-                    Uri.parse("http://misc.commonsware.com/mapsv2/"
-                            + image));
-        }
-    }
+
 
 
 }

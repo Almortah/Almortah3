@@ -2,6 +2,7 @@ package com.almortah.almortah;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Observable;
 import android.net.Uri;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.GoogleMap;
@@ -60,65 +62,18 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private DatabaseReference mDatabase;
     private StorageReference storageReference;
     private Chalet chalet;
-    private boolean query;
-    private ImageView img;
+    private boolean query=false;
+    public ImageView img;
+    public TextView chaletName;
     private String lat;
     private String log;
-    private Executor executor;
-    private OnCompleteListener<Chalet> listener;
-
-    public Task<String> getChalet(final String lat,final String log) {
-        final TaskCompletionSource<String> tcs = new TaskCompletionSource<>();
-        mDatabase =  FirebaseDatabase.getInstance().getReference().child("chalets");
-        mDatabase.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                Log.i("MarkerPostion","112211");
-                for (DataSnapshot snapm: dataSnapshot.getChildren()) {
-                    Log.i("MarkerPostion",snapm.child("latitude").getValue().toString());
-                    Log.i("Key",snapm.getKey());
-                    if ( lat.equals(snapm.child("latitude").getValue().toString()) && log.equals(snapm.child("longitude").getValue().toString()) ){
-                        chalet = snapm.getValue(Chalet.class);
-                        Log.i("Owner ID","9999");
-                    }
-
-                }
+    private Marker markerShowingInfoWindow;
+    private Marker mLastSelectedMarker;
+    private Uri imgUrl;
+    private String nameHolder;
 
 
 
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-
-
-        });
-
-        return tcs.getTask();
-    }
-
-    public Task<String> insertImage(final Chalet chalet) {
-        final TaskCompletionSource<String> tcs = new TaskCompletionSource<>();
-        storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm()).child("1");
-
-        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri).into(img);
-                //           textView.setText(chalet.getName());
-                Log.i("working","11111");
-            }
-        });
-
-        return tcs.getTask();
-    }
 
 
 
@@ -129,6 +84,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoWindow(Marker marker) {
+
         return null;
     }
 
@@ -136,84 +92,185 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     public View getInfoContents(final Marker marker) {
 
 
-
         mDatabase = FirebaseDatabase.getInstance().getReference().child("chalets");
         storageReference=FirebaseStorage.getInstance().getReference();
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View v = inflater.inflate(R.layout.marker_tag,null);
-
-       final LatLng latlng = marker.getPosition();
-       Double doubleLat = latlng.latitude;
-
-         lat = String.valueOf(latlng.latitude);
-         log = String.valueOf(latlng.longitude);
-        Log.i("MarkerPostion",lat);
-
-        img = (ImageView) v.findViewById(R.id.chaletImg);
-
-       // final TextView textView = (TextView) v.findViewById(R.id.markerText);
-        final Semaphore semaphore = new Semaphore(0);
-       mDatabase.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        final  View v = inflater.inflate(R.layout.marker_tag,null);
 
 
-                Log.i("MarkerPostion","112211");
-                for (DataSnapshot snapm: dataSnapshot.getChildren()) {
-                    Log.i("MarkerPostion",snapm.child("latitude").getValue().toString());
-                    Log.i("Key",snapm.getKey());
-                    if ( lat.equals(snapm.child("latitude").getValue().toString()) && log.equals(snapm.child("longitude").getValue().toString()) ){
-                        chalet = snapm.getValue(Chalet.class);
-                        Log.i("Owner ID","9999");
-                        semaphore.release();
-                    }
 
-                }
-                try {
-                    semaphore.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm()).child("1");
-                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            img = (ImageView) v.findViewById(R.id.chaletImg);
+            chaletName =(TextView) v.findViewById(R.id.chaletName);
+
+
+
+        if (query==true){
+            Picasso.with(v.getContext()).load(imgUrl).into(img);
+            chaletName.setText(nameHolder);
+
+
+
+        }
+        else {
+            final LatLng latlng = marker.getPosition();
+            Double doubleLat = latlng.latitude;
+
+            lat = String.valueOf(latlng.latitude);
+            log = String.valueOf(latlng.longitude);
+            Log.i("MarkerPostion", lat);
+
+            if (img.getDrawable() != null) {
+                img.setVisibility(View.GONE);
+
+            } else {
+                Log.i("MarkerPostion", "Hello");
+
+                mDatabase.addValueEventListener(new ValueEventListener() {
 
                     @Override
-                    public void onSuccess(Uri uri) {
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                        //Glide.with(context).load(uri).into(img);
-                        //Picasso.with(context).load(uri).into(img);
+                        Log.i("MarkerPostion", "112211");
+                        for (DataSnapshot snapm : dataSnapshot.getChildren()) {
+                            Log.i("MarkerPostion", snapm.child("latitude").getValue().toString());
+                            Log.i("Key", snapm.getKey());
+                            if (lat.equals(snapm.child("latitude").getValue().toString()) && log.equals(snapm.child("longitude").getValue().toString())) {
+                                chalet = snapm.getValue(Chalet.class);
+                                Log.i("MarkerPostion", "9999");
+                                break;
+                            }
 
-                        Picasso.with(context).load(uri).into(img);
+                        }
 
-                        updateui(uri);
 
-                        //           textView.setText(chalet.getName());
-                        Log.i("MarkerPostion","11111");
+                        storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm()).child("1");
+
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+
+                                //   Glide.with(v.getContext()).load(uri).into(img);
+                                //Picasso.with(context).load(uri).into(img);
+
+                                //  Picasso.with(v.getContext()).load(uri).into(img);
+
+                                query=true;
+                                imgUrl=uri;
+
+                                nameHolder = chalet.getName();
+                                Picasso.with(v.getContext()).load(uri).into(img, new InfoWindowRefresher(marker));
+
+
+                                //    updateui(uri);
+
+                                //           textView.setText(chalet.getName());
+                                Log.i("MarkerPostion", "2222");
+
+
+                            }
+
+                        });
 
 
                     }
 
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+
                 });
-
-
-
-
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
             }
 
 
 
-
-        });
+//            final LatLng latlng = marker.getPosition();
+//       Double doubleLat = latlng.latitude;
+//
+//         lat = String.valueOf(latlng.latitude);
+//         log = String.valueOf(latlng.longitude);
+//        Log.i("MarkerPostion",lat);
+//
+//        img = (ImageView) v.findViewById(R.id.chaletImg);
+//
+//       // final TextView textView = (TextView) v.findViewById(R.id.markerText);
+//        final Semaphore semaphore = new Semaphore(0);
+//       mDatabase.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//
+//                Log.i("MarkerPostion","112211");
+//                for (DataSnapshot snapm: dataSnapshot.getChildren()) {
+//                    Log.i("MarkerPostion",snapm.child("latitude").getValue().toString());
+//                    Log.i("Key",snapm.getKey());
+//                    if ( lat.equals(snapm.child("latitude").getValue().toString()) && log.equals(snapm.child("longitude").getValue().toString()) ){
+//                        chalet = snapm.getValue(Chalet.class);
+//                        Log.i("MarkerPostion","9999");
+//                        semaphore.release();
+//                        break;
+//                    }
+//
+//                }
+//                try {
+//                    semaphore.acquire();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm()).child("1");
+//                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//
+//                    @Override
+//                    public void onSuccess(Uri uri) {
+//
+//
+//                     //   Glide.with(v.getContext()).load(uri).into(img);
+//                        //Picasso.with(context).load(uri).into(img);
+//
+//                      //  Picasso.with(v.getContext()).load(uri).into(img);
+//                        if(img.getDrawable()==null){
+//                            Picasso.with(v.getContext()).load(uri).resize(50,50).centerCrop().into(img, new InfoWindowRefresher(marker));
+//
+//                        }
+//                        else{
+//                            Picasso.with(v.getContext()).load(uri).resize(50,50).centerCrop().into(img);
+//
+//                        }
+//
+//                    //    updateui(uri);
+//
+//                        //           textView.setText(chalet.getName());
+//                        Log.i("MarkerPostion","2222");
+//
+//
+//
+//                    }
+//
+//                });
+//
+//
+//
+//
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//
+//
+//
+//
+//        });
 
 
 
@@ -236,8 +293,8 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                 .addOnCompleteListener()
                 .addOnFailureListener(this);
 */
-        Log.i("MarkerPostion","First");
-        final Handler handler = new Handler();
+        // Log.i("MarkerPostion","First");
+      /*  final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -245,7 +302,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
             }
         }, 500);
-
+*/}
         return v;
     }
 
@@ -266,26 +323,33 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         }
     }*/
 
-    public void updateui(final Uri uri){
-
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View v = inflater.inflate(R.layout.marker_tag,null);
-
-
-        img = (ImageView) v.findViewById(R.id.chaletImg);
-
-        Picasso.with(context).load(uri).into(img);
-
-        img.invalidate();
 
 
 
+    private class InfoWindowRefresher implements Callback {
+        private Marker markerToRefresh;
+
+        private InfoWindowRefresher(Marker markerToRefresh) {
+            this.markerToRefresh = markerToRefresh;
+        }
+
+        @Override
+        public void onSuccess() {
+            if (markerToRefresh != null && markerToRefresh.isInfoWindowShown()) {
+
+                markerToRefresh.hideInfoWindow();
+
+                Log.i("MarkerPostion","Thrid");
+
+
+                markerToRefresh.showInfoWindow();
+            }
 
         }
 
-
-
+        @Override
+        public void onError() {}
+    }
 
 
 
