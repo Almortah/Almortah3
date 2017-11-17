@@ -67,6 +67,7 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
         String name = info.getString("name");
 
 
+
         mAdapter = new ChaletListRV(getBaseContext() ,chalets);
         rv = (RecyclerView) findViewById(R.id.recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));

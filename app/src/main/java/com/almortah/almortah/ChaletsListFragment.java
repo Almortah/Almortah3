@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class ChaletsListFragment extends Fragment {
                         Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
                         while ((iterator.hasNext())) {
                             Chalet chalet = iterator.next().getValue(Chalet.class);
+                            Log.e("CHALET ID:::",chalet.getId());
                             if (chalet.getPromotion().equals("1"))
                                 promotChalets.add(chalet);
                             chalets.add(chalet);

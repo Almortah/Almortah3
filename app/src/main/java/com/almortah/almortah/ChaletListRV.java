@@ -115,18 +115,6 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                                                  public void onClick(View v) {
                                                      Intent toChaletInfo = new Intent(context, ChaletInfoCustomer.class);
                                                      toChaletInfo.putExtra("chalet",chalet);
-                                                     toChaletInfo.putExtra("name", chalet.getName());
-                                                     toChaletInfo.putExtra("normalPrice", chalet.getNormalPrice());
-                                                     toChaletInfo.putExtra("weekendPrice", chalet.getWeekendPrice());
-                                                     toChaletInfo.putExtra("eidPrice", chalet.getEidPrice());
-                                                     toChaletInfo.putExtra("images", chalet.getChaletNm());
-                                                     toChaletInfo.putExtra("ownerID", chalet.getOwnerID());
-                                                     toChaletInfo.putExtra("latitude", chalet.getLatitude());
-                                                     toChaletInfo.putExtra("longitude", chalet.getLongitude());
-                                                     toChaletInfo.putExtra("location",holder.chaletLocation.getText().toString());
-                                                     toChaletInfo.putExtra("description",chalet.getDescription());
-
-                                                     toChaletInfo.putExtra("chaletNb", chalet.getChaletNm());
                                                      context.startActivity(toChaletInfo);
                                                  }
                                              }

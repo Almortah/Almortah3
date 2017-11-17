@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +35,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
     private String finalDates = "";
     private TextView t;
     private DatabaseReference reference;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     private DrawerLayout drawer;
 
@@ -45,13 +47,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_achalet);
         Bundle info = getIntent().getExtras();
-        final String ownerID = info.getString("ownerID");
-        final String chaletNb = info.getString("chaletNb");
-        final String name = info.getString("name");
-        final Chalet chalet = (Chalet) getIntent().getSerializableExtra("chalet");
-
-        final String normalPrice = info.getString("normalPrice");
-        final String weekendPrice = info.getString("weekendPrice");
+        final Chalet chalet = (Chalet) info.getParcelable("chalet");
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -108,7 +104,37 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
                 //          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 //            Date today = new Date(milliseconds);
 //                date = sdf.format(today);
-                reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(ownerID).child(chaletNb).child("busyOn");
+                reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(chalet.getOwnerID())
+                        .child(chalet.getChaletNm()).child("busyOn");
+
+                FirebaseDatabase.getInstance().getReference().child("busyDates").
+                        child(chalet.getId()).child(date)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists())
+                            Toast.makeText(BookingAChalet.this, "DDDDDDDDDDD", Toast.LENGTH_SHORT).show();
+                        else {
+                            Toast.makeText(BookingAChalet.this, R.string.freeDay, Toast.LENGTH_SHORT).show();
+                            Intent toConfirm = new Intent(BookingAChalet.this, ConfirmBooking.class);
+                            toConfirm.putExtra("date", date);
+                            if (finalDates == null)
+                                finalDates = "";
+                            toConfirm.putExtra("price", isWeekend);
+                            toConfirm.putExtra("finalDate", finalDates);
+                            toConfirm.putExtra("chalet",chalet);
+                            startActivity(toConfirm);
+                            FirebaseDatabase.getInstance().getReference().child("reservDates").
+                                    child(chalet.getId()).child(date).setValue(user.getUid());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                /*
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -124,13 +150,10 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
                             Toast.makeText(BookingAChalet.this, R.string.freeDay, Toast.LENGTH_SHORT).show();
                             Intent toConfirm = new Intent(BookingAChalet.this, ConfirmBooking.class);
                             toConfirm.putExtra("date", date);
-                            toConfirm.putExtra("ownerID", ownerID);
-                            toConfirm.putExtra("chaletNb", chaletNb);
                             if (finalDates == null)
                                 finalDates = "";
-                                toConfirm.putExtra("price", isWeekend);
+                            toConfirm.putExtra("price", isWeekend);
                             toConfirm.putExtra("finalDate", finalDates);
-                            toConfirm.putExtra("name", name);
                             toConfirm.putExtra("chalet",chalet);
                             startActivity(toConfirm);
 
@@ -145,7 +168,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
-                });
+                });*/
 
 
             }

@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -24,18 +25,16 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ConfirmBooking extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String date;
-    private String ownerID;
-    private String chaletNb;
     private String finalDates;
     private DatabaseReference reference;
     private String upDate ;
@@ -45,9 +44,8 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
     private TimePicker inTime;
     private String price;
     private String payment;
-    private String name;
     private int oneTimes = 0;
-
+    private int TIME_PICKER_INTERVAL = 15;
 
     private DrawerLayout drawer;
 
@@ -57,18 +55,13 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         setContentView(R.layout.activity_confirm_booking);
         Bundle info = getIntent().getExtras();
         date = info.getString("date");
-        final Chalet chalet = (Chalet) getIntent().getSerializableExtra("chalet");
-        ownerID = info.getString("ownerID");
-        chaletNb = info.getString("chaletNb");
+        final Chalet chalet = (Chalet) info.getParcelable("chalet");
         finalDates = info.getString("finalDates");
         boolean finalPrice = info.getBoolean("price");
         if(finalPrice)
             price = chalet.getWeekendPrice();
         else
             price = chalet.getNormalPrice();
-
-        name = info.getString("name");
-
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -94,8 +87,14 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
 
 
         inTime = (TimePicker) findViewById(R.id.checkin);
+        inTime.setCurrentHour(11);
+        inTime.setCurrentMinute(0);
+        //setTimePickerInterval(inTime);
+
+
         upDate = finalDates+","+date;
-        reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(ownerID).child(chaletNb).child("busyOn");
+        reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(chalet.getOwnerID())
+                .child(chalet.getChaletNm()).child("busyOn");
         TextView dateView = (TextView) findViewById(R.id.date);
         dateView.setText(dateView.getText().toString()+" "+date);
 
@@ -128,30 +127,35 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 checkin = String.valueOf(inTime.getHour()+":"+inTime.getMinute());
                 HashMap<String,String> map = new HashMap<String, String>();
                 map.put("customerID",mAuth.getCurrentUser().getUid());
-                map.put("ownerID",ownerID);
-                map.put("chaletNb",chaletNb);
+                map.put("ownerID",chalet.getOwnerID());
+                map.put("chaletID",chalet.getId());
+
                 map.put("date",date);
                 map.put("check-in",checkin);
                 map.put("check-out","2:00");
                 map.put("payment",payment);
                 map.put("price",price);
-                map.put("chaletName",name);
+                map.put("chaletName",chalet.getName());
                 mDatabase.child("reservation").push().setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        FirebaseDatabase.getInstance().getReference().child("busyDates").
+                                child(chalet.getId()).child(date).setValue(mAuth.getCurrentUser().getUid());
+                        /*reference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 upDate = String.valueOf(dataSnapshot.getValue());
                                 upDate = upDate + "," + date;
-                                mDatabase.child("busyDates").child(ownerID).child(chaletNb).child("busyOn").setValue(String.valueOf(upDate));
+                                mDatabase.child("busyDates").child(chalet.getOwnerID())
+                                        .child(chalet.getChaletNm()).child("busyOn").setValue(String.valueOf(upDate));
                             }
 
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
                                 Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                        });
+                        });*/
+
                         startActivity(new Intent(ConfirmBooking.this,MyReservation.class));
                     }
                 });
@@ -192,6 +196,34 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    private void setTimePickerInterval(TimePicker timePicker) {
+        NumberPicker minutePicker;
+        List<String> displayedValues;
+        try {
+            Class<?> classForid = Class.forName("com.android.internal.R$id");
+            // Field timePickerField = classForid.getField("timePicker");
+
+            Field field = classForid.getField("minute");
+            minutePicker = (NumberPicker) timePicker
+                    .findViewById(field.getInt(null));
+
+            minutePicker.setMinValue(0);
+            minutePicker.setMaxValue(3);
+            displayedValues = new ArrayList<String>();
+            for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
+                displayedValues.add(String.format("%02d", i));
+            }
+            //  for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
+            //      displayedValues.add(String.format("%02d", i));
+            //  }
+            minutePicker.setDisplayedValues(displayedValues
+                    .toArray(new String[0]));
+            minutePicker.setWrapSelectorWheel(true);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -23,14 +23,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Locale locale = new Locale("en", "UK");
-        Locale.setDefault(locale);
-        Configuration config = getBaseContext().getResources().getConfiguration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());
-
-
         mAuth.signOut();
         guestButton = (Button) findViewById(R.id.guestButton);
         signinButton = (Button) findViewById(R.id.signinButton);
@@ -83,20 +75,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         //create a string for country
         //use constructor with country
 
-        Configuration mainConfig = new Configuration(getResources().getConfiguration());
+      /*  Configuration mainConfig = new Configuration(getResources().getConfiguration());
         String languageToLoad = lang;
         Locale locale = new Locale(languageToLoad);
         Locale.setDefault(locale);
         mainConfig.setLocale(locale);
-        getResources().updateConfiguration(mainConfig, null);
+        getResources().updateConfiguration(mainConfig, null);*/
 
-        /*Locale locale = new Locale(lang, country);
+        Locale locale = new Locale(lang, country);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        config.setLocale(locale);
+        //config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config,
-                getBaseContext().getResources().getDisplayMetrics());*/
+                getBaseContext().getResources().getDisplayMetrics());
         recreate();
     }
 

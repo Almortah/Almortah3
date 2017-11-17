@@ -220,7 +220,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
 
                 HashMap<String, String> dateHashMap = new HashMap<String, String>();
                 dateHashMap.put("busyOn", "");
-                mDatabase.child("busyDates").child(chaletOwnerId).child(String.valueOf(chaletCount)).
+                mDatabase.child("busyDates").child(id).
                         child("busyOn").setValue("");
 
                 startActivity(new Intent(AddChalet.this, MyChalets.class));
@@ -239,9 +239,9 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                         .setShowCamera(true)   //is show camera
                         .setSpanCount(4)       //SpanCount
                         .setLightStatusBar(true)  // custom theme
-                        .setStatusBarColor("#0083D7")   // custom statusBar
-                        // custom toolbar icon
+                        .setToolbarColor("#52bb6c")// custom toolbar icon
                         .setSelectIconColor("#52bb6c")  // custom select icon
+                        .setStatusBarColor("#b2b2b2")
                         .start();
 
 

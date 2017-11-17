@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,36 +29,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-
 public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
     private StorageReference storageReference;
     private DrawerLayout drawer;
-    private TabLayout tabLayout;
-
-    private String images;
-    private String eidPrice;
-    private String name;
-    private String normalPrice;
-    private String ownerID;
-    private String promotion;
-    private String chaletNb;
-    private String weekendPrice;
     private String location;
-    private TextView nameView;
     private TextView normalPriceView;
     private TextView weekendPriceView;
     private TextView eidPriceView;
     private TextView locationView;
     private TextView description;
-    private ImageView img1;
-    private ImageView img2;
-    private ImageView img3;
-    private ImageView img4;
-    private ImageView img5;
     private SliderLayout mDemoSlider;
+    private Chalet chalet;
 
 
     @Override
@@ -68,14 +49,8 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chalet_info_customer);
         Bundle chaletInfo = getIntent().getExtras();
-        name = chaletInfo.getString("name");
-        normalPrice = chaletInfo.getString("normalPrice");
-        weekendPrice = chaletInfo.getString("weekendPrice");
-        eidPrice = chaletInfo.getString("eidPrice");
-        ownerID = chaletInfo.getString("ownerID");
         location = chaletInfo.getString("location");
-        chaletNb = chaletInfo.getString("chaletNb");
-        final Chalet chalet = (Chalet) getIntent().getSerializableExtra("chalet");
+        chalet = (Chalet) chaletInfo.getParcelable("chalet");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -100,24 +75,19 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(ownerID).child(chaletNb);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
 
-        //nameView = (TextView) findViewById(R.id.chaletName);
         normalPriceView = (TextView) findViewById(R.id.normalPrice);
         weekendPriceView = (TextView) findViewById(R.id.weekendPrice);
         eidPriceView = (TextView) findViewById(R.id.eidPrice);
         locationView = (TextView) findViewById(R.id.location);
         description = (TextView) findViewById(R.id.description);
-        // owner = (TextView) findViewById(R.id.ownerName);
 
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
-        final ArrayList<String> listUrl = new ArrayList<String>();
-
-
-        normalPriceView.setText(normalPrice);
-        weekendPriceView.setText(weekendPrice);
-        eidPriceView.setText(eidPrice);
+        normalPriceView.setText(chalet.getNormalPrice());
+        weekendPriceView.setText(chalet.getWeekendPrice());
+        eidPriceView.setText(chalet.getEidPrice());
         locationView.setText(location);
         description.setText(chalet.getDescription());
         for (int i = 1; i < 6; i++) {
@@ -129,7 +99,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
                         // initialize a SliderLayout
                         textSliderView
-                                .description(name)
+                                .description(chalet.getName())
                                 .image(uri.toString())
                                 .setBitmapTransformation(new CenterCrop())
                                 .setOnSliderClickListener(ChaletInfoCustomer.this);
@@ -147,7 +117,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
                         // initialize a SliderLayout
                         textSliderView
-                                .description(name)
+                                .description(chalet.getName())
                                 .image(uri.toString())
                                 .setBitmapTransformation(new CenterCrop())
                                 .setOnSliderClickListener(ChaletInfoCustomer.this);
@@ -155,17 +125,6 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         textSliderView.bundle(new Bundle());
                         textSliderView.getBundle().putString("extra", "!!!!!!");
                         mDemoSlider.addSlider(textSliderView);
-                        /*Glide.with(ChaletInfoCustomer.this)
-                                .load(uri)
-                                .into(img2);
-                        img2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(ChaletInfoCustomer.this, FullscreenActivity.class);
-                                intent.putExtra("img", uri );
-                                startActivity(intent);
-                            }
-                        });*/
                     }
                 });
             } else if (i == 3) {
@@ -177,7 +136,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
                         // initialize a SliderLayout
                         textSliderView
-                                .description(name)
+                                .description(chalet.getName())
                                 .image(uri.toString())
                                 .setBitmapTransformation(new CenterCrop())
                                 .setOnSliderClickListener(ChaletInfoCustomer.this);
@@ -185,17 +144,6 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         textSliderView.bundle(new Bundle());
                         textSliderView.getBundle().putString("extra", "!!!!!!");
                         mDemoSlider.addSlider(textSliderView);
-                       /* Glide.with(ChaletInfoCustomer.this)
-                                .load(uri)
-                                .into(img3);
-                        img3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(ChaletInfoCustomer.this, FullscreenActivity.class);
-                                intent.putExtra("img", uri );
-                                startActivity(intent);
-                            }
-                        });*/
                     }
                 });
             } else if (i == 4) {
@@ -207,7 +155,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
                         // initialize a SliderLayout
                         textSliderView
-                                .description(name)
+                                .description(chalet.getName())
                                 .image(uri.toString())
                                 .setBitmapTransformation(new CenterCrop())
                                 .setOnSliderClickListener(ChaletInfoCustomer.this);
@@ -226,7 +174,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         TextSliderView textSliderView = new TextSliderView(ChaletInfoCustomer.this);
                         // initialize a SliderLayout
                         textSliderView
-                                .description(name)
+                                .description(chalet.getName())
                                 .image(uri.toString())
                                 .setBitmapTransformation(new CenterCrop())
                                 .setOnSliderClickListener(ChaletInfoCustomer.this);
@@ -246,7 +194,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
 
         Button book = (Button) findViewById(R.id.book);
 
-        if(!FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("abod@admin.com")) {
+
             book.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -256,27 +204,12 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                         return;
                     }
                     Intent toBooking = new Intent(ChaletInfoCustomer.this, BookingAChalet.class);
-                    toBooking.putExtra("ownerID", ownerID);
-                    toBooking.putExtra("chaletNb", chaletNb);
-                    toBooking.putExtra("normalPrice", normalPrice);
-                    toBooking.putExtra("weekendPrice", weekendPrice);
-                    toBooking.putExtra("name", name);
                     toBooking.putExtra("chalet", chalet);
                     startActivity(toBooking);
 
 
                 }
             });
-        }
-        else {
-            book.setText(R.string.delete);
-            book.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-        }
 
 
     }

@@ -1,55 +1,70 @@
 package com.almortah.almortah;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by ziyadalkhonein on 10/9/17.
  */
 
-public class Chalet implements Serializable {
+public class Chalet implements Parcelable {
 
-    private String chaletID;
     private String images;
-    private String latitude;
     private String description;
-    private String longitude;
     private String chaletNm;
     private String eidPrice;
+    private String id;
+    private String latitude;
+    private String longitude;
     private String name;
+    private String nbImages;
     private String normalPrice;
     private String ownerID;
     private String promotion;
     private String weekendPrice;
-    private String nbOfImages;
-    public Chalet() {
-    }
 
 
-    public Chalet(String id, String images, String latitude,
-                  String description, String longitude, String chaletNm,
-                  String eidPrice, String name, String normalPrice, String ownerID,
-                  String promotion, String weekendPrice, String nbOfImages) {
-        this.chaletID = id;
+    public Chalet() {}
+
+    public Chalet(String images, String description,
+                  String chaletNm, String eidPrice,
+                  String id, String latitude, String longitude,
+                  String name, String nbImages, String normalPrice,
+                  String ownerID, String promotion, String weekendPrice) {
         this.images = images;
-        this.latitude = latitude;
         this.description = description;
-        this.longitude = longitude;
         this.chaletNm = chaletNm;
         this.eidPrice = eidPrice;
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.name = name;
+        this.nbImages = nbImages;
         this.normalPrice = normalPrice;
         this.ownerID = ownerID;
         this.promotion = promotion;
         this.weekendPrice = weekendPrice;
-        this.nbOfImages = nbOfImages;
     }
 
-    public Chalet(Chalet chalet) {
+    public Chalet(Parcel in) {
+        this.images = in.readString();
+        this.description = in.readString();
+        this.chaletNm = in.readString();
+        this.eidPrice = in.readString();
+        this.id = in.readString();
+        this.latitude = in.readString();
+        this.longitude = in.readString();
+        this.name = in.readString();
+        this.nbImages = in.readString();
+        this.normalPrice = in.readString();
+        this.ownerID = in.readString();
+        this.promotion = in.readString();
+        this.weekendPrice = in.readString();
     }
 
 
-    public String getChaletID() {
-        return chaletID;
+    public String getId() {
+        return id;
     }
 
     public String getLatitude() {
@@ -97,7 +112,7 @@ public class Chalet implements Serializable {
     }
 
     public String getNbOfImages() {
-        return nbOfImages;
+        return nbImages;
     }
 
     public void setPromotion(String promotion) {
@@ -106,4 +121,37 @@ public class Chalet implements Serializable {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(images);
+        dest.writeString(description);
+        dest.writeString(chaletNm);
+        dest.writeString(eidPrice);
+        dest.writeString(id);
+        dest.writeString(latitude);
+        dest.writeString(longitude);
+        dest.writeString(name);
+        dest.writeString(nbImages);
+        dest.writeString(normalPrice);
+        dest.writeString(ownerID);
+        dest.writeString(promotion);
+        dest.writeString(weekendPrice);
+    }
+
+    public static final Parcelable.Creator<Chalet> CREATOR
+            = new Parcelable.Creator<Chalet>() {
+        public Chalet createFromParcel(Parcel in) {
+            return new Chalet(in);
+        }
+
+        public Chalet[] newArray(int size) {
+            return new Chalet[size];
+        }
+    };
 }

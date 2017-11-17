@@ -105,7 +105,7 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                        FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getChaletID()).removeValue();
+                                        FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).removeValue();
                                         chalets.remove(chalet);
                                         notifyItemRemoved(position);
                                         notifyItemRangeChanged(position,getItemCount());
