@@ -186,9 +186,19 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        final Context context = getContext();
 
-        MapInfoWindowAdapter adapter = new MapInfoWindowAdapter(this.getContext(),getLayoutInflater());
-        mGoogleMap.setInfoWindowAdapter(adapter);
+        mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                MapInfoWindowAdapter adapter = new MapInfoWindowAdapter(context,getLayoutInflater());
+                adapter.getInfoContents(marker);
+                mGoogleMap.setInfoWindowAdapter(adapter);
+
+                return false;
+            }
+        });
+
 
 
 

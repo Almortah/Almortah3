@@ -31,6 +31,13 @@
         android:roundIcon="@mipmap/logo_noname"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".MyFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".Signup"
             android:label="@string/register" />
@@ -44,6 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ChaletListActivity"
             android:label="@string/title_activity_chalet_list" />

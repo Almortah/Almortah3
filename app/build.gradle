@@ -140,4 +140,7 @@ dependencies {
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:+'
 }
+dependencies {
+    implementation 'com.google.firebase:firebase-messaging:10.0.1'
+}
 
