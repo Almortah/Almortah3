@@ -215,6 +215,9 @@
     <string name="current">My current reservation</string>
     <string name="rateChalet">Rate a rest-house/chalet</string>
     <string name="needRate">Rest-houses/Chalets need your rating!</string>
+    <string name="commet">Comment</string>
+    <string name="promoted">This rest-house/chalet was promoted</string>
+    <string name="dirc">Direction</string>
 
 
 </resources>

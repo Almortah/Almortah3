@@ -1,26 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/markerFrame"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants">
 
 
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/colorWhite">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         <ImageView
             android:id="@+id/chaletImg"
-            android:layout_width="350px"
-            android:layout_height="350px"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-             />
+            android:scaleType="centerCrop" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
         <TextView
-            android:layout_width="300px"
-            android:layout_height="100px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/chaletName"
-            android:textSize="22sp"/>
+            android:textSize="18sp"
+            android:layout_marginBottom="5dp"
+            android:text="..."/>
+
+                <Button
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dirc"
+                    android:text="@string/dirc"
+                    android:background="@color/colorBlue"
+                    android:textColor="@color/colorWhite"/>
+                <Button
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/info"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/detail"
+                    android:background="@color/colorGreen"
+                    android:textColor="@color/colorWhite"/>
 
 
-
-
-
+        </LinearLayout>
+        </LinearLayout>
+        </android.support.v7.widget.CardView>
 </LinearLayout>

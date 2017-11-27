@@ -157,21 +157,11 @@
         </TableRow>
     </TableLayout>
 
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
     <Button
         android:id="@+id/book"
         android:layout_width="150dp"
@@ -179,7 +169,14 @@
         android:background="@color/colorGreen"
         android:textColor="@color/colorWhite"
         android:text="@string/reservation"
-        android:layout_margin="10dp"/>
+        android:layout_margin="5dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
         </LinearLayout>

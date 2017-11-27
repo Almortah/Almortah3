@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -91,7 +92,10 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
             public void onClick(View v) {
                 Intent toPromot = new Intent(context,Promotion.class);
                 toPromot.putExtra("chalet", chalet);
+                if(chalet.getPromotion().equals("0"))
                 context.startActivity(toPromot);
+
+                else Toast.makeText(context,R.string.promoted,Toast.LENGTH_SHORT).show();
             }
         });
 

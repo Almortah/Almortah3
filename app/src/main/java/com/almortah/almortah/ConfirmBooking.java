@@ -132,6 +132,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 map.put("payment",payment);
                 map.put("price",price);
                 map.put("chaletName",chalet.getName());
+                map.put("rated","0");
                 String id = mDatabase.child("reservation").push().getKey();
                 map.put("reservationID",id);
                 mDatabase.child("reservation").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {

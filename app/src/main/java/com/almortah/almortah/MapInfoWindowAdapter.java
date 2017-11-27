@@ -1,53 +1,28 @@
 package com.almortah.almortah;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Observable;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.TimerTask;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Semaphore;
-
-import static android.content.ContentValues.TAG;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by ziyadalkhonein on 10/23/17.
@@ -71,6 +46,8 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private Marker mLastSelectedMarker;
     private Uri imgUrl;
     private String nameHolder;
+    private Button direction;
+    private Button info;
 
 
 
@@ -103,14 +80,15 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
             img = (ImageView) v.findViewById(R.id.chaletImg);
             chaletName =(TextView) v.findViewById(R.id.chaletName);
+            info = (Button) v.findViewById(R.id.info);
+            direction = (Button) v.findViewById(R.id.dirc);
+
 
 
 
         if (query==true){
             Picasso.with(v.getContext()).load(imgUrl).into(img);
             chaletName.setText(nameHolder);
-
-
 
         }
         else {
@@ -164,6 +142,24 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
                                 nameHolder = chalet.getName();
                                 Picasso.with(v.getContext()).load(uri).into(img, new InfoWindowRefresher(marker));
+                                info.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent toInfo = new Intent(context,ChaletInfoCustomer.class);
+                                        toInfo.putExtra("chalet",chalet);
+                                        context.startActivity(toInfo);
+                                    }
+                                });
+
+                                direction.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                                                Uri.parse("geo:0,0?q="+chalet.getLatitude()+","+chalet.getLongitude()+" (" + chalet.getName() + ")"));
+                                        context.startActivity(intent);
+                                    }
+                                });
+
 
 
                                 //    updateui(uri);
