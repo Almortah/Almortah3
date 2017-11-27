@@ -7,6 +7,40 @@
     <string name="owner">مالك</string>
     <string name="userType">نوع المستخدم</string>
 
+    <string-array name="RiyadhEast">
+        <item>الفلاح</item>
+        <item>الروضة</item>
+        <item>النسيم</item>
+        <item>النظيم</item>
+        <item>السلي</item>
+        <item>القدس</item>
+        <item>الحمراء</item>
+        <item>غرناطة</item>
+        <item>النهضة</item>
+        <item>الخليج</item>
+        <item>المغرزات</item>
+        <item>الجزيرة</item>
+        <item>الرواد</item>
+        <item>الروابي</item>
+        <item>إشبيليا</item>
+        <item>اليرموك </item>
+        <item>قرطبة </item>
+        <item>الريان </item>
+        <item>الشهداء </item>
+    </string-array>
+
+    <string-array name="RiyadhWest">
+        <item>الدرعية</item>
+       <item>البديعة</item>
+        <item>ظهرة البديعة</item>
+        <item>عرقة</item>
+    <item> لبن</item>
+        <item>السويدي</item>
+        <item>شبرا</item>
+        <item>العريجاء</item>
+       <item> جامعة الملك سعود</item>
+    </string-array>
+
     <string-array name="android_dropdown_arrays">
         <item>زبون</item>
         <item>المالك</item>
@@ -131,6 +165,7 @@
     <string name="filter">آو خصص النتائج بناءً على</string>
     <string name="maxPrice">الاعلى</string>
     <string name="minPrice">الاقل</string>
+    <string name="yourBooked">هذا اليوم محجوز لك</string>
 
 
 </resources>

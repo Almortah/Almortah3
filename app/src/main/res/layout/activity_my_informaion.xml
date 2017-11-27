@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/design"
     android:orientation="vertical"
     tools:context="com.almortah.almortah.ChaletInfoCustomer">
 
@@ -26,23 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/chaletName"
-        android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/myInfo"
-        android:textColor="@color/colorDarkGrey"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-
-
-
-
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,12 +141,55 @@
                 </TableRow>
             </TableLayout>
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                app:srcCompat="@drawable/logo_noname"
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit"
+                android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_margin="30dp"/>
+                android:text="@string/modify"
+                android:background="@color/colorGreen"
+                android:textColor="@color/colorWhite"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                />
+
+            <EditText
+                android:layout_width="180dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:hint="@string/fullname"
+                android:visibility="invisible"
+                android:id="@+id/fullnameE" />
+            <EditText
+                android:layout_width="180dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:visibility="invisible"
+                android:id="@+id/emailE" />
+            <EditText
+                android:layout_width="180dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:hint="@string/phone"
+                android:visibility="invisible"
+                android:id="@+id/phoneE" />
+
+
+            <Button
+                android:layout_width="150dp"
+                android:id="@+id/submit"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:text="@string/submit"
+                android:background="@color/colorBlue"
+                android:textColor="@color/colorWhite"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                />
 
 
         </LinearLayout>

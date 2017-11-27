@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -51,9 +52,11 @@ import com.gun0912.tedpermission.TedPermission;
 import com.werb.pickphotoview.PickPhotoView;
 import com.werb.pickphotoview.util.PickConfig;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
@@ -86,6 +89,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     private int imgNb = 0;
     double lat1 = 0, lng1 = 0;
     private List<Address> addresses;
+    private Geocoder geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
 
 
     static final int PICK_CONTACT_REQUEST = 1;
@@ -202,6 +206,19 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                     return;
                 }
                 // chaletCount++;
+                try {
+                    //ads = gc.getFromLocationName("Riyadh, SA",50000, 24.2939113, 46.2981033, 25.1564724,47.34695430000001);
+                    addresses = geocoder.getFromLocation(Double.parseDouble(latitude) , Double.parseDouble(longitude),1);
+                    // ads = gc.getFromLocation(24.7135517,46.6752957,5000);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (addresses.size() > 0)
+                    address = addresses.get(0).getSubLocality();
+                else
+                    address = "empty";
+
+                    //Toast.makeText(getApplicationContext(), "Address:- "
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("ownerID", chaletOwnerId);
                 hashMap.put("name", chaletName);
@@ -215,13 +232,13 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("latitude", latitude);
                 hashMap.put("longitude", longitude);
                 hashMap.put("nbImages", String.valueOf(imgNb));
-                hashMap.put("chaletID", id);
+                hashMap.put("address",address);
+                hashMap.put("id", id);
                 mDatabase.child("chalets").child(id).setValue(hashMap);
 
                 HashMap<String, String> dateHashMap = new HashMap<String, String>();
                 dateHashMap.put("busyOn", "");
-                mDatabase.child("busyDates").child(id).
-                        child("busyOn").setValue("");
+                //mDatabase.child("busyDates").child(id).child("busyOn").setValue("");
 
                 startActivity(new Intent(AddChalet.this, MyChalets.class));
             }
@@ -330,7 +347,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
         location = locationManager.getLastKnownLocation(provider);
         LatLng userPostion;
 
-        if(location.hasAltitude()) {
+        if(location != null) {
             userPostion = new LatLng(location.getLatitude(), location.getLongitude());
             latitude = String.valueOf(location.getLatitude()); longitude = String.valueOf(location.getLongitude());
 

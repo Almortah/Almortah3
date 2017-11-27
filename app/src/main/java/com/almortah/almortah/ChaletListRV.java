@@ -115,6 +115,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                                                  public void onClick(View v) {
                                                      Intent toChaletInfo = new Intent(context, ChaletInfoCustomer.class);
                                                      toChaletInfo.putExtra("chalet",chalet);
+                                                     toChaletInfo.putExtra("location",holder.chaletLocation.getText().toString());
                                                      context.startActivity(toChaletInfo);
                                                  }
                                              }

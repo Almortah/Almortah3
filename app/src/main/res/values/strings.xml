@@ -92,6 +92,37 @@
 
     <!-- Strange strings!! -->
     <!-- Example General settings -->
+    <string-array name="RiyadhEast">
+        <item>Alfalah</item>
+        <item>Alruwda</item>
+        <item>Alnasim</item>
+        <item>Alnazim</item>
+        <item>Alsuliyu</item>
+        <item>Alquds</item>
+        <item>Alhamra'</item>
+        <item>Gharnata</item>
+        <item>Alnahda</item>
+        <item>Alkhalij</item>
+        <item>Almughrizat</item>
+        <item>Aljazira</item>
+        <item>Alruwwad</item>
+        <item>Alrabuwh</item>
+        <item>Iishbilia</item>
+        <item>Alyarmuk </item>
+        <item>Qartabuh </item>
+        <item>Alrayan </item>
+        <item>Alshuhada </item>
+    </string-array>
+    <string-array name="RiyadhWest">
+        <item>Aldiriya</item>
+        <item>albadiea</item>
+        <item>Irqah</item>
+        <item>Laban</item>
+        <item>Asswidi</item>
+        <item>Shubra</item>
+        <item>Aleryja</item>
+        <item> King Saud university</item>
+    </string-array>
 
     <!-- Example settings for Data & Sync -->
 
@@ -175,6 +206,15 @@
     <string name="filter">Or filter your result</string>
     <string name="maxPrice">Max</string>
     <string name="minPrice">Min</string>
+    <string name="yourBooked">You have been booked this day</string>
+    <string name="bookingID">Reservation ID: </string>
+    <string name="outTime">Check-out time</string>
+    <string name="riyal">S.R</string>
+    <string name="modify">Edit profile</string>
+    <string name="updateProfile">Your profile has been updated</string>
+    <string name="current">My current reservation</string>
+    <string name="rateChalet">Rate a rest-house/chalet</string>
+    <string name="needRate">Rest-houses/Chalets need your rating!</string>
 
 
 </resources>

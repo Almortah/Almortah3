@@ -1,8 +1,6 @@
 package com.almortah.almortah;
 
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,11 +19,6 @@ import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 public class Search extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,AdapterView.OnItemSelectedListener {
 
     private DrawerLayout drawer;
@@ -33,6 +26,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
     private Spinner spinner;
     private int minPrice = 0;
     private int maxPrice = 0;
+    String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,43 +55,10 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             navigationView.inflateMenu(R.menu.visitor_menu);
 
 
-        Locale locale = new Locale(Locale.getDefault().getLanguage(), Locale.getDefault().getCountry());
-        Geocoder gc = new Geocoder(Search.this, Locale.getDefault());
 
-        //Geocoder gc = new Geocoder(this, Locale.getDefault());
-        List<Address> ads = null ;
-        try {
-           //ads = gc.getFromLocationName("Riyadh, SA",50000, 24.2939113, 46.2981033, 25.1564724,47.34695430000001);
-            ads = gc.getFromLocationName("Riyadh, KSA", 50000);
-           // ads = gc.getFromLocation(24.7135517,46.6752957,5000);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        List tmp = new ArrayList<>();
-        int size = 0;
-        if(ads != null && ads.size() > 0) {
-            Log.e("HI ADSS","HIIIIII");
-            Log.e("HI ADSS", String.valueOf(ads.size()));
-            Log.e("LocalityFIRST: ", ads.get(0).getLocality());
-
-            for (int j = 0; j < ads.size(); j++) {
-                if (ads.get(j).getSubLocality() != null)
-                    tmp.add(ads.get(j).getSubLocality());
-            }
-                address = new String[tmp.size()];
-            Log.e("SIZE: ", String.valueOf(size));
-                for (int i = 0; i < tmp.size(); i++) {
-               // if(ads.get(i).getSubLocality() != null) {
-                    //address[i] = (String) tmp.get(i);
-                    if(ads.get(i).getSubLocality() != null)
-                   Log.e("LocalityL: ", String.valueOf(tmp.get(i)));
-
-
-               // }
-            }
+            String[] list = getResources().getStringArray(R.array.RiyadhWest);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(Search.this,
-                    android.R.layout.simple_spinner_item, (String[]) tmp.toArray(new String[tmp.size()]));
+                    android.R.layout.simple_spinner_item, list);
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
@@ -188,6 +149,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         Intent toResult = new Intent(getBaseContext() ,SearchResult.class);
                         toResult.putExtra("min",minPrice);
                         toResult.putExtra("max",maxPrice);
+                        toResult.putExtra("location", location);
                         startActivity(toResult);
 
                 }
@@ -215,11 +177,6 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         }
 
 
-
-
-    }
-
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         AlmortahDB almortahDB = new AlmortahDB(this);
@@ -240,13 +197,16 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-
+        Intent intent = new Intent(getBaseContext(),SearchResult.class);
         switch (position) {
             case 0:
                 // Whatever you want to happen when the first item gets selected
                 break;
             case 1:
                 // Whatever you want to happen when the second item gets selected
+                intent.putExtra("location", parent.getItemAtPosition(position).toString());
+                Log.e("LOCATION",parent.getItemAtPosition(position).toString());
+                startActivity(intent);
                 break;
             case 2:
                 // Whatever you want to happen when the third item gets selected

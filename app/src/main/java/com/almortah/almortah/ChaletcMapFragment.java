@@ -141,7 +141,7 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
         if(location != null)
             userPostion = new LatLng(location.getLatitude(), location.getLongitude());
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(userPostion));
-        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(5));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
 
 
         // mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this,

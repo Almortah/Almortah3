@@ -1,17 +1,18 @@
 package com.almortah.almortah;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,12 +37,14 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
     private TextView t;
     private DatabaseReference reference;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    boolean flag = false;
 
     private DrawerLayout drawer;
 
     private boolean isBusy = false;
     private boolean isWeekend = false;
 
+    @TargetApi(Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,23 +77,24 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         calendarView.setFirstDayOfWeek(Calendar.SUNDAY);
         Long l = System.currentTimeMillis();
-        calendarView.setMinDate(l);
-
+        //calendarView.setMinDate(l);
 
         t = (TextView) findViewById(R.id.dateChoose);
         checkBusy = (Button) findViewById(R.id.checkBusy);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 if (view.getDate() == System.currentTimeMillis())
                     return;
                 date = dayOfMonth + "-" + (month + 1) + "-" + year;
                 Calendar calendar = Calendar.getInstance();
+                calendar.setFirstDayOfWeek(Calendar.SUNDAY);
                 calendar.set(year, month, dayOfMonth);
                 int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
                 if (dayOfWeek == 5 || dayOfWeek == 6 || dayOfWeek == 7)
                    isWeekend = true;
+                else
+                    isWeekend = false;
             }
         });
 
@@ -104,28 +108,36 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
                 //          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 //            Date today = new Date(milliseconds);
 //                date = sdf.format(today);
-                reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(chalet.getOwnerID())
-                        .child(chalet.getChaletNm()).child("busyOn");
+                //reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(chalet.getOwnerID())
+                  //      .child(chalet.getChaletNm()).child("busyOn");
 
-                FirebaseDatabase.getInstance().getReference().child("busyDates").
-                        child(chalet.getId()).child(date)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                reference = FirebaseDatabase.getInstance().getReference().child("busyDates").
+                        child(chalet.getId()).child(date);
+                Log.e("xDATE?",date);
+
+
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists())
-                            Toast.makeText(BookingAChalet.this, "DDDDDDDDDDD", Toast.LENGTH_SHORT).show();
+                        if(dataSnapshot.exists()) {
+                            Log.e("xVALUE?",dataSnapshot.getValue().toString());
+                            if(dataSnapshot.getValue().toString().equals(user.getUid()))
+                                Toast.makeText(BookingAChalet.this, R.string.yourBooked, Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(BookingAChalet.this, R.string.busyDay, Toast.LENGTH_SHORT).show();
+                        }
                         else {
                             Toast.makeText(BookingAChalet.this, R.string.freeDay, Toast.LENGTH_SHORT).show();
-                            Intent toConfirm = new Intent(BookingAChalet.this, ConfirmBooking.class);
+                            Intent toConfirm = new Intent(getBaseContext(), ConfirmBooking.class);
                             toConfirm.putExtra("date", date);
                             if (finalDates == null)
                                 finalDates = "";
                             toConfirm.putExtra("price", isWeekend);
+                            Log.e("Weekend?", String.valueOf(isWeekend));
                             toConfirm.putExtra("finalDate", finalDates);
+                        //    Log.e("finalDates?",finalDates);
                             toConfirm.putExtra("chalet",chalet);
                             startActivity(toConfirm);
-                            FirebaseDatabase.getInstance().getReference().child("reservDates").
-                                    child(chalet.getId()).child(date).setValue(user.getUid());
                         }
                     }
 
@@ -134,6 +146,8 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
 
                     }
                 });
+
+
                 /*
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

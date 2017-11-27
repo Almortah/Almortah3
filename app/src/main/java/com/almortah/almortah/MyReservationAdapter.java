@@ -2,32 +2,63 @@ package com.almortah.almortah;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by ALMAHRI on 10/21/17.
  */
 
-public class MyReservationAdapter extends ArrayAdapter<Reservation> {
+public class MyReservationAdapter extends RecyclerView.Adapter<MyReservationAdapter.MyViewHolder>  {
 
     private Context context;
     private Button control;
+    private ArrayList<Reservation> reservations;
 
-    public MyReservationAdapter(@NonNull Context context, @NonNull List<Reservation> objects) {
-        super(context, 0, objects);
-        this.context = context;
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView date ;
+        public TextView chaletName;
+
+        public MyViewHolder(View view) {
+            super(view);
+            date = (TextView) view.findViewById(R.id.date);
+            chaletName = (TextView) view.findViewById(R.id.chaletName);
+        }
     }
 
+    public MyReservationAdapter(@NonNull Context context, @NonNull ArrayList<Reservation> objects) {
+        this.context = context;
+        this.reservations = objects;
+    }
+
+    @Override
+    public MyReservationAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_reservation_item, parent, false);
+        MyReservationAdapter.MyViewHolder mViewHold = new MyReservationAdapter.MyViewHolder(mView);
+        return mViewHold;
+    }
+
+    @Override
+    public void onBindViewHolder(final MyReservationAdapter.MyViewHolder holder, final int position) {
+        final Reservation reservation = reservations.get(position);
+        holder.chaletName.setText(reservation.getChaletName());
+        holder.date.setText(reservation.getDate());
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return reservations.size();
+    }
+
+
+    /*
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -67,5 +98,5 @@ public class MyReservationAdapter extends ArrayAdapter<Reservation> {
 
 
         return listItemView;
-    }
+    }*/
 }

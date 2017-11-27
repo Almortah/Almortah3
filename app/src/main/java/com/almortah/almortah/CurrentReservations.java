@@ -1,6 +1,7 @@
 package com.almortah.almortah;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,21 +17,24 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class MyReservation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private RecyclerView recyclerView;
+public class CurrentReservations extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-
+    private RecyclerView recyclerView;
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_reservation);
+        setContentView(R.layout.activity_current_reservations);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -46,27 +50,33 @@ public class MyReservation extends AppCompatActivity implements NavigationView.O
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
-
-        if(FirebaseAuth.getInstance().getCurrentUser() != null)
-            navigationView.inflateMenu(R.menu.customer_menu);
-        else
-            navigationView.inflateMenu(R.menu.visitor_menu);
+        navigationView.inflateMenu(R.menu.customer_menu);
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        recyclerView = (RecyclerView) findViewById(R.id.myHistory);
-        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(MyReservation.this);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(CurrentReservations.this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        final ArrayList<Reservation> myHistory = new ArrayList<>();
-        final MyReservationAdapter adapter = new MyReservationAdapter(MyReservation.this, myHistory);
+        final ArrayList<Reservation> arrayList = new ArrayList<>();
+        final CurrentReservAdapter adapter = new CurrentReservAdapter(this, arrayList);
         recyclerView.setAdapter(adapter);
-        FirebaseDatabase.getInstance().getReference().child("reservation").orderByChild("customerID").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
+
+        final SimpleDateFormat dfDate = new SimpleDateFormat("dd-MM-yyyy");
+        final Date today = new Date(System.currentTimeMillis());
+
+        FirebaseDatabase.getInstance().getReference().child("reservation").
+                orderByChild("customerID").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
                         Reservation reservation = singlValue.getValue(Reservation.class);
-                        myHistory.add(reservation);
+                        try {
+                            if(dfDate.parse(reservation.getDate()).after(today))
+                            arrayList.add(reservation);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -77,14 +87,12 @@ public class MyReservation extends AppCompatActivity implements NavigationView.O
 
             }
         });
-    }
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        AlmortahDB almortahDB = new AlmortahDB(this);
-        almortahDB.menu(item);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+
+
+
+
+
     }
 
     @Override
@@ -95,5 +103,13 @@ public class MyReservation extends AppCompatActivity implements NavigationView.O
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        AlmortahDB almortahDB = new AlmortahDB(this);
+        almortahDB.menu(item);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

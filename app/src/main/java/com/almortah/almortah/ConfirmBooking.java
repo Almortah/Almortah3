@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -28,10 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ConfirmBooking extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String date;
@@ -45,7 +41,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
     private String price;
     private String payment;
     private int oneTimes = 0;
-    private int TIME_PICKER_INTERVAL = 15;
+    private int TIME_PICKER_INTERVAL = 30;
 
     private DrawerLayout drawer;
 
@@ -89,7 +85,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         inTime = (TimePicker) findViewById(R.id.checkin);
         inTime.setCurrentHour(11);
         inTime.setCurrentMinute(0);
-        //setTimePickerInterval(inTime);
+       // setTimePickerInterval(inTime);
 
 
         upDate = finalDates+","+date;
@@ -136,27 +132,14 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 map.put("payment",payment);
                 map.put("price",price);
                 map.put("chaletName",chalet.getName());
-                mDatabase.child("reservation").push().setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                String id = mDatabase.child("reservation").push().getKey();
+                map.put("reservationID",id);
+                mDatabase.child("reservation").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         FirebaseDatabase.getInstance().getReference().child("busyDates").
                                 child(chalet.getId()).child(date).setValue(mAuth.getCurrentUser().getUid());
-                        /*reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                upDate = String.valueOf(dataSnapshot.getValue());
-                                upDate = upDate + "," + date;
-                                mDatabase.child("busyDates").child(chalet.getOwnerID())
-                                        .child(chalet.getChaletNm()).child("busyOn").setValue(String.valueOf(upDate));
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });*/
-
-                        startActivity(new Intent(ConfirmBooking.this,MyReservation.class));
+                                startActivity(new Intent(ConfirmBooking.this,CurrentReservations.class));
                     }
                 });
             }
@@ -198,34 +181,5 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
             super.onBackPressed();
         }
     }
-
-    private void setTimePickerInterval(TimePicker timePicker) {
-        NumberPicker minutePicker;
-        List<String> displayedValues;
-        try {
-            Class<?> classForid = Class.forName("com.android.internal.R$id");
-            // Field timePickerField = classForid.getField("timePicker");
-
-            Field field = classForid.getField("minute");
-            minutePicker = (NumberPicker) timePicker
-                    .findViewById(field.getInt(null));
-
-            minutePicker.setMinValue(0);
-            minutePicker.setMaxValue(3);
-            displayedValues = new ArrayList<String>();
-            for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
-                displayedValues.add(String.format("%02d", i));
-            }
-            //  for (int i = 0; i < 60; i += TIME_PICKER_INTERVAL) {
-            //      displayedValues.add(String.format("%02d", i));
-            //  }
-            minutePicker.setDisplayedValues(displayedValues
-                    .toArray(new String[0]));
-            minutePicker.setWrapSelectorWheel(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }
 

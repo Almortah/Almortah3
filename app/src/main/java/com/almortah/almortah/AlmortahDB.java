@@ -187,6 +187,13 @@ public class AlmortahDB extends Activity {
             case R.id.myChalet:
                 context.startActivity(new Intent(context, MyChalets.class));
                 break;
+            case R.id.rateChalet:
+                context.startActivity(new Intent(context, RateAChalet.class));
+                break;
+            case R.id.current:
+                context.startActivity(new Intent(context, CurrentReservations.class));
+                break;
+
             default:
                 super.onOptionsItemSelected(item);
         }

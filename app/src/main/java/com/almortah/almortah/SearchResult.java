@@ -32,6 +32,7 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
     int minPrice = -1;
     int maxPrice = -1;
     String name = null;
+    String location = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,14 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
 
 
         Bundle info = getIntent().getExtras();
-        minPrice = info.getInt("min");
-        maxPrice = info.getInt("max");
-        String name = info.getString("name");
+        if(info.containsKey("min") && info.containsKey("max")) {
+            minPrice = info.getInt("min");
+            maxPrice = info.getInt("max");
+        }
+        if (info.containsKey("name"))
+        name = info.getString("name");
+        if (info.containsKey("location"))
+            location = info.getString("location");
 
 
 
@@ -87,6 +93,26 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
                         Chalet chalet = iterator.next().getValue(Chalet.class);
                         if (Integer.parseInt(chalet.getNormalPrice()) >= minPrice &&
                                 Integer.parseInt(chalet.getNormalPrice()) <= maxPrice)
+                            chalets.add(chalet);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+
+
+        if(location != null) {
+            reference.orderByChild("address").equalTo(location).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                    Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                    while ((iterator.hasNext())) {
+                        Chalet chalet = iterator.next().getValue(Chalet.class);
                             chalets.add(chalet);
                     }
                     mAdapter.notifyDataSetChanged();

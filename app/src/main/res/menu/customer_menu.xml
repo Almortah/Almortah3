@@ -11,10 +11,25 @@
         android:id="@+id/searchChaleh"
         android:title="@string/searchChalet"
         android:icon="@drawable/ic_search_black_24dp"/>
+
+
+    <item
+        android:id="@+id/current"
+        android:title="@string/current"
+        android:icon="@drawable/ic_current"/>
+
+
     <item
         android:id="@+id/history"
         android:title="@string/history"
         android:icon="@drawable/ic_history_black_24dp"/>
+
+
+    <item
+        android:id="@+id/rateChalet"
+        android:title="@string/rateChalet"
+        android:icon="@drawable/ic_rate_review_black_24dp"/>
+
 
 
     <item

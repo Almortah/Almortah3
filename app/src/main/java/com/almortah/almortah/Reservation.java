@@ -6,8 +6,8 @@ package com.almortah.almortah;
 
 public class Reservation {
 
+    private String chaletID;
     private String chaletName;
-    private String chaletNb;
     private String checkin;
     private String checkout;
     private String customerID;
@@ -15,12 +15,14 @@ public class Reservation {
     private String ownerID;
     private String payment;
     private String price;
+    private String reservationID;
 
     public Reservation() {}
 
-    public Reservation(String chaletName, String chaletNb, String checkin, String checkout, String customerID, String date, String ownerID, String payment, String price) {
+
+    public Reservation(String chaletID, String chaletName, String checkin, String checkout, String customerID, String date, String ownerID, String payment, String price, String reservationID) {
+        this.chaletID = chaletID;
         this.chaletName = chaletName;
-        this.chaletNb = chaletNb;
         this.checkin = checkin;
         this.checkout = checkout;
         this.customerID = customerID;
@@ -28,10 +30,15 @@ public class Reservation {
         this.ownerID = ownerID;
         this.payment = payment;
         this.price = price;
+        this.reservationID = reservationID;
     }
 
-    public String getChaletNb() {
-        return chaletNb;
+    public String getChaletID() {
+        return chaletID;
+    }
+
+    public String getChaletName() {
+        return chaletName;
     }
 
     public String getCheckin() {
@@ -58,11 +65,11 @@ public class Reservation {
         return payment;
     }
 
-    public String getChaletName() {
-        return chaletName;
-    }
-
     public String getPrice() {
         return price;
+    }
+
+    public String getReservationID() {
+        return reservationID;
     }
 }

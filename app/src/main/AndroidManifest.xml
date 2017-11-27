@@ -22,7 +22,6 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
-
     <application
         android:allowBackup="true"
         android:configChanges="orientation|screenSize|keyboardHidden|locale"
@@ -31,12 +30,15 @@
         android:roundIcon="@mipmap/logo_noname"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--
         <service
             android:name=".MyFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
+        -->
 
         <activity
             android:name=".Signup"
@@ -51,7 +53,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ChaletListActivity"
             android:label="@string/title_activity_chalet_list" />
@@ -86,9 +87,11 @@
             android:name="com.google.android.gms"
             android:value="@integer/google_play_services_version" />
 
-        <!--<activity
+        <!--
+            <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />-->
+            android:label="@string/title_activity_maps" />
+        -->
         <activity android:name=".ChaletInfoCustomer" />
         <activity
             android:name=".BookingAChalet"
@@ -120,7 +123,9 @@
             android:name=".Block"
             android:label="@string/blockPage" />
         <activity android:name=".Search" />
-        <activity android:name=".SearchResult"></activity>
+        <activity android:name=".SearchResult" />
+        <activity android:name=".CurrentReservations" />
+        <activity android:name=".RateAChalet"></activity>
     </application>
 
 </manifest>
