@@ -124,6 +124,17 @@
         <item> King Saud university</item>
     </string-array>
 
+    <string-array name="Riyadh">
+        <item>-</item>
+        <item>North of Riyadh</item>
+        <item>East of Riyadh</item>
+        <item>Center of Riyadh</item>
+        <item>West of Riyadh</item>
+        <item>South of Riyadh</item>
+    </string-array>
+
+
+
     <!-- Example settings for Data & Sync -->
 
 

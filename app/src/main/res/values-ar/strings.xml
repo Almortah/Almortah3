@@ -178,5 +178,13 @@
     <string name="promoted">هذه الاستراحة/الشالية مروجة بالفعل</string>
     <string name="dirc">الطريق</string>
 
+    <string-array name="Riyadh">
+        <item>-</item>
+        <item>شمال الرياض</item>
+        <item>شرق الرياض</item>
+        <item>وسط الرياض</item>
+        <item>غرب الرياض</item>
+        <item>جنوب الرياض</item>
+    </string-array>
 
 </resources>
