@@ -89,6 +89,14 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         weekendPriceView.setText(chalet.getWeekendPrice());
         eidPriceView.setText(chalet.getEidPrice());
         locationView.setText(location);
+        locationView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q="+chalet.getLatitude()+","+chalet.getLongitude()+" (" + chalet.getName() + ")"));
+                startActivity(intent);
+            }
+        });
         description.setText(chalet.getDescription());
         for (int i = 1; i < 6; i++) {
             if (i == 1) {

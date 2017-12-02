@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -27,6 +28,8 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
     private int minPrice = 0;
     private int maxPrice = 0;
     String location;
+    private DatePicker datePicker;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,8 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
 
 
-            String[] list = getResources().getStringArray(R.array.RiyadhWest);
+            String[] list = getResources().getStringArray(R.array.Riyadh);
+            String[] tmp = {"-","N","E","W","C","S"};
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(Search.this,
                     android.R.layout.simple_spinner_item, list);
 
@@ -71,8 +75,9 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
             final EditText max = (EditText) findViewById(R.id.max);
             final EditText min = (EditText) findViewById(R.id.min);
+            datePicker = (DatePicker) findViewById(R.id.date);
 
-
+            datePicker.setMinDate(System.currentTimeMillis() - 1000);
             desMin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -150,6 +155,40 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         toResult.putExtra("min",minPrice);
                         toResult.putExtra("max",maxPrice);
                         toResult.putExtra("location", location);
+                        double maxLt = -1; double maxLg = -1;
+                        double minLt = -1; double minLg = -1;
+                        date = datePicker.getDayOfMonth() +"-"+ ( datePicker.getMonth()+1 )+"-"+datePicker.getYear();
+
+                        if(spinner.getSelectedItemPosition() == 1) {
+                             maxLt = 24.79;  maxLg = 46.72;
+                             minLt = 24.75;  minLg = 46.60;
+                        }
+
+                        else if(spinner.getSelectedItemPosition() == 4) {
+                            maxLt = 24.75;  maxLg = 46.60;
+                            minLt = 24.60;  minLg = 46.50;
+                        }
+
+                        else if(spinner.getSelectedItemPosition() == 5) {
+                            maxLt = 24.60;  maxLg = 46.70;
+                            minLt = 24.50;  minLg = 46.50;
+                        }
+
+                        else if(spinner.getSelectedItemPosition() == 2) {
+                            maxLt = 24.80;  maxLg = 46.80;
+                            minLt = 24.63;  minLg = 46.72;
+                        }
+
+
+
+
+
+
+                        toResult.putExtra("maxLt",maxLt);
+                        toResult.putExtra("minLt",minLt);
+                        toResult.putExtra("maxLg",maxLg);
+                        toResult.putExtra("minLg",minLg);
+                        toResult.putExtra("date",date);
                         startActivity(toResult);
 
                 }
@@ -201,12 +240,19 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         switch (position) {
             case 0:
                 // Whatever you want to happen when the first item gets selected
+                double maxLt = 24.79; double maxLg = 46.72;
+                double minLt = 24.75; double minLg = 46.60;
+                intent.putExtra("maxLt",maxLt);
+                intent.putExtra("minLt",minLt);
+                intent.putExtra("maxLg",maxLg);
+                intent.putExtra("minLg",minLg);
+                //startActivity(intent);
                 break;
             case 1:
                 // Whatever you want to happen when the second item gets selected
                 intent.putExtra("location", parent.getItemAtPosition(position).toString());
                 Log.e("LOCATION",parent.getItemAtPosition(position).toString());
-                startActivity(intent);
+                //startActivity(intent);
                 break;
             case 2:
                 // Whatever you want to happen when the third item gets selected

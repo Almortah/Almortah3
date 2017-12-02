@@ -1,5 +1,7 @@
 package com.almortah.almortah;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 public class SearchResult extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,11 +32,15 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
     private ChaletListRV mAdapter;
     private RecyclerView rv;
     private DrawerLayout drawer;
+    private ProgressDialog pDialog;
+
 
     int minPrice = -1;
     int maxPrice = -1;
     String name = null;
     String location = null;
+    double maxLt,maxLg,minLt,minLg = -1;
+    private String date = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,80 +79,20 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
         name = info.getString("name");
         if (info.containsKey("location"))
             location = info.getString("location");
+        if(info.containsKey("maxLt")) {
+            maxLg = info.getDouble("maxLg");
+            maxLt = info.getDouble("maxLt");
+            minLg = info.getDouble("minLg");
+            minLt = info.getDouble("minLt");
+        }
 
-
+        if(info.containsKey("date"))
+            date = info.getString("date");
 
         mAdapter = new ChaletListRV(getBaseContext() ,chalets);
-        rv = (RecyclerView) findViewById(R.id.recycler_view);
-        rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        new GetChalets().execute();
+        mAdapter.notifyDataSetChanged();
 
-        //set join adapter to your RecyclerView
-        rv.setAdapter(mAdapter);
-        // You don't need anything here
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("chalets");
-
-        if(maxPrice != -1 && minPrice != -1) {
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
-                    Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                    while ((iterator.hasNext())) {
-                        Chalet chalet = iterator.next().getValue(Chalet.class);
-                        if (Integer.parseInt(chalet.getNormalPrice()) >= minPrice &&
-                                Integer.parseInt(chalet.getNormalPrice()) <= maxPrice)
-                            chalets.add(chalet);
-                    }
-                    mAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
-        }
-
-
-        if(location != null) {
-            reference.orderByChild("address").equalTo(location).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
-                    Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                    while ((iterator.hasNext())) {
-                        Chalet chalet = iterator.next().getValue(Chalet.class);
-                            chalets.add(chalet);
-                    }
-                    mAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
-        }
-
-        if(name != null) {
-            reference.orderByChild("name").equalTo(name).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()) {
-                        Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
-                        Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                        while ((iterator.hasNext())) {
-                            Chalet chalet = iterator.next().getValue(Chalet.class);
-                                chalets.add(chalet);
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
 
 
     }
@@ -166,6 +114,205 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+    }
+
+
+    private class GetChalets extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(SearchResult.this);
+            pDialog.setTitle(R.string.downChalet);
+            pDialog.setMessage(getString(R.string.wait));
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            rv = (RecyclerView) findViewById(R.id.recycler_view);
+            rv.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+
+            //set join adapter to your RecyclerView
+            rv.setAdapter(mAdapter);
+            // You don't need anything here
+            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("chalets");
+
+            if(maxPrice != -1 && minPrice != -1) {
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                        Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                        while ((iterator.hasNext())) {
+                            Chalet chalet = iterator.next().getValue(Chalet.class);
+                            if (Integer.parseInt(chalet.getNormalPrice()) >= minPrice &&
+                                    Integer.parseInt(chalet.getNormalPrice()) <= maxPrice)
+                                chalets.add(chalet);
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
+
+
+            if(location != null) {
+                reference.orderByChild("address").equalTo(location).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                        Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                        while ((iterator.hasNext())) {
+                            Chalet chalet = iterator.next().getValue(Chalet.class);
+                            chalets.add(chalet);
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
+
+            if(name != null) {
+                reference.orderByChild("name").equalTo(name).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                            Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                            while ((iterator.hasNext())) {
+                                Chalet chalet = iterator.next().getValue(Chalet.class);
+                                chalets.add(chalet);
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            if(minLg != -1 && date != null) {
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
+                                Chalet chalet = singlValue.getValue(Chalet.class);
+                                double currentLt = Double.parseDouble(chalet.getLatitude());
+                                double currentLg = Double.parseDouble(chalet.getLongitude());
+                                if( (currentLt <= maxLt && currentLt >= minLt) && (currentLg <= maxLg && currentLg >= minLg) )
+                                    chalets.add(chalet);
+                            }
+                        }
+
+                        for(int i = 0; i < chalets.size(); i++) {
+                            final Chalet chalet = chalets.get(i);
+                            FirebaseDatabase.getInstance().getReference().child("busyDates")
+                                    .child(chalet.getId()).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.exists())
+                                        chalets.remove(chalet);
+                                }
+
+
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            if(date != null && minLg == -1) {
+                Log.e("DATE::",date);
+                final ArrayList<String> busyChalet = new ArrayList<>();
+                FirebaseDatabase.getInstance().getReference().child("busyDates").orderByChild(date)
+                        .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
+                               if( singlValue.child(date).exists() ) {
+                                   busyChalet.add(singlValue.getKey());
+                                   Log.e("BUSY CHALet?", singlValue.getKey());
+                               }
+                            }
+
+                            reference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.exists()) {
+                                        for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
+                                            Chalet chalet = singlValue.getValue(Chalet.class);
+                                            Log.e("!!CHALET ID:",chalet.getId());
+                                                if(!busyChalet.contains(chalet.getId()))
+                                                    chalets.add(chalet);
+                                        }
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            HashSet<Chalet> hashSet = new HashSet<Chalet>();
+            hashSet.addAll(chalets);
+            chalets.clear();
+            chalets.addAll(hashSet);
+            mAdapter.notifyDataSetChanged();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+            mAdapter.notifyDataSetChanged();
+            HashSet<Chalet> hashSet = new HashSet<Chalet>();
+            hashSet.addAll(chalets);
+            chalets.clear();
+            chalets.addAll(hashSet);
+            mAdapter.notifyDataSetChanged();
+        }
+
     }
 
 }

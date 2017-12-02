@@ -15,12 +15,17 @@ public class Reservation {
     private String ownerID;
     private String payment;
     private String price;
+    private String rated;
     private String reservationID;
 
     public Reservation() {}
 
 
-    public Reservation(String chaletID, String chaletName, String checkin, String checkout, String customerID, String date, String ownerID, String payment, String price, String reservationID) {
+    public String getRated() {
+        return rated;
+    }
+
+    public Reservation(String chaletID, String chaletName, String checkin, String checkout, String customerID, String date, String ownerID, String payment, String price, String rated, String reservationID) {
         this.chaletID = chaletID;
         this.chaletName = chaletName;
         this.checkin = checkin;
@@ -30,6 +35,7 @@ public class Reservation {
         this.ownerID = ownerID;
         this.payment = payment;
         this.price = price;
+        this.rated = rated;
         this.reservationID = reservationID;
     }
 

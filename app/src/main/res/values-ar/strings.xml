@@ -166,6 +166,25 @@
     <string name="maxPrice">الاعلى</string>
     <string name="minPrice">الاقل</string>
     <string name="yourBooked">هذا اليوم محجوز لك</string>
+    <string name="bookingID">"رمز الحجز: "</string>
+    <string name="outTime">وقت الخروج:</string>
+    <string name="riyal">ريال</string>
+    <string name="modify">تعديل الملف الشخصي</string>
+    <string name="updateProfile">تم تحديث معلوماتك</string>
+    <string name="current">حجوزاتي الحالية</string>
+    <string name="rateChalet">قيّم استراحة/شالية</string>
+    <string name="needRate">استراحات وشاليهات بحاجة لتقييمك!</string>
+    <string name="commet">تعليق</string>
+    <string name="promoted">هذه الاستراحة/الشالية مروجة بالفعل</string>
+    <string name="dirc">الطريق</string>
 
+    <string-array name="Riyadh">
+        <item>-</item>
+        <item>شمال الرياض</item>
+        <item>شرق الرياض</item>
+        <item>وسط الرياض</item>
+        <item>غرب الرياض</item>
+        <item>جنوب الرياض</item>
+    </string-array>
 
 </resources>

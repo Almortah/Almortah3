@@ -124,6 +124,17 @@
         <item> King Saud university</item>
     </string-array>
 
+    <string-array name="Riyadh">
+        <item>-</item>
+        <item>North of Riyadh</item>
+        <item>East of Riyadh</item>
+        <item>Center of Riyadh</item>
+        <item>West of Riyadh</item>
+        <item>South of Riyadh</item>
+    </string-array>
+
+
+
     <!-- Example settings for Data & Sync -->
 
 
@@ -215,6 +226,9 @@
     <string name="current">My current reservation</string>
     <string name="rateChalet">Rate a rest-house/chalet</string>
     <string name="needRate">Rest-houses/Chalets need your rating!</string>
+    <string name="commet">Comment</string>
+    <string name="promoted">This rest-house/chalet was promoted</string>
+    <string name="dirc">Direction</string>
 
 
 </resources>

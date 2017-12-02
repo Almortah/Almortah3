@@ -21,6 +21,7 @@ public class Chalet implements Parcelable {
     private String normalPrice;
     private String ownerID;
     private String promotion;
+    private String rating;
     private String weekendPrice;
 
 
@@ -59,6 +60,7 @@ public class Chalet implements Parcelable {
         this.normalPrice = in.readString();
         this.ownerID = in.readString();
         this.promotion = in.readString();
+        this.rating = in.readString();
         this.weekendPrice = in.readString();
     }
 
@@ -122,6 +124,10 @@ public class Chalet implements Parcelable {
         return description;
     }
 
+    public String getRating() {
+        return rating;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -141,7 +147,9 @@ public class Chalet implements Parcelable {
         dest.writeString(normalPrice);
         dest.writeString(ownerID);
         dest.writeString(promotion);
+        dest.writeString(rating);
         dest.writeString(weekendPrice);
+
     }
 
     public static final Parcelable.Creator<Chalet> CREATOR
