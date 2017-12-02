@@ -86,8 +86,8 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
             minLt = info.getDouble("minLt");
         }
 
-        if(info.containsKey("date"))
-            date = info.getString("date");
+        if(info.containsKey("name"))
+            date = info.getString("name");
 
         mAdapter = new ChaletListRV(getBaseContext() ,chalets);
         new GetChalets().execute();
@@ -118,6 +118,7 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
 
 
     private class GetChalets extends AsyncTask<Void, Void, Void> {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("chalets");
 
         @Override
         protected void onPreExecute() {
@@ -137,7 +138,6 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
             //set join adapter to your RecyclerView
             rv.setAdapter(mAdapter);
             // You don't need anything here
-            final DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("chalets");
 
             if(maxPrice != -1 && minPrice != -1) {
                 reference.addValueEventListener(new ValueEventListener() {

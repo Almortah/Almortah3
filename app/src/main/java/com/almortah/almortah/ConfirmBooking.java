@@ -50,7 +50,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_booking);
         Bundle info = getIntent().getExtras();
-        date = info.getString("date");
+        date = info.getString("name");
         final Chalet chalet = (Chalet) info.getParcelable("chalet");
         finalDates = info.getString("finalDates");
         boolean finalPrice = info.getBoolean("price");
@@ -127,10 +127,12 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 map.put("chaletID",chalet.getId());
 
                 map.put("date",date);
-                map.put("check-in",checkin);
-                map.put("check-out","2:00");
+                map.put("checkin",checkin);
+                map.put("checkout","2:00");
                 map.put("payment",payment);
                 map.put("price",price);
+                map.put("confirm","0");
+                map.put("ratedCustomer","0");
                 map.put("chaletName",chalet.getName());
                 map.put("rated","0");
                 String id = mDatabase.child("reservation").push().getKey();

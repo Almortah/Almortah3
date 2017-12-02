@@ -193,6 +193,12 @@ public class AlmortahDB extends Activity {
             case R.id.current:
                 context.startActivity(new Intent(context, CurrentReservations.class));
                 break;
+            case R.id.rateCustomer:
+                context.startActivity(new Intent(context, RateCustomer.class));
+                break;
+            case R.id.notify:
+                context.startActivity(new Intent(context, ApproveBookingByOwner.class));
+                break;
 
             default:
                 super.onOptionsItemSelected(item);

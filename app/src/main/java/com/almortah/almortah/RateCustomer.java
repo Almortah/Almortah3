@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RateAChalet extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class RateCustomer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     private RecyclerView recyclerView;
@@ -35,7 +35,7 @@ public class RateAChalet extends AppCompatActivity implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rate_achalet);
+        setContentView(R.layout.activity_rate_customer);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -51,29 +51,29 @@ public class RateAChalet extends AppCompatActivity implements NavigationView.OnN
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.inflateMenu(R.menu.customer_menu);
+        navigationView.inflateMenu(R.menu.owner_menu);
 
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(RateAChalet.this);
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         final ArrayList<Reservation> arrayList = new ArrayList<>();
-        final RateChaletAdapter adapter = new RateChaletAdapter(this, arrayList, user);
+        final RateCustomerAdapter adapter = new RateCustomerAdapter(this, arrayList, user);
         recyclerView.setAdapter(adapter);
 
         final SimpleDateFormat dfDate = new SimpleDateFormat("dd-MM-yyyy");
         final Date today = new Date(System.currentTimeMillis());
 
         FirebaseDatabase.getInstance().getReference().child("reservation").
-                orderByChild("customerID").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
+                orderByChild("ownerID").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
                         Reservation reservation = singlValue.getValue(Reservation.class);
                         try {
-                            if(dfDate.parse(reservation.getDate()).before(today) && reservation.getRated().equals("0"))
+                            if(dfDate.parse(reservation.getDate()).before(today) && reservation.getRatedCustomer().equals("0"))
                                 arrayList.add(reservation);
                         } catch (ParseException e) {
                             e.printStackTrace();

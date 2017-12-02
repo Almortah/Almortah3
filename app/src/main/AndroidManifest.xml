@@ -125,7 +125,9 @@
         <activity android:name=".Search" />
         <activity android:name=".SearchResult" />
         <activity android:name=".CurrentReservations" />
-        <activity android:name=".RateAChalet"></activity>
+        <activity android:name=".RateAChalet" />
+        <activity android:name=".ApproveBookingByOwner" />
+        <activity android:name=".RateCustomer"></activity>
     </application>
 
 </manifest>

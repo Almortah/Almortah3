@@ -38,7 +38,7 @@
     <item
         android:id="@+id/complain"
         android:icon="@drawable/ic_sentiment_dissatisfied_black_24dp"
-        android:title="@string/complain" />
+        android:title="@string/complaints" />
 
     <item
         android:id="@+id/feed"

@@ -188,7 +188,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         toResult.putExtra("minLt",minLt);
                         toResult.putExtra("maxLg",maxLg);
                         toResult.putExtra("minLg",minLg);
-                        toResult.putExtra("date",date);
+                        toResult.putExtra("name",date);
                         startActivity(toResult);
 
                 }

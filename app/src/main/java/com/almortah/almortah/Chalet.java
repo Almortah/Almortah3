@@ -10,6 +10,7 @@ import android.os.Parcelable;
 public class Chalet implements Parcelable {
 
     private String images;
+    private String address;
     private String description;
     private String chaletNm;
     private String eidPrice;
@@ -27,12 +28,12 @@ public class Chalet implements Parcelable {
 
     public Chalet() {}
 
-    public Chalet(String images, String description,
-                  String chaletNm, String eidPrice,
-                  String id, String latitude, String longitude,
-                  String name, String nbImages, String normalPrice,
-                  String ownerID, String promotion, String weekendPrice) {
+    public Chalet(String images, String address, String description,
+                  String chaletNm, String eidPrice, String id, String latitude,
+                  String longitude, String name, String nbImages, String normalPrice,
+                  String ownerID, String promotion, String rating, String weekendPrice) {
         this.images = images;
+        this.address = address;
         this.description = description;
         this.chaletNm = chaletNm;
         this.eidPrice = eidPrice;
@@ -44,11 +45,13 @@ public class Chalet implements Parcelable {
         this.normalPrice = normalPrice;
         this.ownerID = ownerID;
         this.promotion = promotion;
+        this.rating = rating;
         this.weekendPrice = weekendPrice;
     }
 
     public Chalet(Parcel in) {
         this.images = in.readString();
+        this.address = in.readString();
         this.description = in.readString();
         this.chaletNm = in.readString();
         this.eidPrice = in.readString();
@@ -64,6 +67,10 @@ public class Chalet implements Parcelable {
         this.weekendPrice = in.readString();
     }
 
+
+    public String getAddress() {
+        return address;
+    }
 
     public String getId() {
         return id;
@@ -136,6 +143,7 @@ public class Chalet implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(images);
+        dest.writeString(address);
         dest.writeString(description);
         dest.writeString(chaletNm);
         dest.writeString(eidPrice);

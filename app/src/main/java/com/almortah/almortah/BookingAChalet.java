@@ -107,7 +107,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
                 //              long milliseconds = calendarView.getDate();
                 //          SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 //            Date today = new Date(milliseconds);
-//                date = sdf.format(today);
+//                name = sdf.format(today);
                 //reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(chalet.getOwnerID())
                   //      .child(chalet.getChaletNm()).child("busyOn");
 
@@ -129,7 +129,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
                         else {
                             Toast.makeText(BookingAChalet.this, R.string.freeDay, Toast.LENGTH_SHORT).show();
                             Intent toConfirm = new Intent(getBaseContext(), ConfirmBooking.class);
-                            toConfirm.putExtra("date", date);
+                            toConfirm.putExtra("name", date);
                             if (finalDates == null)
                                 finalDates = "";
                             toConfirm.putExtra("price", isWeekend);
@@ -156,14 +156,14 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
                             finalDates = dataSnapshot.getValue().toString();
                             String[] busyDates = dataSnapshot.getValue().toString().split(",");
                             for (int i = 0; i < busyDates.length; i++) {
-                                if (busyDates[i].equals(date))
+                                if (busyDates[i].equals(name))
                                     isBusy = true;
                             }
                         }
                         if (!isBusy) {
                             Toast.makeText(BookingAChalet.this, R.string.freeDay, Toast.LENGTH_SHORT).show();
                             Intent toConfirm = new Intent(BookingAChalet.this, ConfirmBooking.class);
-                            toConfirm.putExtra("date", date);
+                            toConfirm.putExtra("name", name);
                             if (finalDates == null)
                                 finalDates = "";
                             toConfirm.putExtra("price", isWeekend);

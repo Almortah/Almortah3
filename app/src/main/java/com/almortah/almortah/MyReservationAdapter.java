@@ -68,12 +68,12 @@ public class MyReservationAdapter extends RecyclerView.Adapter<MyReservationAdap
                     R.layout.my_reservation_item, parent, false);
         }
         Reservation reservation = getItem(position);
-        TextView date = (TextView) listItemView.findViewById(R.id.date);
-        TextView chaletName = (TextView) listItemView.findViewById(R.id.chaletName);
+        TextView name = (TextView) listItemView.findViewById(R.id.name);
+        TextView comment = (TextView) listItemView.findViewById(R.id.comment);
         control = (Button) listItemView.findViewById(R.id.control);
 
-        date.setText(reservation.getDate());
-        chaletName.setText(reservation.getChaletName());
+        name.setText(reservation.getDate());
+        comment.setText(reservation.getChaletName());
 
         long yourmilliseconds = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");

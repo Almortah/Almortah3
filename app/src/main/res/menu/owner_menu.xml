@@ -21,8 +21,9 @@ tools:context=".MyChalets">
         android:id="@+id/notify"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/notify"/>
+
     <item
-        android:id="@+id/rate"
+        android:id="@+id/rateCustomer"
         android:icon="@drawable/ic_rate_review_black_24dp"
         android:title="@string/rateCustomer"/>
     <item

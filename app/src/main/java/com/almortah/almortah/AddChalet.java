@@ -231,6 +231,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("promotion", "0"); // 0 no promoted, 1 promoted
                 hashMap.put("latitude", latitude);
                 hashMap.put("longitude", longitude);
+                hashMap.put("rating", "0.0");
                 hashMap.put("nbImages", String.valueOf(imgNb));
                 hashMap.put("address",address);
                 hashMap.put("id", id);

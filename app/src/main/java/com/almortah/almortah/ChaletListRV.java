@@ -74,7 +74,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
         if(ratings == null)
             ratings = "0.0";
 
-        Float finalRating = Float.parseFloat(ratings)/2;
+        Float finalRating = Float.parseFloat(ratings);
         holder.chaletRating.setRating(finalRating);
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());

@@ -46,9 +46,11 @@ public class Promotion extends AppCompatActivity implements NavigationView.OnNav
 
 
         final Chalet chalet = (Chalet) getIntent().getSerializableExtra("chalet");
+        final String chaletID = getIntent().getExtras().getString("id");
         Button submit = (Button) findViewById(R.id.submit);
         final RadioGroup offer = (RadioGroup) findViewById(R.id.offer);
         final RadioGroup payment = (RadioGroup) findViewById(R.id.payment);
+       // Log.e("ID for chale?",chalet.getId());
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +62,7 @@ public class Promotion extends AppCompatActivity implements NavigationView.OnNav
                                         @Override
                                         public void onClick(DialogInterface arg0, int arg1) {
                                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                                            mDatabase.child("chalets").child(chalet.getId()).child("promotion").setValue("1");
+                                            mDatabase.child("chalets").child(chaletID).child("promotion").setValue("1");
                                             Toast.makeText(getApplicationContext(),R.string.donePromot,Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(getBaseContext(),MyChalets.class));
                                         }

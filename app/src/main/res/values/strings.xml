@@ -133,6 +133,12 @@
         <item>South of Riyadh</item>
     </string-array>
 
+    <string-array name="complaints">
+        <item>Fake rest-house/chalet</item>
+        <item>Bad owner</item>
+        <item>Bad Service</item>
+        <item>Low safety</item>
+    </string-array>
 
 
     <!-- Example settings for Data & Sync -->
@@ -165,7 +171,7 @@
     <string name="feedback">Feedback</string>
     <string name="about">About us</string>
     <string name="notify">Notifications</string>
-    <string name="allStat">All Statistics</string>
+    <string name="allStat">Statistics</string>
     <string name="rateCustomer">Rate a customer</string>
     <string name="myChalets">My Rest-houses/Chalets</string>
     <string name="defLocation">Defining location....</string>
@@ -194,7 +200,7 @@
     <string name="viewUsers">Customers and Owners</string>
     <string name="approve">Approve owners</string>
     <string name="ban">Blacklist</string>
-    <string name="complain">Complaints</string>
+    <string name="complain">Complain</string>
     <string name="customers">Customers</string>
     <string name="owners">Owners</string>
     <string name="managePromotion">Manage Promotions</string>
@@ -229,6 +235,21 @@
     <string name="commet">Comment</string>
     <string name="promoted">This rest-house/chalet was promoted</string>
     <string name="dirc">Direction</string>
+    <string name="cleanRate">Cleaning rate</string>
+    <string name="reciptRate">Reception rate</string>
+    <string name="priceRate">Price rating</string>
+    <string name="commentNm">Comment number</string>
+    <string name="needLogin">Kindly login to complain this chalet</string>
+    <string name="complainReson">Why you want to complain?</string>
+    <string name="doneComplain">Your complaint raised successfully, thanks</string>
+    <string name="cancel1">Cancel</string>
+    <string name="complaints">Complaints</string>
+      <string name="needApprove">Reservations need your approve!</string>
+    <string name="customerRate">Customer rate</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="customerName">Customer Name</string>
+    <string name="needCustomerRate">Customers need rating</string>
 
 
 </resources>

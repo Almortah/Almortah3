@@ -2,6 +2,7 @@ package com.almortah.almortah;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Criteria;
@@ -154,7 +155,7 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                 String latitudeString;
                 String longitudeString;
                 for (DataSnapshot snapm: dataSnapshot.getChildren()) {
-                    Chalet chalet = snapm.getValue(Chalet.class);
+                    final Chalet chalet = snapm.getValue(Chalet.class);
                     latitudeString = snapm.child("latitude").getValue(String.class);
                     Log.i("Latitude",latitudeString);
                     double latitude =Double.parseDouble(latitudeString);
@@ -163,6 +164,14 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                     double longitude=Double.parseDouble(longitudeString);
                     LatLng newLocation = new LatLng(latitude,longitude);
                     chalets.add(chalet);
+                    mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            Intent toChaletInfo = new Intent(getContext(), ChaletInfoCustomer.class);
+                            toChaletInfo.putExtra("chalet",chalet);
+                            getContext().startActivity(toChaletInfo);
+                        }
+                    });
 
                    //  mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
 

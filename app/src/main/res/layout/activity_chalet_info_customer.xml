@@ -28,7 +28,7 @@
             android:orientation="vertical">
             <!--
     <TextView
-        android:id="@+id/chaletName"
+        android:id="@commentName"
         android:layout_width="match_parent"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
@@ -64,7 +64,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_alignTop="@+id/chaletLocation"
-        android:text="TextView"
 
         android:textStyle="bold"/>
     </LinearLayout>
@@ -162,6 +161,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/book"
         android:layout_width="150dp"
@@ -171,11 +175,22 @@
         android:text="@string/reservation"
         android:layout_margin="5dp"/>
 
+        <Button
+            android:id="@+id/complain"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorDarkGrey"
+            android:textColor="@color/colorWhite"
+            android:text="@string/complain"
+            android:layout_margin="5dp"/>
+    </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
+            android:id="@+id/recyclerview"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"></android.support.v7.widget.RecyclerView>
 
     </LinearLayout>

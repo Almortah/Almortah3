@@ -70,15 +70,17 @@ public class CurrentReservations extends AppCompatActivity implements Navigation
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
-                        Reservation reservation = singlValue.getValue(Reservation.class);
-                        try {
-                            if(dfDate.parse(reservation.getDate()).after(today))
-                            arrayList.add(reservation);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                        if (singlValue.exists()) {
+                            Reservation reservation = singlValue.getValue(Reservation.class);
+                            try {
+                                if (reservation != null && dfDate.parse(reservation.getDate()).after(today))
+                                    arrayList.add(reservation);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 }
             }
 

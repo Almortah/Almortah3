@@ -1,16 +1,19 @@
 package com.almortah.almortah;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +28,18 @@ import com.glide.slider.library.SliderTypes.TextSliderView;
 import com.glide.slider.library.Tricks.ViewPagerEx;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
@@ -42,6 +54,8 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
     private TextView description;
     private SliderLayout mDemoSlider;
     private Chalet chalet;
+    private RecyclerView recyclerView;
+    private boolean isComplain = false;
 
 
     @Override
@@ -88,7 +102,26 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         normalPriceView.setText(chalet.getNormalPrice());
         weekendPriceView.setText(chalet.getWeekendPrice());
         eidPriceView.setText(chalet.getEidPrice());
-        locationView.setText(location);
+
+        try {
+            Geocoder geo = new Geocoder(getBaseContext(), Locale.getDefault());
+            List<Address> addresses = geo.getFromLocation(Double.parseDouble(chalet.getLatitude()), Double.parseDouble(chalet.getLongitude()), 1);
+            if (addresses.isEmpty()) {
+                ;
+            }
+            else {
+                if (addresses.size() > 0) {
+                    location = addresses.get(0).getSubLocality() + ", " + addresses.get(0).getLocality();
+                    locationView.setText(location);
+                    //Toast.makeText(getApplicationContext(), "Address:- " + addresses.get(0).getFeatureName() + addresses.get(0).getAdminArea() + addresses.get(0).getLocality(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace(); // getFromLocation() may sometimes fail
+        }
+
+
         locationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,21 +252,122 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                 }
             });
 
+        Button complain = (Button) findViewById(R.id.complain);
+        complain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mAuth.getCurrentUser() == null) {
+                    Toast.makeText(getApplicationContext(), R.string.needLogin, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getBaseContext(), login.class));
+                    return;
+                }
 
-    }
+                if(isComplain)
+                    return;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            MenuInflater menuInflater = getMenuInflater();
-            menuInflater.inflate(R.menu.visitor_menu, menu);
-        } else {
-            MenuInflater menuInflater = getMenuInflater();
-            menuInflater.inflate(R.menu.customer_menu, menu);
-        }
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChaletInfoCustomer.this);
+                alertDialogBuilder.setMessage(getString(R.string.sure));
+                alertDialogBuilder.setPositiveButton(getString(R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                final HashMap<String,String> map = new HashMap<>();
+
+                                AlertDialog dialog;
+                                final CharSequence[] items = getResources().getStringArray(R.array.complaints);
+                                //{" Easy "," Medium "," Hard "," Very Hard "};
+                                // arraylist to keep the selected items
+                                final ArrayList seletedItems=new ArrayList();
+
+                                final AlertDialog.Builder builder = new AlertDialog.Builder(ChaletInfoCustomer.this);
+                                builder.setTitle(getString(R.string.complainReson));
+                                builder.setMultiChoiceItems(items, null,
+                                        new DialogInterface.OnMultiChoiceClickListener() {
+                                            // indexSelected contains the index of item (of which checkbox checked)
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int indexSelected,
+                                                                boolean isChecked) {
+                                                if (isChecked) {
+                                                    // If the user checked the item, add it to the selected items
+                                                    // write your code when user checked the checkbox
+                                                    seletedItems.add(indexSelected);
+                                                } else if (seletedItems.contains(indexSelected)) {
+                                                    // Else, if the item is already in the array, remove it
+                                                    // write your code when user Uchecked the checkbox
+                                                    seletedItems.remove(Integer.valueOf(indexSelected));
+                                                }
+                                            }
+                                        })
+                                        // Set the action buttons
+                                        .setPositiveButton( getString(R.string.ok) , new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                String reasons = "";
+                                                for (int i = 0; i < seletedItems.size(); i++) {
+                                                    int tmp = (int) seletedItems.get(i);
+                                                    reasons += tmp + "-";
+                                                }
+                                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                                                reference.child("complaints").child(chalet.getId()).child("reasons").setValue(reasons); //Reasons First!
+                                                reference.child("complaints").child(chalet.getId()).child("customerID").setValue(mAuth.getCurrentUser().getUid());
+                                                isComplain = true;
+                                                Toast.makeText(getBaseContext(),R.string.doneComplain,Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .setNegativeButton(getString(R.string.cancel1), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                //  Your code when user clicked on Cancel
+                                                builder.create().cancel();
+                                            }
+                                        });
+
+                                dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+                                dialog.show();
+                            }
+                        });
+
+                alertDialogBuilder.setNegativeButton(getString(R.string.no),new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
 
 
-        return true;
+            recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+            final ArrayList<Rating> ratings = new ArrayList<>();
+            final CommentsAdapter commentsAdapter = new CommentsAdapter(ChaletInfoCustomer.this ,ratings);
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("chaletRatings");
+            recyclerView.setAdapter(commentsAdapter);
+            reference.orderByChild("chaletID").equalTo(chalet.getId()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()) {
+                        for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
+                            Rating rating = singlValue.getValue(Rating.class);
+                            if(!rating.getComment().equals("-"))
+                                ratings.add(rating);
+                        }
+                        commentsAdapter.notifyDataSetChanged();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+
+
     }
 
     /**

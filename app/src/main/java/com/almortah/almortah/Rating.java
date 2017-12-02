@@ -1,11 +1,10 @@
 package com.almortah.almortah;
 
 /**
- * Created by ALMAHRI on 27/11/2017.
+ * Created by ALMAHRI on 30/11/2017.
  */
 
-public class chaletRatings {
-
+public class Rating {
     private String chaletID;
     private String cleanRating;
     private String comment;
@@ -14,11 +13,9 @@ public class chaletRatings {
     private String priceRating;
     private String reicptRating;
 
-    public chaletRatings() {
-    }
+    public Rating(){}
 
-    public chaletRatings(String chaletID, String cleanRating, String comment, String customerID, String customerName, String priceRating, String reicptRating) {
-
+    public Rating(String chaletID, String cleanRating, String comment, String customerID, String customerName, String priceRating, String reicptRating) {
         this.chaletID = chaletID;
         this.cleanRating = cleanRating;
         this.comment = comment;

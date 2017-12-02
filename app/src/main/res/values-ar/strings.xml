@@ -134,7 +134,7 @@
     <string name="google_maps_key">AIzaSyC3kyuKrNC7kLK6eEzoK94JmxjrHl1tRDw</string>
     <string name="viewUsers">الزبائن والمالكين</string>
     <string name="approve">توثيق مالكي الشاليهات</string>
-    <string name="complain">الشكاوي</string>
+    <string name="complain">شكوى</string>
     <string name="customers">الزبائن</string>
     <string name="owners">مالكي الشاليهات</string>
     <string name="managePromotion">ادارة الترويج</string>
@@ -178,6 +178,14 @@
     <string name="promoted">هذه الاستراحة/الشالية مروجة بالفعل</string>
     <string name="dirc">الطريق</string>
 
+    <string-array name="complaints">
+        <item>استراحة/شالية غير صحيح</item>
+        <item>مالك سيء</item>
+        <item>خدمة سيئة</item>
+        <item>امان ضعيف في الاستراحة/الشالية</item>
+    </string-array>
+
+
     <string-array name="Riyadh">
         <item>-</item>
         <item>شمال الرياض</item>
@@ -186,5 +194,20 @@
         <item>غرب الرياض</item>
         <item>جنوب الرياض</item>
     </string-array>
+    <string name="cleanRate">تقييم النظافة</string>
+    <string name="reciptRate">تقييم الاستقبال</string>
+    <string name="priceRate">تقييم السعر</string>
+    <string name="commentNm">التعليق رقم</string>
+    <string name="needLogin">فضلا قم بتسجيل الدخول لرفع شكوى</string>
+    <string name="complainReson">لماذا تريد الشكوى؟</string>
+    <string name="doneComplain">تم رفع الشكوى بنجاح، شكرا لك</string>
+    <string name="cancel1">الغاء</string>
+    <string name="complaints">الشكاوي</string>
+    <string name="needApprove">حجوزات بحاجة لتاكيد</string>
+    <string name="customerRate">تقييم الزبون</string>
+    <string name="accept">قبول</string>
+    <string name="reject">رفض</string>
+    <string name="customerName">اسم الزبون</string>
+    <string name="needCustomerRate">زبائن بحاجة لتقييمك</string>
 
 </resources>

@@ -90,8 +90,10 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
         holder.promotion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toPromot = new Intent(context,Promotion.class);
+                Intent toPromot = new Intent(context, Promotion.class);
                 toPromot.putExtra("chalet", chalet);
+                toPromot.putExtra("id",chalet.getId());
+
                 if(chalet.getPromotion().equals("0"))
                 context.startActivity(toPromot);
 
