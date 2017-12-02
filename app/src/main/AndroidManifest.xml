@@ -30,16 +30,23 @@
         android:roundIcon="@mipmap/logo_noname"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".MyFirebaseInstanceIdService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
         <!--
-        <service
-            android:name=".MyFirebaseInstanceIdService">
+        -   <service
+            android:name="MyFirebaseInstanceIdService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         -->
-
         <activity
             android:name=".Signup"
             android:label="@string/register" />
@@ -125,7 +132,7 @@
         <activity android:name=".Search" />
         <activity android:name=".SearchResult" />
         <activity android:name=".CurrentReservations" />
-        <activity android:name=".RateAChalet"></activity>
+        <activity android:name=".RateAChalet" />
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private ViewPager viewPager;
@@ -31,6 +33,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
         pageTitle = new String[]{getString(R.string.list), getString(R.string.map)};
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         assert navigationView != null;
@@ -38,6 +41,13 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    //    String mUserID= FirebaseInstanceId.getInstance().getToken();
+    //    Log.i("MyFirebaseId", "Refreshed token: " + mUserID);
+
+
+       // String mUserID= user.getToken(true).toString();
+       // Log.i("MyFirebaseId", "Refreshed token: " + mUserID);
+
         if(user != null) {
             FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
