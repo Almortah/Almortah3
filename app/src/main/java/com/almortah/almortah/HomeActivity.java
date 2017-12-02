@@ -9,9 +9,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceIdService;
 
+import java.util.HashMap;
 import java.util.Locale;
-
+import java.util.Map;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button guestButton;
@@ -23,6 +27,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+       /* PusherAndroid pusher = new PusherAndroid("06a4b24b55e1a8192374");
+        PushNotificationRegistration nativePusher = pusher.nativePusher();
+        try {
+            nativePusher.registerFCM(this);
+        } catch (ManifestValidator.InvalidManifestException e) {
+            e.printStackTrace();
+        }*/
+
+
         mAuth.signOut();
         guestButton = (Button) findViewById(R.id.guestButton);
         signinButton = (Button) findViewById(R.id.signinButton);
@@ -56,6 +70,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.guestButton :
                 Intent intent = new Intent(this,HomePage.class);
                 startActivity(intent);
+                //test
+
+
+
                 break;
             case R.id.signinButton :
                 Intent signin = new Intent(this,login.class);
@@ -91,5 +109,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 getBaseContext().getResources().getDisplayMetrics());
         recreate();
     }
+//    public static void sendNotificationToUser(String user, final String message) {
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+//
+//        final DatabaseReference notifications = ref.child("notificationRequests");
+//
+//        Map notification = new HashMap<>();
+//        notification.put("username", user);
+//        notification.put("message", message);
+//
+//        notifications.push().setValue(notification);
+//    }
 
 }
