@@ -39,6 +39,7 @@ public class ApproveBookingByOwner extends AppCompatActivity implements Navigati
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+        //TEST
 
         setSupportActionBar(toolbar);
 
