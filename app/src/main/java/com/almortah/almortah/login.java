@@ -1,6 +1,8 @@
 package com.almortah.almortah;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,6 +43,8 @@ public class login extends AppCompatActivity  {
     private BroadcastReceiver broadcastReceiver;
     private String app_server_url = "http://almortah2017-001-site1.etempurl.com/fcm_insert.php";
 
+    private Context context = getBaseContext();
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +73,12 @@ public class login extends AppCompatActivity  {
                 if(mEmailField.getText().toString().matches("") || mPassField.getText().toString().matches("")
                         || mEmailField.getText() == null || mPassField.getText() == null)
                     return;
-                else
-                signin(mEmailField.getText().toString(),mPassField.getText().toString());
+                else {
+                                        progressDialog = new ProgressDialog(login.this);
+                                        progressDialog.setMessage(getString(R.string.wait));
+                                        progressDialog.show();
+                                        signin(mEmailField.getText().toString(), mPassField.getText().toString());
+                              }
             }
         });
 
@@ -97,6 +105,7 @@ public class login extends AppCompatActivity  {
                     updateUI(user);
                 } else {
                     // If sign in fails, display a message to the user.
+                    progressDialog.dismiss();
                     updateUI(null);
                 }
 
@@ -147,6 +156,7 @@ public class login extends AppCompatActivity  {
                     if (dataSnapshot.exists()) {
                         String typeValue = dataSnapshot.getValue().toString().trim();
                     Log.i("TYPE", typeValue);
+                        progressDialog.dismiss();
                     if (typeValue.equals("1")) {
                         Intent intent = new Intent(login.this, HomePage.class);
                         startActivity(intent);
