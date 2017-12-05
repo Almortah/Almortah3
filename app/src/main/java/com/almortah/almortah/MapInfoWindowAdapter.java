@@ -94,7 +94,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         if (query==true){
             Picasso.with(v.getContext()).load(imgUrl).into(img);
             chaletName.setText(nameHolder);
-            price.setText(priceHolder);
+            price.setText(context.getString(R.string.startFrom)+ " "+priceHolder+" "+context.getString(R.string.riyal));
             double ratingFinal = Double.parseDouble(ratingHolder);
             ratingFinal = ratingFinal/2;
             rating.setText(String.valueOf(ratingFinal) + " / "+ " 5");

@@ -5,9 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -52,11 +50,8 @@ import com.gun0912.tedpermission.TedPermission;
 import com.werb.pickphotoview.PickPhotoView;
 import com.werb.pickphotoview.util.PickConfig;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
@@ -88,8 +83,13 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     private Location location;
     private int imgNb = 0;
     double lat1 = 0, lng1 = 0;
+<<<<<<< HEAD
     private List<Address> addresses;
     private Geocoder geocoder;
+=======
+//    private List<Address> addresses;
+//    private Geocoder geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
+>>>>>>> c13c5d6c2c1e8bf15b3c784df311995323950879
 
 
     static final int PICK_CONTACT_REQUEST = 1;
@@ -206,17 +206,17 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                     return;
                 }
                 // chaletCount++;
-                try {
-                    //ads = gc.getFromLocationName("Riyadh, SA",50000, 24.2939113, 46.2981033, 25.1564724,47.34695430000001);
-                    addresses = geocoder.getFromLocation(Double.parseDouble(latitude) , Double.parseDouble(longitude),1);
-                    // ads = gc.getFromLocation(24.7135517,46.6752957,5000);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (addresses.size() > 0)
-                    address = addresses.get(0).getSubLocality();
-                else
-                    address = "empty";
+//                try {
+//                    //ads = gc.getFromLocationName("Riyadh, SA",50000, 24.2939113, 46.2981033, 25.1564724,47.34695430000001);
+//                    addresses = geocoder.getFromLocation(Double.parseDouble(latitude) , Double.parseDouble(longitude),1);
+//                    // ads = gc.getFromLocation(24.7135517,46.6752957,5000);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                if (addresses.size() > 0)
+//                    address = addresses.get(0).getSubLocality();
+//                else
+//                    address = "empty";
 
                     //Toast.makeText(getApplicationContext(), "Address:- "
                 HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -231,9 +231,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("promotion", "0"); // 0 no promoted, 1 promoted
                 hashMap.put("latitude", latitude);
                 hashMap.put("longitude", longitude);
-                hashMap.put("rating", "0.0");
+                hashMap.put("rating", "0.00");
                 hashMap.put("nbImages", String.valueOf(imgNb));
-                hashMap.put("address",address);
                 hashMap.put("id", id);
                 hashMap.put("ownerToken",SharedPrefManager.getmInstance(getApplicationContext()).getToken());
                 mDatabase.child("chalets").child(id).setValue(hashMap);
@@ -260,7 +259,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                         .setLightStatusBar(true)  // custom theme
                         .setToolbarColor("#52bb6c")// custom toolbar icon
                         .setSelectIconColor("#52bb6c")  // custom select icon
-                        .setStatusBarColor("#b2b2b2")
                         .start();
 
 
@@ -459,7 +457,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        AlmortahDB almortahDB = new AlmortahDB();
+        AlmortahDB almortahDB = new AlmortahDB(this);
         almortahDB.menu(item);
 
         drawer.closeDrawer(GravityCompat.START);

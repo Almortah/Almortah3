@@ -209,5 +209,11 @@
     <string name="reject">رفض</string>
     <string name="customerName">اسم الزبون</string>
     <string name="needCustomerRate">زبائن بحاجة لتقييمك</string>
+    <string name="pending">جاري التآكيد</string>
+    <string name="confirmed">مؤكد !</string>
+    <string name="rejected">مرفوض</string>
+    <string name="filter1">تصفية النتائج</string>
+    <string name="startFrom">ابتداءً من</string>
+    <string name="loading">يحمل..</string>
 
 </resources>

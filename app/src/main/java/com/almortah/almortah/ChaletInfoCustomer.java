@@ -99,9 +99,9 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
 
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
-        normalPriceView.setText(chalet.getNormalPrice());
-        weekendPriceView.setText(chalet.getWeekendPrice());
-        eidPriceView.setText(chalet.getEidPrice());
+        normalPriceView.setText(chalet.getNormalPrice()+" "+getString(R.string.riyal));
+        weekendPriceView.setText(chalet.getWeekendPrice() +" "+getString(R.string.riyal));
+        eidPriceView.setText(chalet.getEidPrice()+" "+getString(R.string.riyal));
 
         try {
             Geocoder geo = new Geocoder(getBaseContext(), Locale.getDefault());
