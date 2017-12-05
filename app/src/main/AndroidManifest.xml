@@ -23,6 +23,7 @@
     -->
     <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <application
+        android:exported="true"
         android:allowBackup="true"
         android:configChanges="orientation|screenSize|keyboardHidden|locale"
         android:icon="@mipmap/logo_noname"
