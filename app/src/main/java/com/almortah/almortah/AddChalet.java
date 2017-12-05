@@ -83,13 +83,13 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     private Location location;
     private int imgNb = 0;
     double lat1 = 0, lng1 = 0;
-<<<<<<< HEAD
-    private List<Address> addresses;
-    private Geocoder geocoder;
-=======
+//<<<<<<< HEAD
+    //private List<Address> addresses;
+    //private Geocoder geocoder;
+//=======
 //    private List<Address> addresses;
 //    private Geocoder geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
->>>>>>> c13c5d6c2c1e8bf15b3c784df311995323950879
+//>>>>>>> c13c5d6c2c1e8bf15b3c784df311995323950879
 
 
     static final int PICK_CONTACT_REQUEST = 1;
@@ -103,7 +103,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
         setContentView(R.layout.activity_add_chalet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
-        geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
+     //   geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
         setSupportActionBar(toolbar);
 
         //create default navigation drawer toggle

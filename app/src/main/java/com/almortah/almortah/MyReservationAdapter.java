@@ -24,11 +24,13 @@ public class MyReservationAdapter extends RecyclerView.Adapter<MyReservationAdap
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView date ;
         public TextView chaletName;
+        public Button detail;
 
         public MyViewHolder(View view) {
             super(view);
             date = (TextView) view.findViewById(R.id.date);
             chaletName = (TextView) view.findViewById(R.id.chaletName);
+            detail = (Button) view.findViewById(R.id.detail);
         }
     }
 
@@ -49,6 +51,13 @@ public class MyReservationAdapter extends RecyclerView.Adapter<MyReservationAdap
         final Reservation reservation = reservations.get(position);
         holder.chaletName.setText(reservation.getChaletName());
         holder.date.setText(reservation.getDate());
+
+        holder.detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
