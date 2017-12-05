@@ -89,7 +89,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     private int imgNb = 0;
     double lat1 = 0, lng1 = 0;
     private List<Address> addresses;
-    private Geocoder geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
+    private Geocoder geocoder;
 
 
     static final int PICK_CONTACT_REQUEST = 1;
@@ -103,7 +103,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
         setContentView(R.layout.activity_add_chalet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
-
+        geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
         setSupportActionBar(toolbar);
 
         //create default navigation drawer toggle
@@ -235,6 +235,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("nbImages", String.valueOf(imgNb));
                 hashMap.put("address",address);
                 hashMap.put("id", id);
+                hashMap.put("ownerToken",SharedPrefManager.getmInstance(getApplicationContext()).getToken());
                 mDatabase.child("chalets").child(id).setValue(hashMap);
 
                 HashMap<String, String> dateHashMap = new HashMap<String, String>();

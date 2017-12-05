@@ -32,7 +32,7 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
 
     private void notifyUser(String from, String notification ) {
         MyNotificationManager notificationManager= new MyNotificationManager(getApplicationContext());
-        notificationManager.showNotification(from,notification,new Intent(getApplicationContext(),HomeActivity.class));
+        notificationManager.showNotification(from,notification,new Intent(getApplicationContext(),ApproveBookingByOwner.class));
 
 
     }

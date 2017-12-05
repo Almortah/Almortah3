@@ -25,6 +25,8 @@ public class Chalet implements Parcelable {
     private String rating;
     private String weekendPrice;
 
+    private String ownerToken;
+
 
     public Chalet() {}
 
@@ -47,6 +49,7 @@ public class Chalet implements Parcelable {
         this.promotion = promotion;
         this.rating = rating;
         this.weekendPrice = weekendPrice;
+        this.ownerToken=ownerToken;
     }
 
     public Chalet(Parcel in) {
@@ -65,8 +68,10 @@ public class Chalet implements Parcelable {
         this.promotion = in.readString();
         this.rating = in.readString();
         this.weekendPrice = in.readString();
+        this.ownerToken=in.readString();
     }
 
+    public String getOwnerToken() { return ownerToken; }
 
     public String getAddress() {
         return address;
@@ -157,6 +162,7 @@ public class Chalet implements Parcelable {
         dest.writeString(promotion);
         dest.writeString(rating);
         dest.writeString(weekendPrice);
+        dest.writeString(ownerToken);
 
     }
 

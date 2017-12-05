@@ -122,7 +122,7 @@ public class login extends AppCompatActivity  {
 
             if(SharedPrefManager.getmInstance(getApplicationContext()).getToken()!=null){
                 final String token = SharedPrefManager.getmInstance(getApplicationContext()).getToken();
-                Log.i("Token Server ", token);
+                Log.i("Token", token);
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, app_server_url,
 
                         new Response.Listener<String>() {
@@ -148,6 +148,9 @@ public class login extends AppCompatActivity  {
                 MySingleton.getmInstance(login.this).addToRequestque(stringRequest);
             }
 
+            DatabaseReference userToken = mDatabase.child("users").child(user.getUid()).child("token");
+            userToken.setValue(SharedPrefManager.getmInstance(getApplicationContext()).getToken());
+
 
             DatabaseReference type = mDatabase.child("users").child(user.getUid()).child("type");
             type.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -162,6 +165,10 @@ public class login extends AppCompatActivity  {
                         startActivity(intent);
                     }
                     else if (typeValue.equals("2")) {
+
+
+
+
                         startActivity(new Intent(login.this,  MyChalets.class));
                     }
 

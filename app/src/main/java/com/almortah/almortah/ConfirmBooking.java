@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,13 +22,23 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ConfirmBooking extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String date;
@@ -42,6 +53,8 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
     private String payment;
     private int oneTimes = 0;
     private int TIME_PICKER_INTERVAL = 30;
+    private String app_server_url = "http://almortah2017-001-site1.etempurl.com/insert_values.php";
+    private String url_notify = "http://almortah2017-001-site1.etempurl.com/send_notofication.php";
 
     private DrawerLayout drawer;
 
@@ -126,6 +139,8 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 map.put("ownerID",chalet.getOwnerID());
                 map.put("chaletID",chalet.getId());
 
+
+
                 map.put("date",date);
                 map.put("checkin",checkin);
                 map.put("checkout","2:00");
@@ -135,8 +150,73 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 map.put("ratedCustomer","0");
                 map.put("chaletName",chalet.getName());
                 map.put("rated","0");
-                String id = mDatabase.child("reservation").push().getKey();
+                map.put("confirmed","0");
+              final  String id = mDatabase.child("reservation").push().getKey();
+                final String token = SharedPrefManager.getmInstance(getApplicationContext()).getToken();
+
                 map.put("reservationID",id);
+                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                if(SharedPrefManager.getmInstance(getApplicationContext()).getToken()!=null){
+                    Log.i("Token", token);
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, app_server_url,
+
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    })
+                    {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String,String> params = new HashMap<>();
+                            //params.put("fcm_token",token);
+                            params.put("reservation_id",id);
+                            params.put("owner_id",chalet.getOwnerID());
+                            params.put("chalet_id",chalet.getId());
+                            params.put("owner_token",chalet.getOwnerToken());
+                            params.put("customer_id",user.getUid());
+                            params.put("customer_token",token);
+
+                            return params;
+                        }
+                    };
+                    MySingleton.getmInstance(ConfirmBooking.this).addToRequestque(stringRequest);
+                }
+
+                StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url_notify,
+
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                })
+                {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> params = new HashMap<>();
+                        params.put("owner_token",chalet.getOwnerToken());
+                        params.put("title","AlMortah");
+                        params.put("body","You have new reservation on "+chalet.getName());
+                        params.put("customer_token",token);
+
+                        return params;
+                    }
+                };
+                MySingleton.getmInstance(ConfirmBooking.this).addToRequestque(stringRequest2);
+
                 mDatabase.child("reservation").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

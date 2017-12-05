@@ -31,13 +31,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <service
-            android:name=".MyFirebaseInstanceIdService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
+                <service
+                   android:name=".MyFirebaseInstanceIdService"
+                   android:exported="false">
+                  <intent-filter>
+                      <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                  </intent-filter>
+              </service>
 
 
         <!--
@@ -48,6 +48,7 @@
             </intent-filter>
         </service>
         -->
+
 
         <activity
             android:name=".Signup"

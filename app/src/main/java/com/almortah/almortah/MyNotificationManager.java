@@ -28,12 +28,14 @@ public class MyNotificationManager {
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
         NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( context)
+                .setContentIntent(pendingIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("AL-Mortah")
                 .setContentText(notifcation)
                 .setAutoCancel( true )
                 ;
         String ns = Context.NOTIFICATION_SERVICE;
+        mNotificationBuilder.setContentIntent(pendingIntent);
 
         android.app.NotificationManager notificationManager = (android.app.NotificationManager) context.getSystemService(ns);
 
