@@ -87,8 +87,10 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             desMin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(min.getText().toString().matches(""))
+                    if(min.getText().toString().matches("")) {
                         min.setText("0");
+                        minPrice = 0;
+                    }
                     else {
                         minPrice = Integer.parseInt(min.getText().toString().trim()) - 50;
                         if(minPrice < 0)
@@ -105,8 +107,10 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             desMax.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(max.getText().toString().matches(""))
+                    if(max.getText().toString().matches("")) {
                         max.setText("0");
+                        maxPrice = 0;
+                    }
                     else {
                         maxPrice = Integer.parseInt(max.getText().toString().trim()) - 50;
                         if(maxPrice < 0)
@@ -158,6 +162,10 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                    // String minPrice = min.getText().toString().trim();
                     //String maxPrice = max.getText().toString().trim();
                         Intent toResult = new Intent(getBaseContext() ,SearchResult.class);
+                        if(minPrice == -1 && maxPrice != -1) {
+                                minPrice = 0;
+                                Log.e("BadMInPrice","-------");
+                        }
                         toResult.putExtra("min",minPrice);
                         toResult.putExtra("max",maxPrice);
                      //   toResult.putExtra("location", location);

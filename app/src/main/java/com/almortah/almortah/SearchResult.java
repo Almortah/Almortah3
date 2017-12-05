@@ -119,6 +119,7 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
 
     private class GetChalets extends AsyncTask<Void, Void, Void> {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("chalets");
+        private boolean doneSearch = false;
 
         @Override
         protected void onPreExecute() {
@@ -139,7 +140,59 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
             rv.setAdapter(mAdapter);
             // You don't need anything here
 
-            if(maxPrice != -1 && minPrice != -1) {
+            if(minLg != -1 && date != null && maxPrice != -1 && minPrice != -1) {
+                Log.e("FIRST IF","FIRST IF");
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
+                                Chalet chalet = singlValue.getValue(Chalet.class);
+                                double currentLt = Double.parseDouble(chalet.getLatitude());
+                                double currentLg = Double.parseDouble(chalet.getLongitude());
+                                if( (currentLt <= maxLt && currentLt >= minLt) && (currentLg <= maxLg && currentLg >= minLg)
+                                        && (Integer.parseInt(chalet.getNormalPrice()) >= minPrice &&
+                                        Integer.parseInt(chalet.getNormalPrice()) <= maxPrice)
+                                        )
+                                    chalets.add(chalet);
+                            }
+                        }
+
+                        for(int i = 0; i < chalets.size(); i++) {
+                            final Chalet chalet = chalets.get(i);
+                            FirebaseDatabase.getInstance().getReference().child("busyDates")
+                                    .child(chalet.getId()).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.exists())
+                                        chalets.remove(chalet);
+                                }
+
+
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                doneSearch = true;
+            }
+
+
+
+            if(maxPrice != -1 && minPrice != -1 && minLg == -1 && !doneSearch) {
+                Log.e("2nd IF","2nd IF");
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -160,27 +213,8 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
                 });
             }
 
-
-            if(location != null) {
-                reference.orderByChild("address").equalTo(location).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
-                        Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-                        while ((iterator.hasNext())) {
-                            Chalet chalet = iterator.next().getValue(Chalet.class);
-                            chalets.add(chalet);
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-            }
-
             if(name != null) {
+                Log.e("3rd IF","3rd IF");
                 reference.orderByChild("name").equalTo(name).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -202,7 +236,10 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
                 });
             }
 
-            if(minLg != -1 && date != null) {
+
+
+            if(minLg != -1 && date != null && !doneSearch && maxPrice == -1 && minPrice == -1) {
+                Log.e("4th IF","4th IF");
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -245,7 +282,12 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
                 });
             }
 
-            if(date != null && minLg == -1) {
+            if(date != null && minLg == -1 && !doneSearch && maxPrice == -1 && minPrice == -1) {
+                Log.e("5th IF","5th IF");
+                Log.e("MAX?", String.valueOf(maxPrice));
+                Log.e("MIN?", String.valueOf(minPrice));
+
+
                 Log.e("DATE::",date);
                 final ArrayList<String> busyChalet = new ArrayList<>();
 
