@@ -11,9 +11,17 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Signup extends AppCompatActivity {
 
     private Spinner userType;
+
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
+    private boolean mVerificationInProgress = false;
+    private String mVerificationId;
 
     private EditText mUsername;
     private EditText mFullname;
@@ -70,7 +78,7 @@ public class Signup extends AppCompatActivity {
 
                 else {
                         almortahDB.signup(fullname, username, phone, email, password, type);
-                         startActivity(new Intent(Signup.this, login.class));
+                        startActivity(new Intent(Signup.this, login.class));
                 }
             }
         });

@@ -37,8 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/colorGreen"
                 android:text="@string/searchByName" />
 
             <EditText
@@ -47,24 +48,31 @@
                 android:id="@+id/chaletName"
                 android:hint="@string/chaletName"
                 android:inputType="text"
+                android:maxLength="15"
                 android:gravity="center"/>
 
             <Button
                 android:id="@+id/search"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:layout_margin="10dp"
                 android:background="@color/colorBlue"
                 android:textColor="@color/colorWhite"
                 android:text="@string/search"/>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="25dp"
+                android:layout_margin="30dp"
+                android:src="@mipmap/logo_noname"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="50dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/colorGreen"
                 android:text="@string/filter" />
 
             <LinearLayout
@@ -100,7 +108,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -134,18 +142,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:text="@string/location" />
 
                 <Spinner
                     android:id="@+id/spinner1"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_height="wrap_content"
@@ -162,14 +171,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:text="@string/date" />
 
               <DatePicker
                   android:id="@+id/date"
                   android:layout_width="wrap_content"
-                  android:layout_height="130dp"
+                  android:layout_height="110dp"
                   android:layout_marginStart="5dp"
                   android:layout_marginEnd="5dp"
                   android:theme="@style/DatePicker"
@@ -182,12 +191,12 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:id="@+id/filter"
                 android:layout_margin="10dp"
                 android:background="@color/colorBlue"
                 android:textColor="@color/colorWhite"
-                android:text="@string/search"/>
+                android:text="@string/filter1"/>
 
         </LinearLayout>
         </ScrollView>

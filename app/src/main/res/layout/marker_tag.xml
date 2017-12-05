@@ -36,16 +36,18 @@
             android:layout_height="wrap_content"
             android:id="@+id/chaletName"
             android:textSize="18sp"
+            android:textColor="@color/colorBlue"
             android:gravity="center"
             android:layout_marginBottom="5dp"
-            android:text="--"/>
+            android:text="@string/loading"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/location"
-                    android:text="--"
+                    android:text="@string/loading"
                     android:layout_marginBottom="5dp"
+                    android:textSize="12sp"
 
                     android:gravity="center"
                     />
@@ -54,9 +56,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/rating"
-                    android:text="--"
-                    android:layout_marginBottom="5dp"
-
+                    android:text="@string/loading"                    android:layout_marginBottom="5dp"
+                    android:textSize="12sp"
                     android:gravity="center"
                     />
 
@@ -65,8 +66,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/price"
                     android:gravity="center"
+                    android:textSize="12sp"
                     android:layout_marginBottom="5dp"
-                    android:text="--" />
+                    android:text="@string/loading" />
 
                 <ImageView
                     android:layout_width="100dp"

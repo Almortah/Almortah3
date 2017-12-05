@@ -86,8 +86,8 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
             minLt = info.getDouble("minLt");
         }
 
-        if(info.containsKey("name"))
-            date = info.getString("name");
+        if(info.containsKey("date"))
+            date = info.getString("date");
 
         mAdapter = new ChaletListRV(getBaseContext() ,chalets);
         new GetChalets().execute();
@@ -248,6 +248,7 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
             if(date != null && minLg == -1) {
                 Log.e("DATE::",date);
                 final ArrayList<String> busyChalet = new ArrayList<>();
+
                 FirebaseDatabase.getInstance().getReference().child("busyDates").orderByChild(date)
                         .addValueEventListener(new ValueEventListener() {
                     @Override

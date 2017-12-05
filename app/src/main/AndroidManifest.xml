@@ -135,6 +135,8 @@
         <activity android:name=".SearchResult" />
         <activity android:name=".CurrentReservations" />
         <activity android:name=".RateAChalet"></activity>
+        <activity android:name=".ApproveBookingByOwner"
+            android:label="@string/needApprove"/>
     </application>
 
 </manifest>

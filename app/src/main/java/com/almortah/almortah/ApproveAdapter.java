@@ -123,7 +123,6 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                              @Override
                                              public void onClick(View v) {
 
-
                                                  AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                                                  alertDialogBuilder.setMessage(context.getString(R.string.sure));
                                                  alertDialogBuilder.setPositiveButton(context.getString(R.string.yes),
@@ -134,9 +133,8 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                                          .child(reservation.getReservationID()).child("confirm").setValue("1");
                                                                  //code to notify customer!
 
-                                                                 reservations.remove(reservation);
-                                                                 notifyItemRemoved(position);
-                                                                 notifyItemRangeChanged(position, getItemCount());
+                                                                 reservations.remove(position);
+                                                                 notifyDataSetChanged();
 
                                                              }
                                                          });
@@ -147,7 +145,11 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                          dialog.cancel();
                                                      }
                                                  });
+
+                                                 AlertDialog alertDialog = alertDialogBuilder.create();
+                                                 alertDialog.show();
                                              }
+
                                          });
 
 
@@ -165,9 +167,8 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                         FirebaseDatabase.getInstance().getReference().child("reservation")
                                                 .child(reservation.getReservationID()).child("confirm").setValue("2");
                                         //code to notify customer!
-                                        reservations.remove(reservation);
-                                        notifyItemRemoved(position);
-                                        notifyItemRangeChanged(position,getItemCount());
+                                        reservations.remove(position);
+                                        notifyDataSetChanged();
 
                                     }
                                 });

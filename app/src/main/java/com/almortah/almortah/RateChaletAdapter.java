@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -199,17 +200,19 @@ public class RateChaletAdapter extends RecyclerView.Adapter<RateChaletAdapter.My
                                                             double avgRating = 0.0;
                                                             for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
                                                                 chaletRatings chaletRating = singlValue.getValue(chaletRatings.class);
-                                                                avgRating = ( (Double.parseDouble(chaletRating.getCleanRating()) +
+                                                                avgRating =  (Double.parseDouble(chaletRating.getCleanRating()) +
                                                                         Double.parseDouble(chaletRating.getPriceRating()) +
-                                                                        Double.parseDouble(chaletRating.getReicptRating()))  / 3 );
+                                                                        Double.parseDouble(chaletRating.getReicptRating()))  / 3 ;
                                                                 Log.e("avgRating:", String.valueOf(avgRating));
                                                                 sum += avgRating;
                                                             }
                                                             Log.e("sum::", String.valueOf(sum));
 
                                                             double total = sum / size;
+                                                            DecimalFormat df = new DecimalFormat("#.00");
+                                                            String totalFormated = df.format(total);
                                                             Log.e("TOTAL:", String.valueOf(total));
-                                                            reference.child("chalets").child(reservation.getChaletID()).child("rating").setValue(String.valueOf(total));
+                                                            reference.child("chalets").child(reservation.getChaletID()).child("rating").setValue(totalFormated);
                                                         }
                                                     }
 

@@ -20,13 +20,15 @@ import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Calendar;
+
 public class Search extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,AdapterView.OnItemSelectedListener {
 
     private DrawerLayout drawer;
     private String[] address;
     private Spinner spinner;
-    private int minPrice = 0;
-    private int maxPrice = 0;
+    private int minPrice = -1;
+    private int maxPrice = -1;
     String location;
     private DatePicker datePicker;
     private String date;
@@ -76,8 +78,12 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             final EditText max = (EditText) findViewById(R.id.max);
             final EditText min = (EditText) findViewById(R.id.min);
             datePicker = (DatePicker) findViewById(R.id.date);
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.MONTH, +2);
+        long result = c.getTimeInMillis();
 
             datePicker.setMinDate(System.currentTimeMillis() - 1000);
+            datePicker.setMaxDate(result);
             desMin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -154,41 +160,51 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         Intent toResult = new Intent(getBaseContext() ,SearchResult.class);
                         toResult.putExtra("min",minPrice);
                         toResult.putExtra("max",maxPrice);
-                        toResult.putExtra("location", location);
+                     //   toResult.putExtra("location", location);
                         double maxLt = -1; double maxLg = -1;
                         double minLt = -1; double minLg = -1;
                         date = datePicker.getDayOfMonth() +"-"+ ( datePicker.getMonth()+1 )+"-"+datePicker.getYear();
 
-                        if(spinner.getSelectedItemPosition() == 1) {
-                             maxLt = 24.79;  maxLg = 46.72;
-                             minLt = 24.75;  minLg = 46.60;
+                        if(spinner.getSelectedItemPosition() == 1) { // North
+//                             maxLt = 24.79;  maxLg = 46.72;
+//                             minLt = 24.75;  minLg = 46.60;
+                            maxLt = 24.947828;  maxLg = 46.720927;
+                            minLt = 24.743411;  minLg = 46.522921;
+
                         }
 
-                        else if(spinner.getSelectedItemPosition() == 4) {
-                            maxLt = 24.75;  maxLg = 46.60;
-                            minLt = 24.60;  minLg = 46.50;
+                        else if(spinner.getSelectedItemPosition() == 4) { // WEST
+//                            maxLt = 24.75;  maxLg = 46.60;
+//                            minLt = 24.60;  minLg = 46.50;
+                            maxLt = 24.753846;  maxLg = 46.641426;
+                            minLt = 24.604104;  minLg = 46.41655;
                         }
 
-                        else if(spinner.getSelectedItemPosition() == 5) {
-                            maxLt = 24.60;  maxLg = 46.70;
-                            minLt = 24.50;  minLg = 46.50;
+                        else if(spinner.getSelectedItemPosition() == 5) { // south
+//                            maxLt = 24.60;  maxLg = 46.70;
+//                            minLt = 24.50;  minLg = 46.50;
+                            maxLt = 24.606289;  maxLg = 46.72039;
+                            minLt = 24.494491;  minLg = 46.487274;
+
                         }
 
-                        else if(spinner.getSelectedItemPosition() == 2) {
-                            maxLt = 24.80;  maxLg = 46.80;
-                            minLt = 24.63;  minLg = 46.72;
+                        else if(spinner.getSelectedItemPosition() == 2) { // EAST
+//                            maxLt = 24.80;  maxLg = 46.80;
+//                            minLt = 24.63;  minLg = 46.72;
+                            maxLt = 24.898894;  maxLg = 46.977539;
+                            minLt = 24.570855;  minLg = 46.752319;
                         }
 
-
-
-
-
+                        else if(spinner.getSelectedItemPosition() == 3) { // CENTER
+                            maxLt = 24.7223;  maxLg = 46.765737;
+                            minLt = 24.617425;  minLg = 46.660813;
+                        }
 
                         toResult.putExtra("maxLt",maxLt);
                         toResult.putExtra("minLt",minLt);
                         toResult.putExtra("maxLg",maxLg);
                         toResult.putExtra("minLg",minLg);
-                        toResult.putExtra("name",date);
+                        toResult.putExtra("date",date);
                         startActivity(toResult);
 
                 }
