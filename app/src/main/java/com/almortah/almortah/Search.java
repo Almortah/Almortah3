@@ -125,8 +125,10 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             addMin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(min.getText().toString().matches(""))
+                    if(min.getText().toString().matches("")) {
                         min.setText("0");
+                        minPrice = 0;
+                    }
                     else {
                         minPrice = Integer.parseInt(min.getText().toString().trim()) + 50;
                         if(minPrice > 1000)
@@ -142,8 +144,10 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             addMax.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(max.getText().toString().matches(""))
+                    if (max.getText().toString().matches("")) {
                         max.setText("0");
+                        maxPrice = 0;
+                }
                     else {
                         maxPrice = Integer.parseInt(max.getText().toString().trim()) + 50;
                         if(maxPrice > 3000)
