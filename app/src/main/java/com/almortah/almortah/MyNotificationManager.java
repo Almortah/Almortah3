@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -21,12 +22,17 @@ public class MyNotificationManager {
     }
     public void showNotification(String from , String notifcation, Intent intent){
 
+        Log.i("Context",context.getPackageName());
+        Log.i("Context",context.getPackageCodePath());
+        Log.i("ziyad","hello");
+
         PendingIntent pendingIntent=PendingIntent.getActivity(
                 context,
                 Notification_ID,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_CANCEL_CURRENT
         );
+
         NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( context)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,7 +38,23 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }*/
 
 
-        mAuth.signOut();
+        //mAuth.signOut();
+        if (getIntent().getExtras() != null) {
+
+//            for (String key : getIntent().getExtras().keySet()) {
+             //   String value = getIntent().getExtras().getString(key);
+
+               // if (key.equals("AnotherActivity") && value.equals("True")) {
+                    Log.i("hello","Hello");
+                    Intent intent = new Intent(this, ApproveBookingByOwner.class);
+                  //  intent.putExtra("value", value);
+                    startActivity(intent);
+                    finish();
+                //}
+
+  //          }
+        }
+
         guestButton = (Button) findViewById(R.id.guestButton);
         signinButton = (Button) findViewById(R.id.signinButton);
         signupButton = (Button) findViewById(R.id.submitOwner);

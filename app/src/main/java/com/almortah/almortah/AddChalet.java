@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -52,6 +54,8 @@ import com.werb.pickphotoview.util.PickConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
@@ -65,7 +69,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     private String provider;
     private String address;
     private DrawerLayout drawer;
-
 
     private Button mUploadImage;
     private StorageReference firebaseStorage;
@@ -83,13 +86,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     private Location location;
     private int imgNb = 0;
     double lat1 = 0, lng1 = 0;
-<<<<<<< HEAD
     private List<Address> addresses;
     private Geocoder geocoder;
-=======
-//    private List<Address> addresses;
-//    private Geocoder geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
->>>>>>> c13c5d6c2c1e8bf15b3c784df311995323950879
 
 
     static final int PICK_CONTACT_REQUEST = 1;
