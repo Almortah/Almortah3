@@ -256,6 +256,7 @@
     <string name="filter1">Filter</string>
     <string name="startFrom">Starting from</string>
     <string name="loading">Loading..</string>
+    <string name="approvBooking">Accept/Reject reservations</string>
 
 
 </resources>

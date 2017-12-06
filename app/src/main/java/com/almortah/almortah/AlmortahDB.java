@@ -196,7 +196,7 @@ public class AlmortahDB extends Activity {
             case R.id.rateCustomer:
                 context.startActivity(new Intent(context, RateCustomer.class));
                 break;
-            case R.id.notify:
+            case R.id.approvBooking:
                 context.startActivity(new Intent(context, ApproveBookingByOwner.class));
                 break;
 

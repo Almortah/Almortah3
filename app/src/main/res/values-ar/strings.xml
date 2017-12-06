@@ -215,5 +215,6 @@
     <string name="filter1">تصفية النتائج</string>
     <string name="startFrom">ابتداءً من</string>
     <string name="loading">يحمل..</string>
+    <string name="approvBooking">قبول/رفض حجوزات</string>
 
 </resources>
