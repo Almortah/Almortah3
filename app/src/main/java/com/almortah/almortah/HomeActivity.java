@@ -10,13 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button guestButton;
@@ -38,7 +33,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }*/
 
 
-        //mAuth.signOut();
+        if (getIntent().getExtras() == null)
+            mAuth.signOut();
+
+
         if (getIntent().getExtras() != null) {
 
 //            for (String key : getIntent().getExtras().keySet()) {

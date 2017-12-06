@@ -165,14 +165,10 @@ public class login extends AppCompatActivity  {
                         startActivity(intent);
                     }
                     else if (typeValue.equals("2")) {
-
-
-
-
                         startActivity(new Intent(login.this,  MyChalets.class));
                     }
 
-                    else {
+                    else if(typeValue.equals("3")) {
                         startActivity(new Intent(login.this,  AdminPage.class));
                     }
                 }
