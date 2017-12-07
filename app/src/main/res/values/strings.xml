@@ -39,7 +39,14 @@
     </string-array>
 
 
+
     <!-- Owner strings  -->
+    <string-array name="reasonsReject">
+        <item>This day is not available</item>
+        <item>Low customer rating </item>
+    </string-array>
+
+
     <string name="owner">Owner</string>
     <string name="chaletOwner">Rest-house/Chalet owner</string>
     <string name="chaletName">Chalet Name</string>

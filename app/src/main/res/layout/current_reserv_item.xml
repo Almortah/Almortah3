@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         android:background="@drawable/color_logo">
 
 
@@ -16,7 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -172,6 +173,14 @@
                     android:id="@+id/confirmed"
                     android:textStyle="bold"
                     android:text="TEST"/>
+
+                <ImageView
+                    android:id="@+id/why"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/ic_ques"
+                    android:visibility="invisible"/>
 
             </LinearLayout>
         </LinearLayout>

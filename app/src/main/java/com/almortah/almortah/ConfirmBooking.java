@@ -174,7 +174,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String,String> params = new HashMap<>();
                             //params.put("fcm_token",token);
-                            params.put("reservation_id",id);
+                            params.put("reservation_id", String.valueOf(resID));
                             params.put("owner_id",chalet.getOwnerID());
                             params.put("chalet_id",chalet.getId());
                             params.put("owner_token",chalet.getOwnerToken());

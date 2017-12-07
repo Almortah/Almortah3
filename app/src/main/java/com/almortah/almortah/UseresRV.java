@@ -109,10 +109,13 @@ public class UseresRV extends RecyclerView.Adapter<UseresRV.MyViewHolder> {
                                             }
                                         })
                                         // Set the action buttons
-                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        .setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int id) {
                                                 String reasons = "";
+                                                if (seletedItems.isEmpty())
+                                                    return;
+
                                                 for (int i = 0; i < seletedItems.size(); i++) {
                                                     int tmp = (int) seletedItems.get(i);
                                                     reasons += tmp + "-";
@@ -140,7 +143,7 @@ public class UseresRV extends RecyclerView.Adapter<UseresRV.MyViewHolder> {
                                                 });
                                             }
                                         })
-                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        .setNegativeButton(context.getString(R.string.cancel1), new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int id) {
                                                 //  Your code when user clicked on Cancel

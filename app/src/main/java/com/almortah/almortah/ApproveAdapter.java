@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -165,13 +166,73 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        FirebaseDatabase.getInstance().getReference().child("reservation")
-                                                .child(reservation.getReservationID()).child("confirm").setValue("2");
-                                        //code to notify customer!
-                                        reservations.remove(position);
-                                        notifyDataSetChanged();
+
+
+                                        AlertDialog dialog;
+                                        final CharSequence[] items = context.getResources().getStringArray(R.array.reasonsReject);
+                                        //{" Easy "," Medium "," Hard "," Very Hard "};
+                                        // arraylist to keep the selected items
+                                        final ArrayList seletedItems=new ArrayList();
+
+                                        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                        builder.setTitle(context.getString(R.string.reson));
+                                        builder.setMultiChoiceItems(items, null,
+                                                new DialogInterface.OnMultiChoiceClickListener() {
+                                                    // indexSelected contains the index of item (of which checkbox checked)
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int indexSelected,
+                                                                        boolean isChecked) {
+                                                        if (isChecked) {
+                                                            // If the user checked the item, add it to the selected items
+                                                            // write your code when user checked the checkbox
+                                                            seletedItems.add(indexSelected);
+                                                        } else if (seletedItems.contains(indexSelected)) {
+                                                            // Else, if the item is already in the array, remove it
+                                                            // write your code when user Uchecked the checkbox
+                                                            seletedItems.remove(Integer.valueOf(indexSelected));
+                                                        }
+                                                    }
+                                                })
+                                                // Set the action buttons
+                                                .setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        if (seletedItems.size() == 0)
+                                                            return;
+
+                                                        String reasons = "";
+                                                        for (int i = 0; i < seletedItems.size(); i++) {
+                                                            int tmp = (int) seletedItems.get(i);
+                                                            reasons += tmp + "-";
+                                                        }
+                                                        FirebaseDatabase.getInstance().getReference().child("reasonsOfRejectedBooking")
+                                                                .child(reservation.getReservationID())
+                                                                .child("reasons").setValue(reasons).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                FirebaseDatabase.getInstance().getReference().child("reservation")
+                                                                        .child(reservation.getReservationID()).child("confirm").setValue("2");
+                                                                reservations.remove(position);
+                                                                notifyDataSetChanged();
+                                                            }
+                                                        });
+                                                        //code to notify customer!
+
+                                                    }
+                                                })
+                                                .setNegativeButton(context.getString(R.string.cancel1), new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        //  Your code when user clicked on Cancel
+                                                        builder.create().cancel();
+                                                    }
+                                                });
+
+                                        dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+                                        dialog.show();
 
                                     }
+
                                 });
 
                         alertDialogBuilder.setNegativeButton(context.getString(R.string.no),new DialogInterface.OnClickListener() {
@@ -185,9 +246,12 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
 
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
+                notifyDataSetChanged();
 
             }
         });
+
+//        notifyDataSetChanged();
 
     }
 

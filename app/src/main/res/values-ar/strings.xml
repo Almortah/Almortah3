@@ -29,6 +29,11 @@
         <item>الشهداء </item>
     </string-array>
 
+    <string-array name="reasonsReject">
+        <item>هذا اليوم غير متاح</item>
+        <item>تقييم الزبون سيء </item>
+    </string-array>
+
     <string-array name="RiyadhWest">
         <item>الدرعية</item>
        <item>البديعة</item>
