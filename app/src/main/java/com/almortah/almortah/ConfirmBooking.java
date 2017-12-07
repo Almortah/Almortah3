@@ -31,11 +31,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -150,11 +147,11 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 map.put("ratedCustomer","0");
                 map.put("chaletName",chalet.getName());
                 map.put("rated","0");
-                map.put("confirmed","0");
               final  String id = mDatabase.child("reservation").push().getKey();
-                final String token = SharedPrefManager.getmInstance(getApplicationContext()).getToken();
+              final String token = SharedPrefManager.getmInstance(getApplicationContext()).getToken();
+              final int resID = (int) System.currentTimeMillis();
 
-                map.put("reservationID",id);
+                map.put("reservationID", String.valueOf(resID));
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 if(SharedPrefManager.getmInstance(getApplicationContext()).getToken()!=null){
@@ -217,7 +214,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 };
                 MySingleton.getmInstance(ConfirmBooking.this).addToRequestque(stringRequest2);
 
-                mDatabase.child("reservation").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                mDatabase.child("reservation").child(String.valueOf(resID)).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         FirebaseDatabase.getInstance().getReference().child("busyDates").

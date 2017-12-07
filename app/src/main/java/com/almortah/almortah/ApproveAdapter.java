@@ -28,8 +28,8 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
     private Context context;
     private Button control;
     private ArrayList<Reservation> reservations;
-    private double sumOfCustomerRating = 0.0;
-    private double totalRatingOfCustomer = 0.0;
+    private double sumOfCustomerRating ;
+    private double totalRatingOfCustomer ;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView date ;
@@ -69,6 +69,7 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final ApproveAdapter.MyViewHolder holder, final int position) {
         final Reservation reservation = reservations.get(position);
+        sumOfCustomerRating = 0.0; totalRatingOfCustomer = 0.0;
         holder.chaletName.setText(reservation.getChaletName());
         holder.date.setText(reservation.getDate());
         Log.e("CHECKINN",reservation.getCheckin());

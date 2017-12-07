@@ -172,6 +172,7 @@ public class RateCustomerAdapter extends RecyclerView.Adapter<RateCustomerAdapte
                         hashMap.put("customerID", reservation.getCustomerID());
                         reference.child("customerRatings").child(reservation.getReservationID()).setValue(hashMap);
                         reference.child("reservation").child(reservation.getReservationID()).child("ratedCustomer").setValue("1");
+                        notifyDataSetChanged();
                         return null;
                     }
 
@@ -182,7 +183,7 @@ public class RateCustomerAdapter extends RecyclerView.Adapter<RateCustomerAdapte
                         if (pDialog.isShowing())
                             pDialog.dismiss();
                         reservations.remove(position);
-                        notifyItemRemoved(position);
+                        notifyDataSetChanged();
                     }
                 };
 

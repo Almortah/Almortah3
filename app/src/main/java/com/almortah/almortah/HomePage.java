@@ -151,6 +151,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         almortahDB.adminMenu(item);
 
         else
+
         almortahDB.menu(item);
         drawer.closeDrawer(GravityCompat.START);
         return true;

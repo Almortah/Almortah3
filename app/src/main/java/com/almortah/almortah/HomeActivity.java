@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             mAuth.signOut();
 
 
-        if (getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null && mAuth.getCurrentUser() != null) {
 
 //            for (String key : getIntent().getExtras().keySet()) {
              //   String value = getIntent().getExtras().getString(key);
