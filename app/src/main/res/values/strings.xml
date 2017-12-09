@@ -271,6 +271,7 @@
     <string name="month1">Month</string>
     <string name="year">Year</string>
     <string name="noLoad">There is no saved credit card</string>
+    <string name="yourPhone">Your phone number is</string>
 
 
 </resources>

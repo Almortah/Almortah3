@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -31,8 +32,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -105,7 +109,25 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         dateView.setText(dateView.getText().toString()+" "+date);
 
         TextView priceView = (TextView) findViewById(R.id.finalPrice);
-        priceView.setText(getString(R.string.price) +": "+ price);
+        priceView.setText(getString(R.string.price) +": "+ price + " "+ getString(R.string.riyal));
+        final TextView phone = (TextView) findViewById(R.id.phone);
+        FirebaseDatabase.getInstance().getReference().child("users").
+                child(mAuth.getCurrentUser().getUid()).child("phone")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            phone.setText(getString(R.string.yourPhone)+": "+dataSnapshot.getValue().toString());
+                        }
+                        else
+                            phone.setText("");
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
         //Map<String, Object> update = new HashMap<String, Object>();
@@ -116,6 +138,15 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         Button confirm = (Button) findViewById(R.id.confirm);
         payment = "cash";
         final RadioButton visa = (RadioButton) findViewById(R.id.visa);
+        visa.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    phone.setVisibility(View.INVISIBLE);
+                }
+                else phone.setVisibility(View.VISIBLE);
+            }
+        });
 
 
         confirm.setOnClickListener(new View.OnClickListener() {

@@ -229,5 +229,6 @@
     <string name="month1">الشهر</string>
     <string name="year">السنة</string>
     <string name="noLoad">"لا توجد بطاقة ائتمان محفوظة "</string>
+    <string name="yourPhone">رقم جوالك هو</string>
 
 </resources>

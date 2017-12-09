@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/design"
     tools:context="com.almortah.almortah.ConfirmBooking">
 
     <android.support.v7.widget.Toolbar
@@ -116,16 +117,25 @@
             android:textSize="15sp" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/confirm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/type"
-        android:layout_below="@+id/type"
-        android:background="@drawable/blue_border"
-        android:textColor="@color/colorWhite"
-        android:text="@string/confirm"
-        android:layout_alignEnd="@+id/date" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/type"
+            android:layout_below="@+id/type"
+            android:textColor="@color/colorDarkGrey"
+            android:id="@+id/phone" />
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/date"
+            android:layout_marginTop="10dp"
+            android:layout_alignStart="@+id/phone"
+            android:layout_below="@id/phone"
+            android:background="@drawable/blue_border"
+            android:text="@string/confirm"
+            android:textColor="@color/colorWhite" />
 
     </RelativeLayout>
         <android.support.design.widget.NavigationView
