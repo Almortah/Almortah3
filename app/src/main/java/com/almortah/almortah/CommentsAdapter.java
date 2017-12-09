@@ -48,7 +48,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.MyView
     public void onBindViewHolder(final CommentsAdapter.MyViewHolder holder, final int position) {
         final Rating rating = ratings.get(position);
         holder.comment.setText(rating.getComment());
-        holder.name.setText(context.getString(R.string.commentNm) + " " + (position+1));
+        holder.name.setText("#" + " " + (position+1));
     }
 
     @Override

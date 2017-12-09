@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="horizontal"
     android:weightSum="3"
     android:padding="6dp"
@@ -11,7 +12,7 @@
         android:id="@+id/date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         android:gravity="center"
         android:background="@drawable/table_cell_bg"
         android:text="Date"
@@ -23,17 +24,18 @@
         android:text="Chalet Name"
         android:gravity="center"
         android:background="@drawable/table_cell_bg"
-        android:layout_weight="1"/>
+        android:layout_weight="1.2"/>
     <Button
-        android:id="@+id/control"
+        android:id="@+id/detail"
         android:layout_width="0dp"
         android:layout_height="18dp"
-        android:text="@string/rate"
+        android:text="@string/detail"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         android:textColor="@color/colorWhite"
-        android:background="@color/colorGreen"
+        android:backgroundTint="@color/colorGreen"
+        android:background="@drawable/table_cell_bg"
         android:layout_marginLeft="8dp"/>
 
 </LinearLayout>

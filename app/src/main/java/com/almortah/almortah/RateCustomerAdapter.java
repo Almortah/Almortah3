@@ -1,8 +1,6 @@
 package com.almortah.almortah;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +11,8 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -150,45 +150,24 @@ public class RateCustomerAdapter extends RecyclerView.Adapter<RateCustomerAdapte
         holder.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AsyncTask<Void, Void, Void> updateTask = new AsyncTask<Void, Void, Void>() {
-                    private ProgressDialog pDialog;
-                    @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
-                        pDialog = new ProgressDialog(context);
-                        pDialog.setMessage(context.getString(R.string.wait));
-                        pDialog.setCancelable(false);
-                        pDialog.show();
-                    }
-
-                    @Override
-                    protected Void doInBackground(Void... arg0) {
-                        Log.e("USER NAME?",user.getEmail());
-                        HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put("chaletID", reservation.getChaletID());
-                        hashMap.put("cleanRating", String.valueOf( (Double) (cleanProgress/2.0) ));
-                        hashMap.put("paymentRating", String.valueOf( (Double) (priceProgress/2.0) ));
-                        hashMap.put("ownerID", reservation.getOwnerID());
-                        hashMap.put("customerID", reservation.getCustomerID());
-                        reference.child("customerRatings").child(reservation.getReservationID()).setValue(hashMap);
-                        reference.child("reservation").child(reservation.getReservationID()).child("ratedCustomer").setValue("1");
-                        return null;
-                    }
-
-                    @Override
-                    protected void onPostExecute(Void result) {
-                        super.onPostExecute(result);
-                        // Dismiss the cleanProgress dialog
-                        if (pDialog.isShowing())
-                            pDialog.dismiss();
-                        reservations.remove(position);
-                        notifyItemRemoved(position);
-                    }
-                };
-
-                updateTask.execute();
-
-
+                Log.e("USER NAME?",user.getEmail());
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("chaletID", reservation.getChaletID());
+                hashMap.put("cleanRating", String.valueOf( (Double) (cleanProgress/2.0) ));
+                hashMap.put("paymentRating", String.valueOf( (Double) (priceProgress/2.0) ));
+                hashMap.put("ownerID", reservation.getOwnerID());
+                hashMap.put("customerID", reservation.getCustomerID());
+                reference.child("customerRatings").child(reservation.getReservationID()).setValue(hashMap)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                reference.child("reservation").child(reservation.getReservationID()).child("ratedCustomer").setValue("1");
+                                notifyDataSetChanged();
+                            }
+                        });
+                reference.child("reservation").child(reservation.getReservationID()).child("ratedCustomer").setValue("1");
+                reservations.remove(position);
+                notifyDataSetChanged();
             }
         });
     }
