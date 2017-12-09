@@ -185,8 +185,6 @@ public class login extends AppCompatActivity  {
                 }
             });
 
-
-
         } else {
             Toast.makeText(this,R.string.erEmailPass, Toast.LENGTH_LONG).show();
         }
