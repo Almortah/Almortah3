@@ -160,6 +160,7 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
                     if(card.isValid()) {
                         Log.e("Hi","Good CARD NUMBER");
                         Log.e("Hi",card.getBrand().name());
+                        logo.setVisibility(View.VISIBLE);
                         if (card.getBrand().name().equals("VISA"))
                             logo.setImageResource(R.mipmap.visa);
                         else if (card.getBrand().name().equals("MASTERCARD"))
@@ -167,6 +168,9 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
                         else if (card.getBrand().name().equals("AMEX"))
                             logo.setImageResource(R.mipmap.amex);
                     }
+                }
+                else {
+                    logo.setVisibility(View.INVISIBLE);
                 }
             }
         });
