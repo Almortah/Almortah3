@@ -94,7 +94,7 @@ public class login extends AppCompatActivity  {
 
     public void signin(String email,String password){
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email.trim(), password.trim()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -188,8 +188,6 @@ public class login extends AppCompatActivity  {
                     Log.i("Error","Error fetch type");
                 }
             });
-
-
 
         } else {
             Toast.makeText(this,R.string.erEmailPass, Toast.LENGTH_LONG).show();

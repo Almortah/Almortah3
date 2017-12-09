@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class MyReservationAdapter extends RecyclerView.Adapter<MyReservationAdapter.MyViewHolder>  {
 
     private Context context;
-    private Button control;
+    private Button control;     
     private ArrayList<Reservation> reservations;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
