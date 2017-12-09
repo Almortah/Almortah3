@@ -221,5 +221,13 @@
     <string name="startFrom">ابتداءً من</string>
     <string name="loading">يحمل..</string>
     <string name="approvBooking">قبول/رفض حجوزات</string>
+    <string name="cardNum">رقم البطاقة</string>
+    <string name="cardName">آسم حامل البطاقة</string>
+    <string name="loadVisa">تحميل بطاقتي</string>
+    <string name="saveVisa">حفظ هذه البطاقة للحجوزات القادمة</string>
+    <string name="confirmPay">آدفع</string>
+    <string name="month1">الشهر</string>
+    <string name="year">السنة</string>
+    <string name="noLoad">"لا توجد بطاقة ائتمان محفوظة "</string>
 
 </resources>

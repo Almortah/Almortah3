@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -74,7 +75,7 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
         holder.chaletName.setText(reservation.getChaletName());
         holder.date.setText(reservation.getDate());
         Log.e("CHECKINN",reservation.getCheckin());
-        holder.inTime.setText(reservation.getCheckin());
+        holder.inTime.setText(reservation.getCheckin()+"0");
         holder.id.setText(reservation.getReservationID());
         FirebaseDatabase.getInstance().getReference().child("customerRatings").orderByChild("customerID")
                 .equalTo(reservation.getCustomerID())
@@ -91,6 +92,10 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                             }
 
                             totalRatingOfCustomer = sumOfCustomerRating/size;
+                            DecimalFormat df = new DecimalFormat("#.00");
+                            String totalFormated = df.format(totalRatingOfCustomer);
+
+                            holder.rating.setText(totalFormated+" / "+" 5.0");
 
                             }
                     }
@@ -116,9 +121,6 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
 
                     }
                 });
-
-
-        holder.rating.setText(totalRatingOfCustomer+" / "+" 5.0");
 
 
         holder.accept.setOnClickListener(new View.OnClickListener() {

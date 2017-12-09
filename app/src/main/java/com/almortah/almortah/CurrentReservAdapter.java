@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,26 +120,51 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
                 builder.setTitle(context.getString(R.string.reasons));
                 final String[] reasons = context.getResources().getStringArray(R.array.reasonsReject);
                 reason1 = null; reason2 = null;
+                final ArrayList<String> rejected = new ArrayList<>();
 
 // add a list
+                final String[][] stringArray1 = new String[1][1];
                 FirebaseDatabase.getInstance().getReference().child("reasonsOfRejectedBooking")
                         .child(reservation.getReservationID())
                         .child("reasons").addListenerForSingleValueEvent(new ValueEventListener() {
+                    String[] stringArray1;
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(dataSnapshot.exists()) {
                             String[] tmp = dataSnapshot.getValue().toString().split("-");
                             ArrayList<Integer> userReasons = new ArrayList<>();
-                            for (int i = 0; i< (tmp.length); i++) {
+                            for (int i = 0; i < (tmp.length); i++) {
                                 userReasons.add(Integer.parseInt(tmp[i]));
+                                rejected.add(reasons[Integer.parseInt(tmp[i])]);
+                                Log.e("FirstReason",reasons[Integer.parseInt(tmp[i])]);
                             }
-                            for (int i = 0; i<userReasons.size(); i++) {
-                                if(i == 0)
-                                    reason1 = reasons[userReasons.get(i)];
-                                else if (i == 1)
-                                    reason2 = reasons[userReasons.get(i)];
-                            }
+                            stringArray1 = rejected.toArray(new String[rejected.size()]);
+                            Log.e("InStringArray", stringArray1[0]);
                         }
+
+                        builder.setItems(stringArray1, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().cancel();
+//                        switch (which) {
+//                            case 0: // horse
+//                            case 1: // cow
+//                            case 2: // camel
+//                            case 3: // sheep
+//                            case 4: // goat
+//                        }
+                            }
+                        });
+
+
+                        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                builder.create().cancel();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
 
                     }
 
@@ -147,47 +173,8 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
 
                     }
                 });
-                String id = context.getString(R.string.bookingID)+": "+reservation.getReservationID();
-                String chaletName = context.getString(R.string.chaletName)+": "+reservation.getChaletName();
-                String date = context.getString(R.string.date)+": "+reservation.getDate();
-                String checkin = context.getString(R.string.checkin)+": "+reservation.getCheckin();
-                String checkout = context.getString(R.string.outTime)+": "+reservation.getCheckout();
-                String payment = context.getString(R.string.payment)+": "+reservation.getPayment();
-                String price = context.getString(R.string.price)+": "+reservation.getPrice();
-                String[] animals = null;
-
-                if(reason1 != null && reason2 != null) {
-                    animals = new String[2];
-                    animals[0] = reason1;
-                    animals[1] = reason2;
-                }
-
-                else if (reason1 != null || reason2 != null) {
-                    animals = new String[1];
-                    if(reason1 != null) {
-                        animals[0] = reason1;
-                    }
-                    else
-                        animals[0] = reason2;
-                }
-
-                builder.setItems(animals, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        builder.create().cancel();
-//                        switch (which) {
-//                            case 0: // horse
-//                            case 1: // cow
-//                            case 2: // camel
-//                            case 3: // sheep
-//                            case 4: // goat
-//                        }
-                    }
-                });
 
 // create and show the alert dialog
-                AlertDialog dialog = builder.create();
-                dialog.show();
 
 
             }

@@ -122,14 +122,24 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
+                final int resID = (int) System.currentTimeMillis();
                 if(oneTimes == 1 || date == null) {
                     Toast.makeText(getApplicationContext(),R.string.oneTimeOnly,Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getBaseContext(),MyReservation.class));
                     return;
                 }
                 oneTimes++;
-                if(visa.isChecked())
+                if(visa.isChecked()) {
                     payment = "visa";
+                    Reservation reservation = new Reservation(chalet.getId(),chalet.getName()
+                            ,checkin,"2:00","0",mAuth.getCurrentUser().getUid()
+                            ,date,chalet.getOwnerID(),payment,price,"0","0"
+                            ,String.valueOf(resID));
+                    Intent toPayment = new Intent(getBaseContext(),PaymentPage.class);
+                    toPayment.putExtra("res",reservation);
+                    startActivity(toPayment);
+                    return;
+                }
                 checkin = String.valueOf(inTime.getHour()+":"+inTime.getMinute());
                 HashMap<String,String> map = new HashMap<String, String>();
                 map.put("customerID",mAuth.getCurrentUser().getUid());
@@ -147,9 +157,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 map.put("ratedCustomer","0");
                 map.put("chaletName",chalet.getName());
                 map.put("rated","0");
-              final  String id = mDatabase.child("reservation").push().getKey();
               final String token = SharedPrefManager.getmInstance(getApplicationContext()).getToken();
-              final int resID = (int) System.currentTimeMillis();
 
                 map.put("reservationID", String.valueOf(resID));
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
