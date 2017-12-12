@@ -1,6 +1,5 @@
 package com.almortah.almortah;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,17 +11,21 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 public class Signup extends AppCompatActivity {
 
     private Spinner userType;
-
+    boolean flag = false;
     private FirebaseAuth mAuth;
     // [END declare_auth]
+    private final static String TAG = "SignUP";
 
     private boolean mVerificationInProgress = false;
     private String mVerificationId;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
+    private EditText smsCode;
     private EditText mUsername;
     private EditText mFullname;
     private EditText mPhonenumber;
@@ -32,12 +35,19 @@ public class Signup extends AppCompatActivity {
     private RadioGroup mRadio;
     private Button mSignup;
     private AlmortahDB almortahDB;
+    private PhoneAuthProvider.ForceResendingToken mResendToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         almortahDB = new AlmortahDB(this);
+        //FirebaseApp.initializeApp(this);
+
+
+        mAuth = FirebaseAuth.getInstance();
+
+
         //EditText
         mUsername = (EditText) findViewById(R.id.username);
         mFullname = (EditText) findViewById(R.id.fullname);
@@ -60,7 +70,7 @@ public class Signup extends AppCompatActivity {
                 int type = 1;
                 RadioButton ownerType = (RadioButton) findViewById(R.id.ownerType);
 
-                if(ownerType.isChecked())
+                if (ownerType.isChecked())
                     type = 2;
 
                 if (username.equals("") || fullname.equals("") || phone.equals("") || email.equals("") || password.equals("")) {
@@ -72,13 +82,10 @@ public class Signup extends AppCompatActivity {
                 } else if (phone.length() < 9 || !phone.startsWith("5")) {
                     Toast.makeText(Signup.this, R.string.badPhone, Toast.LENGTH_LONG).show();
                 } else if (password.length() < 6) {
-                    Toast.makeText(getApplicationContext(),R.string.badPas,Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.badPas, Toast.LENGTH_LONG).show();
                     return;
-                }
-
-                else {
+                } else {
                         almortahDB.signup(fullname, username, phone, email, password, type);
-                        startActivity(new Intent(Signup.this, login.class));
                 }
             }
         });

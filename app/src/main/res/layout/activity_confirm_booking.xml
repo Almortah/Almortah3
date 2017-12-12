@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/design"
     tools:context="com.almortah.almortah.ConfirmBooking">
 
@@ -22,83 +23,77 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
         android:text="@string/freeDate"
         android:textColor="@color/colorGreen"
         android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/checkinText"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/checkin"
+            android:layout_marginTop="18dp" />
 
     <TimePicker
         android:id="@+id/checkin"
         android:layout_width="wrap_content"
         android:layout_height="150dp"
         android:timePickerMode="spinner"
-        android:layout_below="@+id/checkinText"
-        android:layout_alignStart="@+id/date" />
-
-    <TextView
-        android:id="@+id/checkinText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/checkin"
-        android:layout_below="@+id/date"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp" />
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/checkout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/date"
-        android:layout_below="@+id/checkoutText" />
+        android:layout_height="wrap_content" />
 
     <TextView
+        android:gravity="center"
         android:id="@+id/checkoutText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/checkout"
-        android:layout_below="@+id/checkin"
-        android:layout_centerHorizontal="true" />
+        android:text="@string/checkout" />
 
-    <TextView
-        android:id="@+id/finalPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/checkout"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@+id/imageView"
-        android:textColor="@color/colorBlue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        app:srcCompat="@drawable/price_icon"
-        android:layout_alignBottom="@+id/finalPrice"
-        android:layout_alignStart="@+id/checkout" />
+        app:srcCompat="@drawable/price_icon"/>
 
+            <TextView
+                android:id="@+id/finalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/colorBlue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:id="@+id/type"
-        android:layout_below="@+id/finalPrice"
-        android:layout_alignStart="@+id/checkin">
+        android:id="@+id/type">
 
         <RadioButton
             android:id="@+id/cash"
@@ -117,27 +112,17 @@
             android:textSize="15sp" />
     </RadioGroup>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/type"
-            android:layout_below="@+id/type"
-            android:textColor="@color/colorDarkGrey"
-            android:id="@+id/phone" />
-
         <Button
             android:id="@+id/confirm"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/date"
             android:layout_marginTop="10dp"
-            android:layout_alignStart="@+id/phone"
-            android:layout_below="@id/phone"
             android:background="@drawable/blue_border"
             android:text="@string/confirm"
             android:textColor="@color/colorWhite" />
 
-    </RelativeLayout>
+    </LinearLayout>
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
@@ -147,4 +132,4 @@
             />
     </android.support.v4.widget.DrawerLayout>
 
-</RelativeLayout>
+</LinearLayout>

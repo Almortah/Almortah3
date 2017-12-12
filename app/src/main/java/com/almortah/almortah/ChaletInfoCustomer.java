@@ -56,6 +56,8 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
     private Chalet chalet;
     private RecyclerView recyclerView;
     private boolean isComplain = false;
+    private Button book;
+    private Button complain;
 
 
     @Override
@@ -80,9 +82,153 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
+        book = (Button) findViewById(R.id.book);
+        complain = (Button) findViewById(R.id.complain);
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null)
-            navigationView.inflateMenu(R.menu.customer_menu);
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            if(FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("abod@admin.com")) {
+                navigationView.inflateMenu(R.menu.admin_menu);
+                book.setText(R.string.delete);
+                book.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChaletInfoCustomer.this);
+                        alertDialogBuilder.setMessage(getString(R.string.sure));
+                        alertDialogBuilder.setPositiveButton(getString(R.string.yes),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).removeValue();
+                                        Toast.makeText(getApplicationContext(), R.string.deleteChalet, Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(ChaletInfoCustomer.this, HomePage.class));
+                                    }
+                                });
+
+                        alertDialogBuilder.setNegativeButton(getString(R.string.no),new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                        ///////////////////////////////////////
+
+
+
+                    }
+                });
+
+            }
+            else {
+                navigationView.inflateMenu(R.menu.customer_menu);
+
+                book.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mAuth.getCurrentUser() == null) {
+                            Toast.makeText(getApplicationContext(), R.string.bookVistor, Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getBaseContext(), login.class));
+                            return;
+                        }
+                        Intent toBooking = new Intent(ChaletInfoCustomer.this, BookingAChalet.class);
+                        toBooking.putExtra("chalet", chalet);
+                        startActivity(toBooking);
+
+
+                    }
+                });
+
+                complain.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mAuth.getCurrentUser() == null) {
+                            Toast.makeText(getApplicationContext(), R.string.needLogin, Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getBaseContext(), login.class));
+                            return;
+                        }
+
+                        if(isComplain)
+                            return;
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChaletInfoCustomer.this);
+                        alertDialogBuilder.setMessage(getString(R.string.sure));
+                        alertDialogBuilder.setPositiveButton(getString(R.string.yes),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        final HashMap<String,String> map = new HashMap<>();
+
+                                        AlertDialog dialog;
+                                        final CharSequence[] items = getResources().getStringArray(R.array.complaints);
+                                        //{" Easy "," Medium "," Hard "," Very Hard "};
+                                        // arraylist to keep the selected items
+                                        final ArrayList seletedItems=new ArrayList();
+
+                                        final AlertDialog.Builder builder = new AlertDialog.Builder(ChaletInfoCustomer.this);
+                                        builder.setTitle(getString(R.string.complainReson));
+                                        builder.setMultiChoiceItems(items, null,
+                                                new DialogInterface.OnMultiChoiceClickListener() {
+                                                    // indexSelected contains the index of item (of which checkbox checked)
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int indexSelected,
+                                                                        boolean isChecked) {
+                                                        if (isChecked) {
+                                                            // If the user checked the item, add it to the selected items
+                                                            // write your code when user checked the checkbox
+                                                            seletedItems.add(indexSelected);
+                                                        } else if (seletedItems.contains(indexSelected)) {
+                                                            // Else, if the item is already in the array, remove it
+                                                            // write your code when user Uchecked the checkbox
+                                                            seletedItems.remove(Integer.valueOf(indexSelected));
+                                                        }
+                                                    }
+                                                })
+                                                // Set the action buttons
+                                                .setPositiveButton( getString(R.string.ok) , new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        String reasons = "";
+                                                        for (int i = 0; i < seletedItems.size(); i++) {
+                                                            int tmp = (int) seletedItems.get(i);
+                                                            reasons += tmp + "-";
+                                                        }
+                                                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+                                                        reference.child("complaints").child(chalet.getId()).child("reasons").setValue(reasons); //Reasons First!
+                                                        reference.child("complaints").child(chalet.getId()).child("customerID").setValue(mAuth.getCurrentUser().getUid());
+                                                        isComplain = true;
+                                                        Toast.makeText(getBaseContext(),R.string.doneComplain,Toast.LENGTH_SHORT).show();
+                                                    }
+                                                })
+                                                .setNegativeButton(getString(R.string.cancel1), new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        //  Your code when user clicked on Cancel
+                                                        builder.create().cancel();
+                                                    }
+                                                });
+
+                                        dialog = builder.create();//AlertDialog dialog; create like this outside onClick
+                                        dialog.show();
+                                    }
+                                });
+
+                        alertDialogBuilder.setNegativeButton(getString(R.string.no),new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
+                });
+
+            }
+        }
         else
             navigationView.inflateMenu(R.menu.visitor_menu);
 
@@ -232,113 +378,6 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
         mDemoSlider.setDuration(4000);
         mDemoSlider.addOnPageChangeListener(ChaletInfoCustomer.this);
-
-        Button book = (Button) findViewById(R.id.book);
-
-
-            book.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mAuth.getCurrentUser() == null) {
-                        Toast.makeText(getApplicationContext(), R.string.bookVistor, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getBaseContext(), login.class));
-                        return;
-                    }
-                    Intent toBooking = new Intent(ChaletInfoCustomer.this, BookingAChalet.class);
-                    toBooking.putExtra("chalet", chalet);
-                    startActivity(toBooking);
-
-
-                }
-            });
-
-        Button complain = (Button) findViewById(R.id.complain);
-        complain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mAuth.getCurrentUser() == null) {
-                    Toast.makeText(getApplicationContext(), R.string.needLogin, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getBaseContext(), login.class));
-                    return;
-                }
-
-                if(isComplain)
-                    return;
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChaletInfoCustomer.this);
-                alertDialogBuilder.setMessage(getString(R.string.sure));
-                alertDialogBuilder.setPositiveButton(getString(R.string.yes),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                final HashMap<String,String> map = new HashMap<>();
-
-                                AlertDialog dialog;
-                                final CharSequence[] items = getResources().getStringArray(R.array.complaints);
-                                //{" Easy "," Medium "," Hard "," Very Hard "};
-                                // arraylist to keep the selected items
-                                final ArrayList seletedItems=new ArrayList();
-
-                                final AlertDialog.Builder builder = new AlertDialog.Builder(ChaletInfoCustomer.this);
-                                builder.setTitle(getString(R.string.complainReson));
-                                builder.setMultiChoiceItems(items, null,
-                                        new DialogInterface.OnMultiChoiceClickListener() {
-                                            // indexSelected contains the index of item (of which checkbox checked)
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int indexSelected,
-                                                                boolean isChecked) {
-                                                if (isChecked) {
-                                                    // If the user checked the item, add it to the selected items
-                                                    // write your code when user checked the checkbox
-                                                    seletedItems.add(indexSelected);
-                                                } else if (seletedItems.contains(indexSelected)) {
-                                                    // Else, if the item is already in the array, remove it
-                                                    // write your code when user Uchecked the checkbox
-                                                    seletedItems.remove(Integer.valueOf(indexSelected));
-                                                }
-                                            }
-                                        })
-                                        // Set the action buttons
-                                        .setPositiveButton( getString(R.string.ok) , new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                String reasons = "";
-                                                for (int i = 0; i < seletedItems.size(); i++) {
-                                                    int tmp = (int) seletedItems.get(i);
-                                                    reasons += tmp + "-";
-                                                }
-                                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                                                reference.child("complaints").child(chalet.getId()).child("reasons").setValue(reasons); //Reasons First!
-                                                reference.child("complaints").child(chalet.getId()).child("customerID").setValue(mAuth.getCurrentUser().getUid());
-                                                isComplain = true;
-                                                Toast.makeText(getBaseContext(),R.string.doneComplain,Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .setNegativeButton(getString(R.string.cancel1), new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                //  Your code when user clicked on Cancel
-                                                builder.create().cancel();
-                                            }
-                                        });
-
-                                dialog = builder.create();//AlertDialog dialog; create like this outside onClick
-                                dialog.show();
-                            }
-                        });
-
-                alertDialogBuilder.setNegativeButton(getString(R.string.no),new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-        });
-
 
             recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
             final ArrayList<Rating> ratings = new ArrayList<>();

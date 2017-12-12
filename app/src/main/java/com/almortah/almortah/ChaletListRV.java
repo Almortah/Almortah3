@@ -38,6 +38,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
         public RatingBar chaletRating;
        public TextView chaletLocation;
        public ImageView promot;
+       public boolean isLoaded;
 
         public MyViewHolder(View view) {
             super(view);
@@ -46,6 +47,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
             chaletLocation = (TextView) view.findViewById(R.id.chaletLocation);
             chaletRating = (RatingBar) view.findViewById(R.id.chaletRating);
             promot = (ImageView) view.findViewById(R.id.promotion);
+            isLoaded = false;
         }
     }
 
@@ -53,7 +55,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
     public ChaletListRV(Context context, ArrayList<Chalet> chalets) {
         this.context = context;
         this.chalets = chalets;
-         geo = new Geocoder(context, Locale.getDefault());
+        geo = new Geocoder(context, Locale.getDefault());
 
     }
 
@@ -76,21 +78,20 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
 
         Float finalRating = Float.parseFloat(ratings);
         holder.chaletRating.setRating(finalRating);
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
-        StorageReference tmp = storageReference.child(String.valueOf(1));
-
         //final View finalListItemView1 = listItemView;
-        tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(final Uri uri) {
-                Glide.with(context)
-                        .load(uri)
-                        .into(holder.img1);
-
-                holder.img1.invalidate();
-            }
-        });
+//        if (holder.img1.getDrawable() == null) {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
+            StorageReference tmp = storageReference.child(String.valueOf(1));
+            tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(final Uri uri) {
+                    Glide.with(context.getApplicationContext())
+                            .load(uri)
+                            .into(holder.img1);
+                    holder.img1.invalidate();
+                }
+            });
+        //}
 
         holder.chaletLocation.setText(R.string.defLocation);
 
@@ -140,6 +141,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
         return position;
     }
 */
+
 
 
 

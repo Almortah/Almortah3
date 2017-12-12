@@ -255,8 +255,7 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
                                         mm.setSelection(finalMM);
                                         yy.setSelection(finalYY);
                                         saveVisa.setVisibility(View.INVISIBLE);
-
-
+                                        Toast.makeText(getBaseContext(),R.string.yesLoad,Toast.LENGTH_SHORT).show();
 
                                     }
                                     else {
@@ -292,10 +291,12 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
                 //String[] tmp = mmYY.getText().toString().split("/");
                 CreditCard card = new CreditCard(cardNm.getText().toString());
                 if(!card.isValid()) {
+                    cardNm.setError(getString(R.string.noCard));
                     return;
                 }
 
                 if(cvv.getText().length() != 3) {
+                    cvv.setError(getString(R.string.noCvv));
                     return;
                 }
 
@@ -308,6 +309,8 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
                     map.put("YY",yy.getSelectedItem().toString());
                     map.put("cvv",cvv.getText().toString().trim());
                     FirebaseDatabase.getInstance().getReference().child("savedCC").child(auth.getCurrentUser().getUid()).setValue(map);
+                    Toast.makeText(getBaseContext(), R.string.visaSaved ,Toast.LENGTH_SHORT).show();
+
                 }
 
                 HashMap<String,String> map = new HashMap<String, String>();
@@ -331,6 +334,7 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
                     public void onComplete(@NonNull Task<Void> task) {
                         FirebaseDatabase.getInstance().getReference().child("busyDates").
                                 child(reservation.getChaletID()).child(reservation.getDate()).setValue(auth.getCurrentUser().getUid());
+                        Toast.makeText(getApplicationContext(),R.string.thanksForPayment,Toast.LENGTH_LONG).show();
                         startActivity(new Intent(PaymentPage.this,CurrentReservations.class));
                     }
                 });

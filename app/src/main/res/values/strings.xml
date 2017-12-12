@@ -73,7 +73,7 @@
     <string name="chaletRate">Rate this chalet</string>
     <string name="freeDate">This rest-house/chalet is free at </string>
     <string name="checkin">Check-in time</string>
-    <string name="checkout">Check-out time at 2:00 after midnight</string>
+    <string name="checkout">Check-out time will be at 2:00 after midnight</string>
     <string name="cash">Pay cash</string>
     <string name="visa">Pay by credit card</string>
     <string name="confirm">Confirm reservation</string>
@@ -272,6 +272,19 @@
     <string name="year">Year</string>
     <string name="noLoad">There is no saved credit card</string>
     <string name="yourPhone">Your phone number is</string>
+    <string name="phoneValdition">You will receive verification code on</string>
+    <string name="sms">SMS Code</string>
+    <string name="valdition">Validate</string>
+    <string name="invalidCode">Invalid code</string>
+    <string name="complatePayment">Kindly complete the payment with your credit card</string>
+    <string name="thanksForPayment">Thanks for payment we will come back within 48 hours</string>
+    <string name="thanksForCash">Thanks for your reservation we will come back within 48 hours</string>
+    <string name="yesLoad">You can use your credit for this payment</string>
+    <string name="noCard">Your credit card is invalid</string>
+    <string name="noCvv">Your CVV number is invalid</string>
+    <string name="visaSaved">Your credit card was saved successfully</string>
+    <string name="noData">There is no information to display</string>
+    <string name="deleteChalet">The chalet was deleted successfully</string>
 
 
 </resources>

@@ -173,8 +173,29 @@ public class login extends AppCompatActivity  {
                     }
                 }
                 else {
-                        startActivity(new Intent(login.this,  Block.class));
-                        Toast.makeText(getBaseContext(),"WHAT?",Toast.LENGTH_SHORT).show();
+                        FirebaseDatabase.getInstance().getReference().child("blacklist").child(user.getUid())
+                                .addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.exists()) {
+                                            startActivity(new Intent(login.this,  Block.class));
+                                            Toast.makeText(getBaseContext(),"WHAT?",Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+
+                                        else {
+                                            Toast.makeText(getBaseContext(),"Bad phone?",Toast.LENGTH_SHORT).show();
+
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
                     }
 
                 }

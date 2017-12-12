@@ -115,7 +115,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         maxPrice = Integer.parseInt(max.getText().toString().trim()) - 50;
                         if(maxPrice < 0)
                             maxPrice = 0;
-                        else if(maxPrice < minPrice)
+                        else if(maxPrice < minPrice && minPrice != -1)
                             maxPrice = minPrice;
                         max.setText(String.valueOf(maxPrice));
                     }
@@ -133,7 +133,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         minPrice = Integer.parseInt(min.getText().toString().trim()) + 50;
                         if(minPrice > 1000)
                             minPrice = 1000;
-                        else if (minPrice > maxPrice)
+                        else if (minPrice > maxPrice && maxPrice != -1)
                             minPrice = maxPrice;
 
                         min.setText(String.valueOf(minPrice));

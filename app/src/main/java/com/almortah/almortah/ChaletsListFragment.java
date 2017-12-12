@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +35,8 @@ public class ChaletsListFragment extends Fragment {
     int i = 0;
     private ChaletListRV mAdapter;
     private ChaletListRV promotAdapter;
+    private RequestManager mRequestManager;
+
 
     private RecyclerView rv;
     public ChaletsListFragment() {
@@ -53,6 +57,7 @@ public class ChaletsListFragment extends Fragment {
         promotAdapter = new ChaletListRV(getContext() ,promotChalets);
         rv = (RecyclerView) view.findViewById(R.id.recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRequestManager= Glide.with(this);
 
         //construct a joiner
         RvJoiner rvJoiner = new RvJoiner();

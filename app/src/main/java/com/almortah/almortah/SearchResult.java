@@ -164,8 +164,10 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
                                     .child(chalet.getId()).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.exists())
+                                    if(dataSnapshot.exists()) {
                                         chalets.remove(chalet);
+                                        mAdapter.notifyDataSetChanged();
+                                    }
                                 }
 
 
@@ -248,30 +250,41 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
                                 Chalet chalet = singlValue.getValue(Chalet.class);
                                 double currentLt = Double.parseDouble(chalet.getLatitude());
                                 double currentLg = Double.parseDouble(chalet.getLongitude());
-                                if( (currentLt <= maxLt && currentLt >= minLt) && (currentLg <= maxLg && currentLg >= minLg) )
+                                if( (currentLt <= maxLt && currentLt >= minLt) && (currentLg <= maxLg && currentLg >= minLg) ) {
                                     chalets.add(chalet);
+                                    Log.e("ADD: ",chalet.getName());
+                                }
                             }
+
+                            for(int i = 0; i < chalets.size(); i++) {
+                                final Chalet chalet = chalets.get(i);
+                                Log.e("GET: ",chalet.getName());
+
+                                FirebaseDatabase.getInstance().getReference().child("busyDates")
+                                        .child(chalet.getId()).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if(dataSnapshot.exists()) {
+                                            Log.e("Remove: ",chalet.getName());
+                                            chalets.remove(chalet);
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        else {
+                                            Log.e("WrongChild: ",chalet.getName()+" + "+date);
+                                        }
+                                    }
+
+
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+
+
                         }
-
-                        for(int i = 0; i < chalets.size(); i++) {
-                            final Chalet chalet = chalets.get(i);
-                            FirebaseDatabase.getInstance().getReference().child("busyDates")
-                                    .child(chalet.getId()).child(date).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.exists())
-                                        chalets.remove(chalet);
-                                }
-
-
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-                        }
-
                         mAdapter.notifyDataSetChanged();
                     }
 
@@ -346,14 +359,14 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
             mAdapter.notifyDataSetChanged();
             HashSet<Chalet> hashSet = new HashSet<Chalet>();
             hashSet.addAll(chalets);
             chalets.clear();
             chalets.addAll(hashSet);
             mAdapter.notifyDataSetChanged();
+            if (pDialog.isShowing())
+                pDialog.dismiss();
         }
 
     }

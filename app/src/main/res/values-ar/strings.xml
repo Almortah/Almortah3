@@ -230,5 +230,18 @@
     <string name="year">السنة</string>
     <string name="noLoad">"لا توجد بطاقة ائتمان محفوظة "</string>
     <string name="yourPhone">رقم جوالك هو</string>
+    <string name="phoneValdition">سوف تصلك رسالة التفعيل على</string>
+    <string name="sms">رمز التحقق</string>
+    <string name="valdition">تحقق</string>
+    <string name="invalidCode">الرمز غير صحيح</string>
+    <string name="complatePayment">فضلا قم بإستكمال عملية الدفع</string>
+    <string name="thanksForPayment">شكرا لدفعك سوف نتصل بك خلال يومين</string>
+    <string name="thanksForCash">شكرا لحجزك، سوف نتصل بك خلال يومين</string>
+    <string name="yesLoad">يمكنك استخدام بطاقتك المحفوظة للدفع</string>
+    <string name="noCard">رقم البطاقة غير صحيح</string>
+    <string name="noCvv">رقم CVV غير صحيح</string>
+    <string name="visaSaved">لقد تم حفظ بطاقتك بنجاح</string>
+    <string name="noData">لا يوجد معلومات لعرضها</string>
+    <string name="deleteChalet">لقد تم حذف الشالية بنجاح</string>
 
 </resources>

@@ -72,10 +72,9 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                     type = Integer.parseInt(dataSnapshot.getValue().toString());
                     if (type == 1)
                         navigationView.inflateMenu(R.menu.customer_menu);
-                    else if(type == -1)
-                        navigationView.inflateMenu(R.menu.visitor_menu);
-                    else
+                    else if(type == 3)
                         navigationView.inflateMenu(R.menu.admin_menu);
+
                 }
 
                 @Override
@@ -147,12 +146,12 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     public boolean onNavigationItemSelected(MenuItem item) {
         AlmortahDB almortahDB = new AlmortahDB(this);
 
-        if(type == 3)
+        if(FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("abod@admin.com"))
         almortahDB.adminMenu(item);
 
         else
-
         almortahDB.menu(item);
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

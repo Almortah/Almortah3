@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -80,7 +81,11 @@ public class CurrentReservations extends AppCompatActivity implements Navigation
                             }
                         }
                         adapter.notifyDataSetChanged();
+
                     }
+
+                    if (arrayList.isEmpty())
+                        Toast.makeText(getApplicationContext(),R.string.noData,Toast.LENGTH_SHORT).show();
                 }
             }
 
