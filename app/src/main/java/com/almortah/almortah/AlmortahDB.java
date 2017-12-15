@@ -240,12 +240,13 @@ public class AlmortahDB extends Activity {
             case R.id.homePage:
                 context.startActivity(new Intent(context, HomePage.class));
                 break;
-            case R.id.myInfo:
-                context.startActivity(new Intent(context, MyInformation.class));
+            case R.id.promotion:
+                context.startActivity(new Intent(context, ApprovePromotions.class));
                 break;
-            case R.id.myChalet:
-                context.startActivity(new Intent(context, MyChalets.class)); // users
+            case R.id.complain:
+                context.startActivity(new Intent(context, CustomerComplaints.class)); // users
                 break;
+
             default:
                 super.onOptionsItemSelected(item);
         }

@@ -2,7 +2,6 @@ package com.almortah.almortah;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,11 +23,10 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -39,7 +37,7 @@ import java.util.List;
 
 import br.com.moip.validators.CreditCard;
 
-public class PaymentPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class PaymentPromotion extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     private EditText cardNm;
@@ -55,12 +53,18 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
 
     private ImageView logo;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment_page);
+        setContentView(R.layout.activity_payment_promotion);
         Bundle info = getIntent().getExtras();
-        final Reservation reservation = (Reservation) info.getParcelable("res");
+        final Chalet chalet = (Chalet) info.getParcelable("chalet");
+        final String price = info.getString("price");
+        final String duration = info.getString("duration");
+        final String date = info.getString("date");
+        final String toDate = info.getString("toDate");
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,7 +81,7 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.inflateMenu(R.menu.customer_menu);
+        navigationView.inflateMenu(R.menu.owner_menu);
 
         cardNm = (EditText) findViewById(R.id.cardNum);
         cardName = (EditText) findViewById(R.id.cardName);
@@ -284,7 +288,9 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
             }
         });
 
-        pay.setText(pay.getText().toString()+" "+reservation.getPrice()+" "+getString(R.string.riyal));
+        Calendar c = Calendar.getInstance();
+
+        pay.setText(pay.getText().toString()+" "+price+" "+getString(R.string.riyal));
         final Calendar today = Calendar.getInstance();
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,30 +321,16 @@ public class PaymentPage extends AppCompatActivity implements NavigationView.OnN
                 }
 
                 HashMap<String,String> map = new HashMap<String, String>();
-                map.put("customerID",auth.getCurrentUser().getUid());
-                map.put("ownerID",reservation.getOwnerID());
-                map.put("chaletID",reservation.getChaletID());
-                map.put("date",reservation.getDate());
-                map.put("checkin",reservation.getCheckin());
-                map.put("checkout","2:00");
-                map.put("payment","visa");
-                map.put("price",reservation.getPrice());
-                map.put("confirm","0");
-                map.put("ratedCustomer","0");
-                map.put("chaletName",reservation.getChaletName());
-                map.put("rated","0");
-                map.put("reservationID", reservation.getReservationID());
-                FirebaseDatabase.getInstance().getReference()
-                        .child("reservation").child(reservation.getReservationID())
-                        .setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        FirebaseDatabase.getInstance().getReference().child("busyDates").
-                                child(reservation.getChaletID()).child(reservation.getDate()).setValue(auth.getCurrentUser().getUid());
-                        Toast.makeText(getApplicationContext(),R.string.thanksForPayment,Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(PaymentPage.this,CurrentReservations.class));
-                    }
-                });
+                map.put("duration",duration);
+                map.put("fromDate",date);
+                map.put("toDate",toDate);
+                map.put("chaletName",chalet.getName());
+                map.put("chaletID",chalet.getId());
+                final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.child("Promotions").child(chalet.getId()).setValue(map);
+                //mDatabase.child("chalets").child(chalet.getId()).child("promotion").setValue("1");
+                Toast.makeText(getApplicationContext(),R.string.donePromot,Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getBaseContext(),MyChalets.class));
             }
         });
 

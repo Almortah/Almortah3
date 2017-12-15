@@ -232,7 +232,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("rating", "0.00");
                 hashMap.put("nbImages", String.valueOf(imgNb));
                 hashMap.put("id", id);
-                hashMap.put("ownerToken",SharedPrefManager.getmInstance(getApplicationContext()).getToken());
+                hashMap.put("ownerToken", SharedPrefManager.getmInstance(getApplicationContext()).getToken() );
                 mDatabase.child("chalets").child(id).setValue(hashMap);
 
                 HashMap<String, String> dateHashMap = new HashMap<String, String>();

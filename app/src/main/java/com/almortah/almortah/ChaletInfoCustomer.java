@@ -1,5 +1,6 @@
 package com.almortah.almortah;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
@@ -60,6 +61,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
     private Button complain;
 
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
             if(FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("abod@admin.com")) {
                 navigationView.inflateMenu(R.menu.admin_menu);
                 book.setText(R.string.delete);
+                book.setBackgroundColor(R.color.colorDarkGrey);
                 book.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -196,8 +199,16 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                                                             reasons += tmp + "-";
                                                         }
                                                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                                                        reference.child("complaints").child(chalet.getId()).child("reasons").setValue(reasons); //Reasons First!
-                                                        reference.child("complaints").child(chalet.getId()).child("customerID").setValue(mAuth.getCurrentUser().getUid());
+                                                        final int complainTime = (int) System.currentTimeMillis();
+                                                        final String complainID = String.valueOf(complainTime);
+                                                        reference.child("complaints").child(complainID).child("reasons").setValue(reasons); //Reasons First!
+                                                        reference.child("complaints").child(complainID).child("customerID").setValue(mAuth.getCurrentUser().getUid());
+                                                        reference.child("complaints").child(complainID).child("chaletID").setValue(chalet.getId());
+                                                        reference.child("complaints").child(complainID).child("isDismiss").setValue("0");
+                                                        reference.child("complaints").child(complainID).child("chaletName").setValue(chalet.getName());
+                                                        reference.child("complaints").child(complainID).child("complainID").setValue(complainID);
+
+
                                                         isComplain = true;
                                                         Toast.makeText(getBaseContext(),R.string.doneComplain,Toast.LENGTH_SHORT).show();
                                                     }

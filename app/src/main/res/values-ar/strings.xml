@@ -128,7 +128,7 @@
     <string name="team"> أعضاء الفريق</string>
     <string name="start">البداية</string>
     <string name="startDate">المرتاح هو عمل مشروع تخرج خلال سنة 2017</string>
-    <string name="donePromot">لقد تم ترويج استراحتك/شاليهك بنجاح</string>
+    <string name="donePromot">لقد تم ترويج استراحتك/شاليهك بنجاح!</string>
     <string name="ideaName">د/ عبدالعزيز السدحان\nجامعة الملك سعود\nكلية علوم الحاسب والمعلومات
         \nقسم هندسة البرمجيات</string>
     <string name="us">عبدالله المهري\nزياد الخنين\nعبدالله الاجرد\nعبدالله المالكي</string>
@@ -184,10 +184,10 @@
     <string name="dirc">الطريق</string>
 
     <string-array name="complaints">
-        <item>استراحة/شالية غير صحيح</item>
+        <item>شالية غير صحيح</item>
         <item>مالك سيء</item>
         <item>خدمة سيئة</item>
-        <item>امان ضعيف في الاستراحة/الشالية</item>
+        <item>امان ضعيف في الشالية</item>
     </string-array>
 
 
@@ -243,5 +243,11 @@
     <string name="visaSaved">لقد تم حفظ بطاقتك بنجاح</string>
     <string name="noData">لا يوجد معلومات لعرضها</string>
     <string name="deleteChalet">لقد تم حذف الشالية بنجاح</string>
+    <string name="toChalet">صفحة الشالية</string>
+    <string name="toCustomer">الى صفحة العميل</string>
+    <string name="blockCustomer">حظر الزبون</string>
+    <string name="dismiss">تجاهل</string>
+    <string name="showDismiss">عرض جميع الشكاوي</string>
+    <string name="noInternt">تاكد من الاتصال بالشبكة</string>
 
 </resources>

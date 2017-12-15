@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:backgroundTint="@color/colorWhite"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:weightSum="2"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:weightSum="3"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/date"/>
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/chaletName"/>
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/offer"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:weightSum="3"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:id="@+id/fromDate"
+                        android:gravity="center"
+                        android:text="11-11-1111"/>
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:id="@+id/chaletName"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Chalet Name"/>
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/duration"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="---"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="160dp"
+                    android:id="@+id/accept"
+                    android:layout_height="55dp"
+                    android:backgroundTint="@color/colorGreen"
+                    android:textColor="@color/colorWhite"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/accept"/>
+
+                <Button
+                    android:layout_width="160dp"
+                    android:backgroundTint="@color/colorDarkGrey"
+                    android:textColor="@color/colorWhite"
+                    android:layout_height="55dp"
+                    android:layout_weight="1"
+                    android:id="@+id/reject"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/reject"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
