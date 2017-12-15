@@ -146,7 +146,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     public boolean onNavigationItemSelected(MenuItem item) {
         AlmortahDB almortahDB = new AlmortahDB(this);
 
-        if(FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("abod@admin.com"))
+        if(FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("abod@admin.com"))
         almortahDB.adminMenu(item);
 
         else

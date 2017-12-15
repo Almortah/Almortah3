@@ -52,6 +52,8 @@ public class login extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        progressDialog = new ProgressDialog(login.this);
         mEmailField = (EditText) findViewById(R.id.email);
         mPassField = (EditText) findViewById(R.id.password);
         mLogin = (Button) findViewById(R.id.login);
@@ -80,7 +82,6 @@ public class login extends AppCompatActivity  {
                     return;
                 }
                 else {
-                                        progressDialog = new ProgressDialog(login.this);
                                         progressDialog.setMessage(getString(R.string.wait));
                                         progressDialog.show();
                                         signin(mEmailField.getText().toString(), mPassField.getText().toString());
@@ -111,6 +112,7 @@ public class login extends AppCompatActivity  {
                     updateUI(user);
                 } else {
                     // If sign in fails, display a message to the user.
+                    if(progressDialog.isShowing())
                     progressDialog.dismiss();
                     updateUI(null);
                 }
@@ -165,7 +167,8 @@ public class login extends AppCompatActivity  {
                     if (dataSnapshot.exists()) {
                         String typeValue = dataSnapshot.getValue().toString().trim();
                     Log.i("TYPE", typeValue);
-                        progressDialog.dismiss();
+                        if(progressDialog.isShowing())
+                            progressDialog.dismiss();
                     if (typeValue.equals("1")) {
                         Intent intent = new Intent(login.this, HomePage.class);
                         startActivity(intent);

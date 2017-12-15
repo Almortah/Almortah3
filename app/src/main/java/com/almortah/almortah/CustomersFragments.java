@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -56,6 +57,7 @@ public class CustomersFragments extends Fragment {
                     Users user = iterator.next().getValue(Users.class);
                     customers.add(user);
                 }
+                Collections.reverse(customers);
                 cAdapter.notifyDataSetChanged();
             }
 

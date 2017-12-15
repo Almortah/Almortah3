@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class CurrentReservations extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,6 +81,7 @@ public class CurrentReservations extends AppCompatActivity implements Navigation
                                 e.printStackTrace();
                             }
                         }
+                        Collections.reverse(arrayList);
                         adapter.notifyDataSetChanged();
 
                     }

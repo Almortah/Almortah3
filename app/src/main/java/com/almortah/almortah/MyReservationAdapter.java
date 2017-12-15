@@ -60,6 +60,12 @@ public class MyReservationAdapter extends RecyclerView.Adapter<MyReservationAdap
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(context.getString(R.string.detail));
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
 
 // add a list
                 String id = context.getString(R.string.bookingID)+": "+reservation.getReservationID();

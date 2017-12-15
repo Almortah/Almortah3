@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CustomerComplaints extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -76,6 +77,7 @@ public class CustomerComplaints extends AppCompatActivity implements NavigationV
 
                     if (arrayList.isEmpty())
                         Toast.makeText(getApplicationContext(),R.string.noData,Toast.LENGTH_SHORT).show();
+                    Collections.reverse(arrayList);
                     adapter.notifyDataSetChanged();
                 }
             }

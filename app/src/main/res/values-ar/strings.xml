@@ -171,7 +171,7 @@
     <string name="maxPrice">الاعلى</string>
     <string name="minPrice">الاقل</string>
     <string name="yourBooked">هذا اليوم محجوز لك</string>
-    <string name="bookingID">"رمز الحجز: "</string>
+    <string name="bookingID">"رمز الحجز "</string>
     <string name="outTime">وقت الخروج:</string>
     <string name="riyal">ريال</string>
     <string name="modify">تعديل الملف الشخصي</string>
@@ -250,5 +250,6 @@
     <string name="showDismiss">عرض جميع الشكاوي</string>
     <string name="noInternt">تاكد من الاتصال بالشبكة</string>
     <string name="cantAdd">"عذرا، لست مؤهلا لإضافة شاليهات، يرجى العودة قريبا "</string>
+    <string name="on">في</string>
 
 </resources>

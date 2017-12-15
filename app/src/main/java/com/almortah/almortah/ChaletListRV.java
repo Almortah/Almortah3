@@ -31,6 +31,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
     private Context context;
     private Geocoder geo;
     private List<Address> addresses;
+    private String date = null;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
        public TextView chaletName;
@@ -58,6 +59,16 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
         geo = new Geocoder(context, Locale.getDefault());
 
     }
+
+    public ChaletListRV(Context context, ArrayList<Chalet> chalets, String date) {
+        this.context = context;
+        this.chalets = chalets;
+        geo = new Geocoder(context, Locale.getDefault());
+        this.date = date;
+
+    }
+
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -123,6 +134,9 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                                                      Intent toChaletInfo = new Intent(context, ChaletInfoCustomer.class);
                                                      toChaletInfo.putExtra("chalet",chalet);
                                                      toChaletInfo.putExtra("location",holder.chaletLocation.getText().toString());
+                                                     if(date != null) {
+                                                         toChaletInfo.putExtra("date",date);
+                                                     }
                                                      context.startActivity(toChaletInfo);
                                                  }
                                              }

@@ -48,6 +48,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
     <ImageView
@@ -56,7 +57,7 @@
         android:layout_height="20dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="50dp"
-        app:srcCompat="@drawable/ic_location_on_black_24dp" />
+        app:srcCompat="@drawable/location_icon" />
 
     <TextView
         android:id="@+id/location"
@@ -85,7 +86,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="50dp"
-            app:srcCompat="@drawable/ic_attach_money_black_24dp" />
+            app:srcCompat="@drawable/price_icon" />
         <TextView
             android:id="@+id/finalPrice"
             android:layout_width="wrap_content"

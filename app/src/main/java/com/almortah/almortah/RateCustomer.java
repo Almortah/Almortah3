@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class RateCustomer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,6 +80,7 @@ public class RateCustomer extends AppCompatActivity implements NavigationView.On
                             e.printStackTrace();
                         }
                     }
+                    Collections.reverse(arrayList);
                     adapter.notifyDataSetChanged();
                 }
             }

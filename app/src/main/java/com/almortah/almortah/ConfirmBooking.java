@@ -61,7 +61,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         Bundle info = getIntent().getExtras();
         date = info.getString("name");
         final Chalet chalet = (Chalet) info.getParcelable("chalet");
-        finalDates = info.getString("finalDates");
+     //   finalDates = info.getString("finalDates");
         boolean finalPrice = info.getBoolean("price");
         if(finalPrice)
             price = chalet.getWeekendPrice();
@@ -93,7 +93,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
 
         inTime = (TimePicker) findViewById(R.id.checkin);
         inTime.setCurrentHour(11);
-        inTime.setCurrentMinute(0);
+        inTime.setCurrentMinute(00);
        // setTimePickerInterval(inTime);
 
 
@@ -141,15 +141,17 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                     return;
                 }
 
-                checkin = String.valueOf(inTime.getHour()+":"+inTime.getMinute());
+                checkin = inTime.getHour()+ ":" +inTime.getMinute() ;
                 HashMap<String,String> map = new HashMap<String, String>();
                 map.put("customerID",mAuth.getCurrentUser().getUid());
                 map.put("ownerID",chalet.getOwnerID());
                 map.put("chaletID",chalet.getId());
-
-
-
                 map.put("date",date);
+
+                if(inTime.getMinute() < 10) {
+                    checkin = inTime.getHour()+ ":" + "0" + inTime.getMinute();
+                }
+
                 map.put("checkin",checkin);
                 map.put("checkout","2:00");
                 map.put("payment",payment);

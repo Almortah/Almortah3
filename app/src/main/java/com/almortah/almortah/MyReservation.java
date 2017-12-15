@@ -19,7 +19,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 public class MyReservation extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,14 +64,23 @@ public class MyReservation extends AppCompatActivity implements NavigationView.O
         final ArrayList<Reservation> myHistory = new ArrayList<>();
         final MyReservationAdapter adapter = new MyReservationAdapter(MyReservation.this, myHistory);
         recyclerView.setAdapter(adapter);
+        final SimpleDateFormat dfDate = new SimpleDateFormat("dd-MM-yyyy");
+        final Date today = new Date(System.currentTimeMillis());
         FirebaseDatabase.getInstance().getReference().child("reservation").orderByChild("customerID").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
                         Reservation reservation = singlValue.getValue(Reservation.class);
-                        myHistory.add(reservation);
+                        try {
+                            if (reservation != null && dfDate.parse(reservation.getDate()).before(today))
+                            myHistory.add(reservation);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
                     }
+                    Collections.reverse(myHistory);
                     adapter.notifyDataSetChanged();
                 }
             }

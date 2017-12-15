@@ -84,6 +84,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
 
         t = (TextView) findViewById(R.id.dateChoose);
         checkBusy = (Button) findViewById(R.id.checkBusy);
+        calendarView.setFirstDayOfWeek(Calendar.SUNDAY);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -94,7 +95,8 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
                 calendar.setFirstDayOfWeek(Calendar.SUNDAY);
                 calendar.set(year, month, dayOfMonth);
                 int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-                if (dayOfWeek == 5 || dayOfWeek == 6 || dayOfWeek == 7)
+                Log.e("DayOfWeek", String.valueOf(dayOfWeek));
+                if (dayOfWeek > 4)
                    isWeekend = true;
                 else
                     isWeekend = false;

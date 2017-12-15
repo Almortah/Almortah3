@@ -1,7 +1,6 @@
 package com.almortah.almortah;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
@@ -32,7 +31,6 @@ public class AlmortahDB extends Activity {
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private Activity context;
     private boolean flag;
-    private ProgressDialog progressDialog;
 
 
     public AlmortahDB(Activity context) {
@@ -42,10 +40,7 @@ public class AlmortahDB extends Activity {
 
     public void signup(final String fullname, final String username, final String phone, final String email, String password, final int type) {
 
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setTitle(getString(R.string.register));
-        progressDialog.setMessage(getString(R.string.wait));
-        progressDialog.show();
+
 
         Task<AuthResult> i = mAuth.createUserWithEmailAndPassword(email,password);
         i.isComplete();
@@ -65,7 +60,6 @@ public class AlmortahDB extends Activity {
                         hashMap.put("type", String.valueOf(type));
                         hashMap.put("isApproved","0");
                         almortahDB.child("users").child(user.getUid()).setValue(hashMap);
-                        progressDialog.dismiss();
                         context.startActivity(new Intent(context,login.class));
                 }
             }

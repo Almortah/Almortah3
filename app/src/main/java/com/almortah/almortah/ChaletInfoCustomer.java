@@ -3,10 +3,13 @@ package com.almortah.almortah;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,9 +18,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +43,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -59,8 +65,10 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
     private boolean isComplain = false;
     private Button book;
     private Button complain;
+    private String date = null;
+    private boolean isWeekend = false;
 
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +77,9 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         Bundle chaletInfo = getIntent().getExtras();
         location = chaletInfo.getString("location");
         chalet = (Chalet) chaletInfo.getParcelable("chalet");
+        if(chaletInfo.containsKey("date")) {
+            date = chaletInfo.getString("date");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -92,6 +103,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                 navigationView.inflateMenu(R.menu.admin_menu);
                 book.setText(R.string.delete);
                 book.setBackgroundColor(R.color.colorDarkGrey);
+                complain.setVisibility(View.GONE);
                 book.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -127,17 +139,43 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
             }
             else {
                 navigationView.inflateMenu(R.menu.customer_menu);
+                if(date != null) {
+                    String[] tmp = date.split("-");
+                    book.setText(book.getText().toString() +" "+getString(R.string.on) + " " + tmp[0] +"/"+tmp[1]);
+
+                }
 
                 book.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mAuth.getCurrentUser() == null) {
-                            Toast.makeText(getApplicationContext(), R.string.bookVistor, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getBaseContext(), login.class));
+
+                        if(date != null) {
+                            Intent toConfirm = new Intent(getBaseContext(), ConfirmBooking.class);
+                            toConfirm.putExtra("name", date);
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+                            String[] tmp = date.split("-");
+                            calendar.set(Integer.parseInt(tmp[2]) , (Integer.parseInt(tmp[1]) -1 ), Integer.parseInt(tmp[0]));
+                            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                            Log.e("DayOfWeek", String.valueOf(dayOfWeek));
+                            if (dayOfWeek > 4) {
+                                isWeekend = true;
+                            }
+                            else {
+                                isWeekend = false;
+                            }
+
+                            toConfirm.putExtra("price", isWeekend);
+                            Log.e("Weekend?", String.valueOf(isWeekend));
+                            //    Log.e("finalDates?",finalDates);
+                            toConfirm.putExtra("chalet",chalet);
+                            startActivity(toConfirm);
                             return;
                         }
+
                         Intent toBooking = new Intent(ChaletInfoCustomer.this, BookingAChalet.class);
                         toBooking.putExtra("chalet", chalet);
+
                         startActivity(toBooking);
 
 
@@ -147,12 +185,6 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                 complain.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mAuth.getCurrentUser() == null) {
-                            Toast.makeText(getApplicationContext(), R.string.needLogin, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getBaseContext(), login.class));
-                            return;
-                        }
-
                         if(isComplain)
                             return;
 
@@ -240,8 +272,26 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
 
             }
         }
-        else
+        else {
             navigationView.inflateMenu(R.menu.visitor_menu);
+            book.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), R.string.bookVistor, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getBaseContext(), login.class));
+                    return;
+                }
+            });
+
+            complain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), R.string.needLogin, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getBaseContext(), login.class));
+                    return;
+                }
+            });
+        }
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -287,6 +337,17 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                 startActivity(intent);
             }
         });
+
+        ImageView locationLogo = (ImageView) findViewById(R.id.chaletLocation);
+        locationLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q="+chalet.getLatitude()+","+chalet.getLongitude()+" (" + chalet.getName() + ")"));
+                startActivity(intent);
+            }
+        });
+
         description.setText(chalet.getDescription());
         for (int i = 1; i < 6; i++) {
             if (i == 1) {
@@ -404,6 +465,7 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                             if(!rating.getComment().equals("-"))
                                 ratings.add(rating);
                         }
+                        Collections.reverse(ratings);
                         commentsAdapter.notifyDataSetChanged();
                     }
 
@@ -457,7 +519,13 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         AlmortahDB almortahDB = new AlmortahDB(this);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("abod@admin.com"))
+            almortahDB.adminMenu(item);
+
+        else
         almortahDB.menu(item);
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

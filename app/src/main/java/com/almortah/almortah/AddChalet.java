@@ -106,7 +106,21 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference reference = mDatabase.child("users").child(user.getUid());
+        DatabaseReference reference = mDatabase.child("users").child(user.getUid()).child("nbChalets");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                chaletCount = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
+                chaletCount++;
+                mDatabase.child("users").child(user.getUid()).child("nbChalets").setValue(String.valueOf(chaletCount));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 //        reference.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
@@ -200,22 +214,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
         final EditText des = (EditText) findViewById(R.id.description);
 
         submitChalet = (Button) findViewById(R.id.submitChalet);
-
-
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                chaletCount = Integer.parseInt(String.valueOf(dataSnapshot.getValue()));
-                chaletCount++;
-                mDatabase.child("users").child(user.getUid()).child("nbChalets").setValue(String.valueOf(chaletCount));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
         submitChalet.setOnClickListener(new View.OnClickListener() {
             @Override

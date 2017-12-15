@@ -78,7 +78,6 @@ public class ApproveOwnersAdapter extends RecyclerView.Adapter<ApproveOwnersAdap
                                 arrayList.remove(position);
                                 Toast.makeText(context,R.string.promoted,Toast.LENGTH_SHORT).show();
                                 notifyDataSetChanged();
-
                             }
                         });
 
