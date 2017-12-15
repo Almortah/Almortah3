@@ -27,10 +27,10 @@ tools:context=".MyChalets">
         android:id="@+id/rateCustomer"
         android:icon="@drawable/ic_rate_review_black_24dp"
         android:title="@string/rateCustomer"/>
-    <item
-        android:id="@+id/feed"
-        android:icon="@drawable/ic_feedback_black_24dp"
-        android:title="@string/feedback" />
+    <!--<item-->
+        <!--android:id="@+id/feed"-->
+        <!--android:icon="@drawable/ic_feedback_black_24dp"-->
+        <!--android:title="@string/feedback" />-->
 
     <item
         android:id="@+id/about"

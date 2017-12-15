@@ -37,10 +37,10 @@
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/notify"/>
 
-    <item
-        android:id="@+id/feed"
-        android:icon="@drawable/ic_feedback_black_24dp"
-        android:title="@string/feedback" />
+    <!--<item-->
+        <!--android:id="@+id/feed"-->
+        <!--android:icon="@drawable/ic_feedback_black_24dp"-->
+        <!--android:title="@string/feedback" />-->
 
     <item
         android:id="@+id/about"

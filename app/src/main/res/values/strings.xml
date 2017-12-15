@@ -140,9 +140,9 @@
     </string-array>
 
     <string-array name="complaints">
-        <item>Fake rest-house/chalet</item>
+        <item>Fake chalet</item>
         <item>Bad owner</item>
-        <item>Bad Service</item>
+        <item>Bad service</item>
         <item>Low safety</item>
     </string-array>
 
@@ -285,6 +285,13 @@
     <string name="visaSaved">Your credit card was saved successfully</string>
     <string name="noData">There is no information to display</string>
     <string name="deleteChalet">The chalet was deleted successfully</string>
+    <string name="toChalet">Chalet Page</string>
+    <string name="toCustomer">Go to Customer Profile</string>
+    <string name="blockCustomer">Ban Customer</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="showDismiss">Show all complaints</string>
+    <string name="noInternt">Kindly check the connection</string>
+    <string name="cantAdd">Sorry you are not eligible to add chalets, please come back soon</string>
 
 
 </resources>

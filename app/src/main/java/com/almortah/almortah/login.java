@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -73,6 +75,10 @@ public class login extends AppCompatActivity  {
                 if(mEmailField.getText().toString().matches("") || mPassField.getText().toString().matches("")
                         || mEmailField.getText() == null || mPassField.getText() == null)
                     return;
+                else if (!isNetworkAvailable()) {
+                    Toast.makeText(getApplicationContext(),R.string.noInternt, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 else {
                                         progressDialog = new ProgressDialog(login.this);
                                         progressDialog.setMessage(getString(R.string.wait));
@@ -211,7 +217,11 @@ public class login extends AppCompatActivity  {
         }
     }
 
-
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
 
 

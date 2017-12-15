@@ -23,7 +23,6 @@ public class Chalet implements Parcelable {
     private String promotion;
     private String rating;
     private String weekendPrice;
-
     private String ownerToken;
 
 

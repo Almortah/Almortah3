@@ -9,9 +9,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <meta-data
         android:name="com.google.android.gms.version"
@@ -143,7 +143,11 @@
             android:label="@string/needApprove" />
         <activity android:name=".RateCustomer" />
         <activity android:name=".PaymentPage" />
-        <activity android:name=".ValidatePhoneNumber"></activity>
+        <activity android:name=".ValidatePhoneNumber" />
+        <activity android:name=".CustomerComplaints" />
+        <activity android:name=".ApprovePromotions" />
+        <activity android:name=".PaymentPromotion" />
+        <activity android:name=".ApproveOwners"></activity>
     </application>
 
 </manifest>

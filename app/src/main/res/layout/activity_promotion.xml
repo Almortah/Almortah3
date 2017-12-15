@@ -58,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/tmpPrice"
             android:textColor="@color/colorWhite"
             android:text="@string/price" />
     </TableRow>
@@ -75,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="5.0" />
+            android:text="10" />
     </TableRow>
 
     <TableRow
@@ -90,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="15.0" />
+            android:text="50" />
     </TableRow>
     <TableRow
         android:background="#ECEFF1"
@@ -105,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="50.0" />
+            android:text="180" />
     </TableRow>
 </TableLayout>
 
@@ -154,13 +155,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/payment"
         android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/cash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/cash" />
 
         <RadioButton
             android:id="@+id/visa"

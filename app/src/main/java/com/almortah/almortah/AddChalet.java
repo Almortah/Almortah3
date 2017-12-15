@@ -88,12 +88,12 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     double lat1 = 0, lng1 = 0;
     private List<Address> addresses;
     private Geocoder geocoder;
+    private String isApproved = null;
 
 
     static final int PICK_CONTACT_REQUEST = 1;
     static final int MY_PERMISSIONS_REQUEST = 1;
     private String descr = "Empty";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +103,36 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
         setSupportActionBar(toolbar);
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference reference = mDatabase.child("users").child(user.getUid());
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()) {
+//                    Users user = dataSnapshot.getValue(Users.class);
+//                    chaletCount = Integer.parseInt(String.valueOf(user.getNbChalets()));
+//                    chaletCount++;
+//                    mDatabase.child("users").child(user.getUserID()).child("nbChalets").setValue(String.valueOf(chaletCount));
+//                    isApproved = user.getIsApproved();
+//                }
+//
+//                if(isApproved != null && isApproved.equals("0")) {
+//                    Toast.makeText(getApplicationContext(),R.string.cantAdd,Toast.LENGTH_LONG).show();
+//                    startActivity(new Intent(getApplicationContext(), MyChalets.class));
+//                    return;
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+
+
 
         //create default navigation drawer toggle
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -161,8 +191,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
             }
         }
 
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
         firebaseStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mChaletName = (EditText) findViewById(R.id.chaletName);
@@ -172,8 +200,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
         final EditText des = (EditText) findViewById(R.id.description);
 
         submitChalet = (Button) findViewById(R.id.submitChalet);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference reference = mDatabase.child("users").child(user.getUid()).child("nbChalets");
+
+
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -187,6 +215,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
         submitChalet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,7 +262,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("rating", "0.00");
                 hashMap.put("nbImages", String.valueOf(imgNb));
                 hashMap.put("id", id);
-                hashMap.put("ownerToken",SharedPrefManager.getmInstance(getApplicationContext()).getToken());
+                hashMap.put("ownerToken", SharedPrefManager.getmInstance(getApplicationContext()).getToken() );
                 mDatabase.child("chalets").child(id).setValue(hashMap);
 
                 HashMap<String, String> dateHashMap = new HashMap<String, String>();
