@@ -13,18 +13,14 @@ public class Users {
     private String type;
     private String username;
     private String userID;
+    private String isApproved;
 
 
     public Users(){}
 
-    public Users(String name, String email, String nbChalets, String phone, String type, String username, String id) {
-        Name = name;
-        this.email = email;
-        this.nbChalets = nbChalets;
-        this.phone = phone;
-        this.type = type;
-        this.username = username;
-        userID = id;
+
+    public String getIsApproved() {
+        return isApproved;
     }
 
     public String getName() {

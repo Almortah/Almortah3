@@ -1,6 +1,7 @@
 package com.almortah.almortah;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
@@ -31,6 +32,8 @@ public class AlmortahDB extends Activity {
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private Activity context;
     private boolean flag;
+    private ProgressDialog progressDialog;
+
 
     public AlmortahDB(Activity context) {
         this.context = context;
@@ -38,6 +41,12 @@ public class AlmortahDB extends Activity {
     public AlmortahDB(){}
 
     public void signup(final String fullname, final String username, final String phone, final String email, String password, final int type) {
+
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle(getString(R.string.register));
+        progressDialog.setMessage(getString(R.string.wait));
+        progressDialog.show();
+
         Task<AuthResult> i = mAuth.createUserWithEmailAndPassword(email,password);
         i.isComplete();
         i.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -54,7 +63,10 @@ public class AlmortahDB extends Activity {
                         hashMap.put("nbChalets","0");
                         hashMap.put("userID",user.getUid());
                         hashMap.put("type", String.valueOf(type));
+                        hashMap.put("isApproved","0");
                         almortahDB.child("users").child(user.getUid()).setValue(hashMap);
+                        progressDialog.dismiss();
+                        context.startActivity(new Intent(context,login.class));
                 }
             }
         });
@@ -173,7 +185,24 @@ public class AlmortahDB extends Activity {
                 context.startActivity(new Intent(context, MyReservation.class));
                 break;
             case R.id.newChalet:
-              context.startActivity(new Intent(context, AddChalet.class));
+              almortahDB.child("users").child(mAuth.getCurrentUser().getUid()).child("isApproved")
+                      .addListenerForSingleValueEvent(new ValueEventListener() {
+                          @Override
+                          public void onDataChange(DataSnapshot dataSnapshot) {
+                              if(dataSnapshot.exists()) {
+                                  if(dataSnapshot.getValue().toString().equals("1"))
+                                      context.startActivity(new Intent(context, AddChalet.class));
+                                    else
+                                      Toast.makeText(context,R.string.cantAdd,Toast.LENGTH_LONG).show();
+                              }
+                          }
+
+                          @Override
+                          public void onCancelled(DatabaseError databaseError) {
+
+                          }
+                      });
+
                 break;
             case R.id.about:
                 context.startActivity(new Intent(context, About.class));
@@ -215,6 +244,7 @@ public class AlmortahDB extends Activity {
     }
 
     public void adminMenu(MenuItem item){
+
         switch(item.getItemId()) {
             case R.id.searchChaleh:
                 break;
@@ -222,20 +252,14 @@ public class AlmortahDB extends Activity {
                 FirebaseAuth.getInstance().signOut();
                 context.startActivity(new Intent(context, HomeActivity.class));
                 break;
-            case R.id.login:
-                context.startActivity(new Intent(context, login.class));
-                break;
-            case R.id.register:
-                context.startActivity(new Intent(context, Signup.class));
+            case R.id.approve:
+                context.startActivity(new Intent(context, ApproveOwners.class));
                 break;
             case R.id.chalets:
                 context.startActivity(new Intent(context, HomePage.class));
                 break;
             case R.id.users:
                 context.startActivity(new Intent(context, AdminPage.class));
-                break;
-            case R.id.about:
-                context.startActivity(new Intent(context, About.class));
                 break;
             case R.id.homePage:
                 context.startActivity(new Intent(context, HomePage.class));
@@ -246,7 +270,6 @@ public class AlmortahDB extends Activity {
             case R.id.complain:
                 context.startActivity(new Intent(context, CustomerComplaints.class)); // users
                 break;
-
             default:
                 super.onOptionsItemSelected(item);
         }

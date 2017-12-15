@@ -69,7 +69,6 @@ public class Signup extends AppCompatActivity {
                 final String passowrd2 = mPassword2.getText().toString().trim();
                 int type = 1;
                 RadioButton ownerType = (RadioButton) findViewById(R.id.ownerType);
-
                 if (ownerType.isChecked())
                     type = 2;
 

@@ -291,6 +291,7 @@
     <string name="dismiss">Dismiss</string>
     <string name="showDismiss">Show all complaints</string>
     <string name="noInternt">Kindly check the connection</string>
+    <string name="cantAdd">Sorry you are not eligible to add chalets, please come back soon</string>
 
 
 </resources>

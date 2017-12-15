@@ -249,5 +249,6 @@
     <string name="dismiss">تجاهل</string>
     <string name="showDismiss">عرض جميع الشكاوي</string>
     <string name="noInternt">تاكد من الاتصال بالشبكة</string>
+    <string name="cantAdd">"عذرا، لست مؤهلا لإضافة شاليهات، يرجى العودة قريبا "</string>
 
 </resources>

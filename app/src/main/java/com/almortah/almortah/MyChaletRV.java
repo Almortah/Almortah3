@@ -79,7 +79,7 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
         tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(final Uri uri) {
-                Glide.with(context)
+                Glide.with(context.getApplicationContext())
                         .load(uri)
                         .into(holder.img1);
 

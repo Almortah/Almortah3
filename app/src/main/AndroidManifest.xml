@@ -146,7 +146,8 @@
         <activity android:name=".ValidatePhoneNumber" />
         <activity android:name=".CustomerComplaints" />
         <activity android:name=".ApprovePromotions" />
-        <activity android:name=".PaymentPromotion"></activity>
+        <activity android:name=".PaymentPromotion" />
+        <activity android:name=".ApproveOwners"></activity>
     </application>
 
 </manifest>
