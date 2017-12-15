@@ -164,14 +164,7 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
                     double longitude=Double.parseDouble(longitudeString);
                     LatLng newLocation = new LatLng(latitude,longitude);
                     chalets.add(chalet);
-                    mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                        @Override
-                        public void onInfoWindowClick(Marker marker) {
-                            Intent toChaletInfo = new Intent(getContext(), ChaletInfoCustomer.class);
-                            toChaletInfo.putExtra("chalet",chalet);
-                            getContext().startActivity(toChaletInfo);
-                        }
-                    });
+
 
                    //  mGoogleMap.addMarker(new MarkerOptions().position(newLocation));
 
@@ -197,6 +190,21 @@ public class ChaletcMapFragment extends Fragment implements OnMapReadyCallback {
 
         final Context context = getContext();
 
+
+        mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                for(int i =0 ; i<chalets.size();i++){
+                    if(marker.getTitle().equals(chalets.get(i).getName())){
+                        Intent toChaletInfo = new Intent(getContext(), ChaletInfoCustomer.class);
+                        toChaletInfo.putExtra("chalet",chalets.get(i));
+                        getContext().startActivity(toChaletInfo);
+                    }
+                }
+
+
+            }
+        });
         mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
