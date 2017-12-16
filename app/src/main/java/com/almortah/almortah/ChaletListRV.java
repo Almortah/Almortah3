@@ -131,12 +131,14 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
                                                  @Override
                                                  public void onClick(View v) {
-                                                     Intent toChaletInfo = new Intent(context, ChaletInfoCustomer.class);
+                                                     Intent toChaletInfo = new Intent( context , ChaletInfoCustomer.class);
                                                      toChaletInfo.putExtra("chalet",chalet);
                                                      toChaletInfo.putExtra("location",holder.chaletLocation.getText().toString());
+
                                                      if(date != null) {
                                                          toChaletInfo.putExtra("date",date);
                                                      }
+
                                                      v.getContext().startActivity(toChaletInfo);
                                                  }
                                              }

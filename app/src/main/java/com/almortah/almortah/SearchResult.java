@@ -94,7 +94,7 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
         if(info.containsKey("date"))
             date = info.getString("date");
 
-        mAdapter = new ChaletListRV(getBaseContext() ,chalets,date);
+        mAdapter = new ChaletListRV(getBaseContext() ,chalets ,date);
         new GetChalets().execute();
         mAdapter.notifyDataSetChanged();
 

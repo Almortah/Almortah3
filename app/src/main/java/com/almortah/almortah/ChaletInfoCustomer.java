@@ -77,8 +77,11 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         Bundle chaletInfo = getIntent().getExtras();
         location = chaletInfo.getString("location");
         chalet = (Chalet) chaletInfo.getParcelable("chalet");
+        book = (Button) findViewById(R.id.book);
         if(chaletInfo.containsKey("date")) {
             date = chaletInfo.getString("date");
+            String[] tmp = date.split("-");
+            book.setText(book.getText().toString() +" "+getString(R.string.on) + " " + tmp[0] +"/"+tmp[1]);
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,7 +98,6 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
-        book = (Button) findViewById(R.id.book);
         complain = (Button) findViewById(R.id.complain);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
@@ -139,11 +141,11 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
             }
             else {
                 navigationView.inflateMenu(R.menu.customer_menu);
-                if(date != null) {
-                    String[] tmp = date.split("-");
-                    book.setText(book.getText().toString() +" "+getString(R.string.on) + " " + tmp[0] +"/"+tmp[1]);
-
-                }
+//                if(date != null) {
+//                    String[] tmp = date.split("-");
+//                    book.setText(book.getText().toString() +" "+getString(R.string.on) + " " + tmp[0] +"/"+tmp[1]);
+//
+//                }
 
                 book.setOnClickListener(new View.OnClickListener() {
                     @Override
