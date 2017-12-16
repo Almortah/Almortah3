@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -108,7 +109,8 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
             holder.icon.setImageResource(R.drawable.ic_close_black_24dp);
             holder.confirmed.setText(R.string.rejected);
             holder.confirmed.setTextColor(Color.parseColor("#b50009"));
-            holder.why.setVisibility(View.VISIBLE);
+            holder.why.setVisibility(View.GONE);
+            holder.cancel.setVisibility(View.GONE);
         }
 
 
@@ -185,33 +187,69 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
             @Override
             public void onClick(View v) {
 
+                if (reservation.getConfirm().equals("2")) {
+                    Toast.makeText(context,R.string.sorry,Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setMessage(context.getString(R.string.sure));
-                alertDialogBuilder.setPositiveButton(context.getString(R.string.yes),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                FirebaseDatabase.getInstance().getReference().child("reservation")
-                                        .child(reservation.getReservationID()).removeValue();
+                else if(reservation.getConfirm().equals("1")) {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setTitle(R.string.warning);
+                    alertDialogBuilder.setMessage(context.getString(R.string.taxForCancel));
+                    alertDialogBuilder.setPositiveButton(context.getString(R.string.yesCancel),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    FirebaseDatabase.getInstance().getReference().child("reservation")
+                                            .child(reservation.getReservationID()).removeValue();
+                                    FirebaseDatabase.getInstance().getReference().child("busyDates").child(reservation.getChaletID())
+                                            .child(reservation.getDate()).removeValue();
+                                    reservations.remove(reservation);
+                                    notifyDataSetChanged();
 
-                                FirebaseDatabase.getInstance().getReference().child("busyDates").child(reservation.getChaletID())
-                                        .child(reservation.getDate()).removeValue();
-                                reservations.remove(reservation);
-                                notifyDataSetChanged();
+                                }
+                            });
 
-                            }
-                        });
+                    alertDialogBuilder.setNegativeButton(context.getString(R.string.noGoBack),new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
 
-                alertDialogBuilder.setNegativeButton(context.getString(R.string.no),new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
 
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                else {
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    alertDialogBuilder.setMessage(context.getString(R.string.sure));
+                    alertDialogBuilder.setPositiveButton(context.getString(R.string.yes),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    FirebaseDatabase.getInstance().getReference().child("reservation")
+                                            .child(reservation.getReservationID()).removeValue();
+
+                                    FirebaseDatabase.getInstance().getReference().child("busyDates").child(reservation.getChaletID())
+                                            .child(reservation.getDate()).removeValue();
+                                    reservations.remove(reservation);
+                                    notifyDataSetChanged();
+
+                                }
+                            });
+
+                    alertDialogBuilder.setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
 
             }
         });

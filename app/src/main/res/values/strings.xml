@@ -297,6 +297,10 @@
     <string name="promotedAccepted">This request accepted successfully</string>
     <string name="findSpecifcChalet">Find a specific rest-house/chalet</string>
     <string name="addMax">Add max price first</string>
-
+    <string name="sorry">Sorry you can not cancel this reservation</string>
+    <string name="taxForCancel">If you cancel this reservation you will get low rating and may in future you will not be able to reserve. Also it may not get 100% of reservation cost.</string>
+    <string name="warning">Warning!</string>
+    <string name="yesCancel">Yes cancel this reservation!</string>
+    <string name="noGoBack">No keep this reservation</string>
 
 </resources>
