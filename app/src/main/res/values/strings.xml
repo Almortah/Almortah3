@@ -131,7 +131,7 @@
     </string-array>
 
     <string-array name="Riyadh">
-        <item>-</item>
+        <item>Undefined</item>
         <item>North of Riyadh</item>
         <item>East of Riyadh</item>
         <item>Center of Riyadh</item>
@@ -226,9 +226,9 @@
     <string name="reasons">Reasons</string>
     <string name="contact">Contact to admin</string>
     <string name="searchByName">Search for specific rest-house/chalet</string>
-    <string name="filter">Or filter your result</string>
-    <string name="maxPrice">Max</string>
-    <string name="minPrice">Min</string>
+    <string name="filter">Filter your result</string>
+    <string name="maxPrice">Max Price</string>
+    <string name="minPrice">Min Price</string>
     <string name="yourBooked">You have been booked this day</string>
     <string name="bookingID">Reservation ID </string>
     <string name="outTime">Check-out time</string>
@@ -293,6 +293,9 @@
     <string name="noInternt">Kindly check the connection</string>
     <string name="cantAdd">Sorry you are not eligible to add chalets, please come back soon</string>
     <string name="on">on</string>
+    <string name="rejectedPromotion">This request rejected successfully</string>
+    <string name="promotedAccepted">This request accepted successfully</string>
+    <string name="findSpecifcChalet">Find a specific rest-house/chalet</string>
 
 
 </resources>

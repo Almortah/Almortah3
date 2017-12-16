@@ -30,41 +30,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="5dp"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:textStyle="bold|italic"
-                android:textColor="@color/colorGreen"
-                android:text="@string/searchByName" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/chaletName"
-                android:hint="@string/chaletName"
-                android:inputType="text"
-                android:maxLength="15"
-                android:gravity="center"/>
-
-            <Button
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_margin="10dp"
-                android:background="@color/colorBlue"
-                android:textColor="@color/colorWhite"
-                android:text="@string/search"/>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_height="25dp"
-                android:layout_margin="30dp"
+                android:layout_margin="5dp"
                 android:src="@mipmap/logo_noname"/>
             <TextView
                 android:layout_width="match_parent"
@@ -72,25 +45,69 @@
                 android:gravity="center"
                 android:textSize="14sp"
                 android:textStyle="bold|italic"
-                android:textColor="@color/colorGreen"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/colorBlue"
                 android:text="@string/filter" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorGreen"
+                    android:textStyle="bold|italic" />
+
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:labelFor="@+id/location"
+                    android:prompt="@string/location"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold|italic"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorGreen"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/prices" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/desMin"
-                    android:layout_width="40dp"
+                    android:layout_width="50dp"
                     android:layout_height="40dp"
                     android:backgroundTint="@color/colorDarkGrey"
                     android:textColor="@color/colorWhite"
                     android:text="-"/>
                 <EditText
-                    android:layout_width="50dp"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:id="@+id/min"
@@ -99,39 +116,7 @@
                     android:inputType="number" />
                 <Button
                     android:id="@+id/addMin"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:backgroundTint="@color/colorGreen"
-                    android:textColor="@color/colorWhite"
-                    android:text="+"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="@string/price" />
-
-                <Button
-                    android:id="@+id/desMax"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:backgroundTint="@color/colorDarkGrey"
-                    android:textColor="@color/colorWhite"
-                    android:text="-"/>
-                <EditText
                     android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:id="@+id/max"
-                    android:maxLength="4"
-                    android:hint="@string/maxPrice"
-                    android:inputType="number" />
-                <Button
-                    android:id="@+id/addMax"
-                    android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:backgroundTint="@color/colorGreen"
                     android:textColor="@color/colorWhite"
@@ -141,25 +126,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-android:gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:text="@string/location" />
-
-                <Spinner
-                    android:id="@+id/spinner1"
-                    android:layout_width="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"/>
+            <Button
+                android:id="@+id/desMax"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/colorDarkGrey"
+                android:textColor="@color/colorWhite"
+                android:text="-"/>
+            <EditText
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/max"
+                android:maxLength="4"
+                android:hint="@string/maxPrice"
+                android:inputType="number" />
+            <Button
+                android:id="@+id/addMax"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/colorGreen"
+                android:textColor="@color/colorWhite"
+                android:text="+"/>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -172,15 +166,16 @@ android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textStyle="bold"
+                    android:textStyle="bold|italic"
+                    android:textColor="@color/colorGreen"
                     android:text="@string/date" />
 
               <DatePicker
                   android:id="@+id/date"
                   android:layout_width="wrap_content"
                   android:layout_height="110dp"
-                  android:layout_marginStart="5dp"
-                  android:layout_marginEnd="5dp"
+                  android:layout_marginStart="8dp"
+                  android:layout_marginEnd="8dp"
                   android:theme="@style/DatePicker"
                   android:datePickerMode="spinner"
                   android:spinnersShown="true"
@@ -190,13 +185,24 @@ android:gravity="center"
 
 
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_width="280dp"
+                android:layout_gravity="center"
+                android:layout_height="40dp"
                 android:id="@+id/filter"
                 android:layout_margin="10dp"
                 android:background="@color/colorBlue"
                 android:textColor="@color/colorWhite"
                 android:text="@string/filter1"/>
+
+            <Button
+                android:id="@+id/search"
+                android:layout_width="280dp"
+                android:layout_gravity="center"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@color/colorBlue"
+                android:textColor="@color/colorWhite"
+                android:text="@string/findSpecifcChalet"/>
 
         </LinearLayout>
         </ScrollView>

@@ -233,16 +233,16 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
                                                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                                                         final int complainTime = (int) System.currentTimeMillis();
                                                         final String complainID = String.valueOf(complainTime);
-                                                        reference.child("complaints").child(complainID).child("reasons").setValue(reasons); //Reasons First!
-                                                        reference.child("complaints").child(complainID).child("customerID").setValue(mAuth.getCurrentUser().getUid());
-                                                        reference.child("complaints").child(complainID).child("chaletID").setValue(chalet.getId());
-                                                        reference.child("complaints").child(complainID).child("isDismiss").setValue("0");
-                                                        reference.child("complaints").child(complainID).child("chaletName").setValue(chalet.getName());
-                                                        reference.child("complaints").child(complainID).child("complainID").setValue(complainID);
-
-
+                                                        HashMap<String,String> hashMap = new HashMap<>();
+                                                        hashMap.put("reasons",reasons);
+                                                        hashMap.put("customerID",mAuth.getCurrentUser().getUid());
+                                                        hashMap.put("chaletID",chalet.getId());
+                                                        hashMap.put("isDismiss","0");
+                                                        hashMap.put("chaletName",chalet.getName());
+                                                        hashMap.put("complainID",complainID);
+                                                        reference.child("complaints").child(complainID).setValue(hashMap);
                                                         isComplain = true;
-                                                        Toast.makeText(getBaseContext(),R.string.doneComplain,Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getApplicationContext(),R.string.doneComplain,Toast.LENGTH_SHORT).show();
                                                     }
                                                 })
                                                 .setNegativeButton(getString(R.string.cancel1), new DialogInterface.OnClickListener() {

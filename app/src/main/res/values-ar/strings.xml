@@ -167,9 +167,9 @@
     </string-array>
     <string name="ban">الحسابات المحظورة</string>
     <string name="searchByName">بحث بواسطة آسم الاستراحة/الشالية</string>
-    <string name="filter">آو خصص النتائج بناءً على</string>
-    <string name="maxPrice">الاعلى</string>
-    <string name="minPrice">الاقل</string>
+    <string name="filter">" خصص النتائج بناءً على"</string>
+    <string name="maxPrice">السعر الاقصى</string>
+    <string name="minPrice">السعر الادنى</string>
     <string name="yourBooked">هذا اليوم محجوز لك</string>
     <string name="bookingID">"رمز الحجز "</string>
     <string name="outTime">وقت الخروج:</string>
@@ -192,7 +192,7 @@
 
 
     <string-array name="Riyadh">
-        <item>-</item>
+        <item>غير محدد</item>
         <item>شمال الرياض</item>
         <item>شرق الرياض</item>
         <item>وسط الرياض</item>
@@ -251,5 +251,8 @@
     <string name="noInternt">تاكد من الاتصال بالشبكة</string>
     <string name="cantAdd">"عذرا، لست مؤهلا لإضافة شاليهات، يرجى العودة قريبا "</string>
     <string name="on">في</string>
+    <string name="rejectedPromotion">هذا الطلب تم رفضة بنجاح</string>
+    <string name="promotedAccepted">هذا الطلب تم قبوله بنجاح</string>
+    <string name="findSpecifcChalet">بحث عن استراحة/شالية بالاسم</string>
 
 </resources>

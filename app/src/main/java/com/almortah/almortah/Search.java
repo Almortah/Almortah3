@@ -1,14 +1,17 @@
 package com.almortah.almortah;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -229,13 +232,33 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             search.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EditText editText = (EditText) findViewById(R.id.chaletName);
-                    String chaletName = editText.getText().toString().trim();
-                    if(chaletName.matches(""))
-                        return;
-                    Intent toResult = new Intent(getBaseContext(), SearchResult.class);
-                    toResult.putExtra("name",chaletName);
-                    startActivity(toResult);
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Search.this);
+                    LayoutInflater inflater = getLayoutInflater();
+                    final View dialogView = inflater.inflate(R.layout.phone_dialog, null);
+                    dialogBuilder.setView(dialogView);
+
+                    final EditText edt = (EditText) dialogView.findViewById(R.id.edit1);
+                    dialogBuilder.setTitle(R.string.findSpecifcChalet);
+                    dialogBuilder.setPositiveButton(getText(R.string.search), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //do something with edt.getText().toString();
+                            String chaletName = edt.getText().toString().trim();
+                            if(chaletName.matches(""))
+                                return;
+                            Intent toResult = new Intent(getBaseContext(), SearchResult.class);
+                            toResult.putExtra("name",chaletName);
+                            startActivity(toResult);
+                            return;
+                        }
+                    });
+                    dialogBuilder.setNegativeButton(getString(R.string.cancel1), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //pass
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog b = dialogBuilder.create();
+                    b.show();
                 }
             });
 

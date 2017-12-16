@@ -77,9 +77,8 @@ public class ApprovePromotionAdapter extends RecyclerView.Adapter<ApprovePromoti
                                 FirebaseDatabase.getInstance().getReference().child("chalets").child(promotions.getChaletID()).child("promotion").setValue("1");
                                 FirebaseDatabase.getInstance().getReference().child("Promotions").child(promotions.getChaletID()).removeValue();
                                 arrayList.remove(position);
-                                Toast.makeText(context,R.string.promoted,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,R.string.promotedAccepted,Toast.LENGTH_SHORT).show();
                                 notifyDataSetChanged();
-
                             }
                         });
 
@@ -107,7 +106,7 @@ public class ApprovePromotionAdapter extends RecyclerView.Adapter<ApprovePromoti
                                 FirebaseDatabase.getInstance().getReference().child("chalets").child(promotions.getChaletID()).child("promotion").setValue("0");
                                 FirebaseDatabase.getInstance().getReference().child("Promotions").child(promotions.getChaletID()).removeValue();
                                 arrayList.remove(position);
-                                Toast.makeText(context,R.string.rejected,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context,R.string.rejectedPromotion,Toast.LENGTH_SHORT).show();
                                 notifyDataSetChanged();
 
                             }

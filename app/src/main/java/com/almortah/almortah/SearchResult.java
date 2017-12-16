@@ -47,6 +47,11 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
+        pDialog = new ProgressDialog(SearchResult.this);
+        pDialog.setTitle(R.string.downChalet);
+        pDialog.setMessage(getString(R.string.wait));
+        pDialog.setCancelable(false);
+        pDialog.show();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -124,11 +129,6 @@ public class SearchResult extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(SearchResult.this);
-            pDialog.setTitle(R.string.downChalet);
-            pDialog.setMessage(getString(R.string.wait));
-            pDialog.setCancelable(false);
-            pDialog.show();
         }
 
         @Override
