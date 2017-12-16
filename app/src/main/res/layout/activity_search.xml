@@ -36,7 +36,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
-                android:layout_height="25dp"
+                android:layout_height="20dp"
                 android:layout_margin="5dp"
                 android:src="@mipmap/logo_noname"/>
             <TextView
@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:textSize="14sp"
                 android:textStyle="bold|italic"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 android:textColor="@color/colorBlue"
                 android:text="@string/filter" />
 
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/location"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textColor="@color/colorGreen"
                     android:textStyle="bold|italic" />
 
@@ -84,7 +84,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold|italic"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/colorGreen"
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="9dp"
                 android:orientation="horizontal">
             <Button
                 android:id="@+id/desMax"
@@ -165,7 +165,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold|italic"
                     android:textColor="@color/colorGreen"
                     android:text="@string/date" />

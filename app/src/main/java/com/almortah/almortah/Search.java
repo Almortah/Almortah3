@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -128,14 +129,23 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             addMin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(min.getText().toString().matches("")) {
+                    if(maxPrice == -1) {
+                        Toast.makeText(getApplicationContext(),R.string.addMax,Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    else if(minPrice > maxPrice)
+                        return;
+
+                    else if(min.getText().toString().matches("")) {
                         min.setText("0");
                         minPrice = 0;
                     }
+
                     else {
                         minPrice = Integer.parseInt(min.getText().toString().trim()) + 50;
-                        if(minPrice > 1000)
-                            minPrice = 1000;
+                        if(minPrice > 3000)
+                            minPrice = 3000;
                         else if (minPrice > maxPrice && maxPrice != -1)
                             minPrice = maxPrice;
 
@@ -151,12 +161,14 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                         max.setText("0");
                         maxPrice = 0;
                 }
+
                     else {
                         maxPrice = Integer.parseInt(max.getText().toString().trim()) + 50;
-                        if(maxPrice > 3000)
-                            maxPrice = 3000;
+                        if(maxPrice > 5000)
+                            maxPrice = 5000;
                         else if(maxPrice < minPrice)
                             maxPrice = minPrice;
+
                         max.setText(String.valueOf(maxPrice));
                     }
                 }

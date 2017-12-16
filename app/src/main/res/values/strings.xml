@@ -131,7 +131,7 @@
     </string-array>
 
     <string-array name="Riyadh">
-        <item>Undefined</item>
+        <item>All Areas</item>
         <item>North of Riyadh</item>
         <item>East of Riyadh</item>
         <item>Center of Riyadh</item>
@@ -296,6 +296,7 @@
     <string name="rejectedPromotion">This request rejected successfully</string>
     <string name="promotedAccepted">This request accepted successfully</string>
     <string name="findSpecifcChalet">Find a specific rest-house/chalet</string>
+    <string name="addMax">Add max price first</string>
 
 
 </resources>

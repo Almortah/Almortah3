@@ -192,7 +192,7 @@
 
 
     <string-array name="Riyadh">
-        <item>غير محدد</item>
+        <item>جميع المناطق</item>
         <item>شمال الرياض</item>
         <item>شرق الرياض</item>
         <item>وسط الرياض</item>
@@ -254,5 +254,6 @@
     <string name="rejectedPromotion">هذا الطلب تم رفضة بنجاح</string>
     <string name="promotedAccepted">هذا الطلب تم قبوله بنجاح</string>
     <string name="findSpecifcChalet">بحث عن استراحة/شالية بالاسم</string>
+    <string name="addMax">اضف السعر الاقصى</string>
 
 </resources>
