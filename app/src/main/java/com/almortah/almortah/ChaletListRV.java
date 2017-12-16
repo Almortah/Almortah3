@@ -137,7 +137,7 @@ public class ChaletListRV extends RecyclerView.Adapter<ChaletListRV.MyViewHolder
                                                      if(date != null) {
                                                          toChaletInfo.putExtra("date",date);
                                                      }
-                                                     context.startActivity(toChaletInfo);
+                                                     v.getContext().startActivity(toChaletInfo);
                                                  }
                                              }
         );
