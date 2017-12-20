@@ -96,7 +96,6 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
             chaletName.setText(nameHolder);
             price.setText(context.getString(R.string.startFrom)+ " "+priceHolder+" "+context.getString(R.string.riyal));
             double ratingFinal = Double.parseDouble(ratingHolder);
-            ratingFinal = ratingFinal/2;
             rating.setText(String.valueOf(ratingFinal) + " / "+ " 5");
             location.setText(locationHolder);
 

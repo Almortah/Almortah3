@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,19 +29,22 @@ import java.util.ArrayList;
  * Created by ALMAHRI on 26/11/2017.
  */
 
-public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdapter.MyViewHolder>  {
+public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdapter.MyViewHolder> {
 
     private Context context;
-    private Button control;
+    private static final String TAG = "CurrentRDebug";
     private ArrayList<Reservation> reservations;
-    String reason1; String reason2;
+    String reason1;
+    String reason2;
+    private static CurrentReservAdapter.MyClickListener sClickListener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView date ;
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View
+            .OnClickListener {
+        public TextView date;
         public TextView chaletName;
-        public TextView inTime ;
+        public TextView inTime;
         public TextView outTime;
-        public TextView payment ;
+        public TextView payment;
         public TextView id;
         public Button cancel;
         public ImageView icon;
@@ -62,12 +66,26 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
             confirmed = (TextView) view.findViewById(R.id.confirmed);
             why = (ImageView) view.findViewById(R.id.why);
 
+            cancel.setOnClickListener(this);
+
         }
+
+        @Override
+        public void onClick(View v) {
+            sClickListener.onItemClick(getAdapterPosition(), v);
+            //deleteItem(getAdapterPosition());
+        }
+
     }
 
     public CurrentReservAdapter(@NonNull Context context, @NonNull ArrayList<Reservation> objects) {
         this.context = context;
         this.reservations = objects;
+        //setHasStableIds(true);
+    }
+
+    void setOnItemClickListener(CurrentReservAdapter.MyClickListener myClickListener) {
+        this.sClickListener = myClickListener;
     }
 
     @Override
@@ -86,30 +104,27 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
         holder.inTime.setText(reservation.getCheckin());
         holder.outTime.setText(reservation.getCheckout());
         holder.id.setText(reservation.getReservationID());
-        String payment;
-        if(reservation.getPayment().equals("cash"))
+        final String payment;
+        if (reservation.getPayment().equals("cash"))
             payment = context.getString(R.string.cash);
         else
             payment = context.getString(R.string.visa);
 
-        holder.payment.setText(payment+" / "+reservation.getPrice()+ " " + context.getString(R.string.riyal));
+        holder.payment.setText(payment + " / " + reservation.getPrice() + " " + context.getString(R.string.riyal));
 
-        if(reservation.getConfirm().equals("0")) {
+        if (reservation.getConfirm().equals("0")) {
             holder.icon.setImageResource(R.drawable.ic_pend);
             holder.confirmed.setText(R.string.pending);
             holder.confirmed.setTextColor(context.getColor(R.color.colorDarkGrey));
-        }
-        else if(reservation.getConfirm().equals("1")) {
+        } else if (reservation.getConfirm().equals("1")) {
             holder.icon.setImageResource(R.drawable.ic_curent);
             holder.confirmed.setText(R.string.confirmed);
             holder.confirmed.setTextColor(context.getColor(R.color.colorGreen));
-        }
-
-        else {
+        } else {
             holder.icon.setImageResource(R.drawable.ic_close_black_24dp);
             holder.confirmed.setText(R.string.rejected);
             holder.confirmed.setTextColor(Color.parseColor("#b50009"));
-            holder.why.setVisibility(View.GONE);
+            holder.why.setVisibility(View.VISIBLE);
             holder.cancel.setVisibility(View.GONE);
         }
 
@@ -121,7 +136,8 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
                 final AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(context.getString(R.string.reasons));
                 final String[] reasons = context.getResources().getStringArray(R.array.reasonsReject);
-                reason1 = null; reason2 = null;
+                reason1 = null;
+                reason2 = null;
                 final ArrayList<String> rejected = new ArrayList<>();
 
 // add a list
@@ -130,15 +146,16 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
                         .child(reservation.getReservationID())
                         .child("reasons").addListenerForSingleValueEvent(new ValueEventListener() {
                     String[] stringArray1;
+
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()) {
+                        if (dataSnapshot.exists()) {
                             String[] tmp = dataSnapshot.getValue().toString().split("-");
                             ArrayList<Integer> userReasons = new ArrayList<>();
                             for (int i = 0; i < (tmp.length); i++) {
                                 userReasons.add(Integer.parseInt(tmp[i]));
                                 rejected.add(reasons[Integer.parseInt(tmp[i])]);
-                                Log.e("FirstReason",reasons[Integer.parseInt(tmp[i])]);
+                                Log.e("FirstReason", reasons[Integer.parseInt(tmp[i])]);
                             }
                             stringArray1 = rejected.toArray(new String[rejected.size()]);
                             Log.e("InStringArray", stringArray1[0]);
@@ -162,7 +179,7 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
                         builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                builder.create().cancel();
+                                dialog.cancel();
                             }
                         });
                         AlertDialog dialog = builder.create();
@@ -183,16 +200,15 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
         });
 
 
+        final int remove = holder.getAdapterPosition();
         holder.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (reservation.getConfirm().equals("2")) {
-                    Toast.makeText(context,R.string.sorry,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.sorry, Toast.LENGTH_SHORT).show();
                     return;
-                }
-
-                else if(reservation.getConfirm().equals("1")) {
+                } else if (reservation.getConfirm().equals("1")) {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                     alertDialogBuilder.setTitle(R.string.warning);
                     alertDialogBuilder.setMessage(context.getString(R.string.taxForCancel));
@@ -200,17 +216,21 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface arg0, int arg1) {
-                                    FirebaseDatabase.getInstance().getReference().child("reservation")
-                                            .child(reservation.getReservationID()).removeValue();
-                                    FirebaseDatabase.getInstance().getReference().child("busyDates").child(reservation.getChaletID())
-                                            .child(reservation.getDate()).removeValue();
                                     reservations.remove(reservation);
+                                    reservations.clear();
                                     notifyDataSetChanged();
-
+                                    FirebaseDatabase.getInstance().getReference().child("reservation")
+                                            .child(reservation.getReservationID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            FirebaseDatabase.getInstance().getReference().child("busyDates").child(reservation.getChaletID())
+                                                    .child(reservation.getDate()).removeValue();
+                                        }
+                                    });
                                 }
                             });
 
-                    alertDialogBuilder.setNegativeButton(context.getString(R.string.noGoBack),new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setNegativeButton(context.getString(R.string.noGoBack), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
@@ -219,23 +239,27 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
 
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
-                }
-
-                else {
-
+                } else {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                     alertDialogBuilder.setMessage(context.getString(R.string.sure));
                     alertDialogBuilder.setPositiveButton(context.getString(R.string.yes),
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface arg0, int arg1) {
-                                    FirebaseDatabase.getInstance().getReference().child("reservation")
-                                            .child(reservation.getReservationID()).removeValue();
 
-                                    FirebaseDatabase.getInstance().getReference().child("busyDates").child(reservation.getChaletID())
-                                            .child(reservation.getDate()).removeValue();
                                     reservations.remove(reservation);
+                                    reservations.clear();
                                     notifyDataSetChanged();
+
+                                    FirebaseDatabase.getInstance().getReference().child("reservation")
+                                            .child(reservation.getReservationID()).removeValue()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    FirebaseDatabase.getInstance().getReference().child("busyDates").child(reservation.getChaletID())
+                                                            .child(reservation.getDate()).removeValue();
+                                                }
+                                            });
 
                                 }
                             });
@@ -259,5 +283,21 @@ public class CurrentReservAdapter extends RecyclerView.Adapter<CurrentReservAdap
     @Override
     public int getItemCount() {
         return reservations.size();
+    }
+
+
+    void deleteItem(int index) {
+        reservations.remove(index);
+        //notifyItemRemoved(index);
+    }
+
+    interface MyClickListener {
+        void onItemClick(int position, View v);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        //Return the stable ID for the item at position
+        return Long.parseLong(reservations.get(position).getReservationID());
     }
 }

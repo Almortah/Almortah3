@@ -111,11 +111,10 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                        FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).removeValue();
-                                        chalets.remove(chalet);
-                                        notifyItemRemoved(position);
-                                        notifyItemRangeChanged(position,getItemCount());
-
+                                chalets.remove(chalet);
+                                chalets.clear();
+                                notifyDataSetChanged();
+                                FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).removeValue();
                             }
                         });
 
@@ -129,9 +128,15 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
 
+            }
+        });
 
-
-
+        holder.manage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toManageChalet = new Intent(v.getContext(), ManageChalet.class);
+                toManageChalet.putExtra("chalet",chalet);
+                v.getContext().startActivity(toManageChalet);
             }
         });
 

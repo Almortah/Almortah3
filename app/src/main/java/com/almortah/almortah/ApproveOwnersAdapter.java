@@ -77,7 +77,10 @@ public class ApproveOwnersAdapter extends RecyclerView.Adapter<ApproveOwnersAdap
                                 FirebaseDatabase.getInstance().getReference().child("users").child(user.getUserID()).child("isApproved").setValue("1");
                                 arrayList.remove(position);
                                 Toast.makeText(context,R.string.promoted,Toast.LENGTH_SHORT).show();
-                                notifyDataSetChanged();
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position,arrayList.size());
+                                holder.itemView.setVisibility(View.GONE);
+
                             }
                         });
 
@@ -104,7 +107,9 @@ public class ApproveOwnersAdapter extends RecyclerView.Adapter<ApproveOwnersAdap
                             public void onClick(DialogInterface arg0, int arg1) {
                                 arrayList.remove(position);
                                 Toast.makeText(context,R.string.rejected,Toast.LENGTH_SHORT).show();
-                                notifyDataSetChanged();
+                                notifyItemRemoved(position);
+                                notifyItemRangeChanged(position,arrayList.size());
+                                holder.itemView.setVisibility(View.GONE);
 
                             }
                         });

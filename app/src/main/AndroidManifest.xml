@@ -104,8 +104,9 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         -->
-        <activity android:name=".ChaletInfoCustomer"
-            android:label="@string/toChalet"/>
+        <activity
+            android:name=".ChaletInfoCustomer"
+            android:label="@string/toChalet" />
         <activity
             android:name=".BookingAChalet"
             android:label="@string/reservation" />
@@ -115,15 +116,17 @@
         <activity
             android:name=".MyReservation"
             android:label="@string/history" />
-        <activity android:name=".MapActivity"
-            android:label="@string/title_activity_maps"/>
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
-        <activity android:name=".HomePage"
-            android:label="@string/restsChalets"/>
+        <activity
+            android:name=".HomePage"
+            android:label="@string/restsChalets" />
         <activity
             android:name=".Promotion"
             android:label="@string/promotion" />
@@ -133,39 +136,48 @@
         <activity
             android:name=".About"
             android:label="@string/about" />
-        <activity android:name=".AdminPage"
-            android:label="@string/viewUsers"/>
+        <activity
+            android:name=".AdminPage"
+            android:label="@string/viewUsers" />
         <activity
             android:name=".Block"
             android:label="@string/blockPage" />
-
-        <activity android:name=".Search"
-            android:label="@string/searchChalet"/>
-        <activity android:name=".SearchResult"
-            android:label="@string/searchChalet"/>
-        <activity android:name=".CurrentReservations"
-            android:label="@string/current"/>
-        <activity android:name=".RateAChalet"
-            android:label="@string/rateChalet"/>
+        <activity
+            android:name=".Search"
+            android:label="@string/searchChalet" />
+        <activity
+            android:name=".SearchResult"
+            android:label="@string/searchChalet" />
+        <activity
+            android:name=".CurrentReservations"
+            android:label="@string/current" />
+        <activity
+            android:name=".RateAChalet"
+            android:label="@string/rateChalet" />
         <activity
             android:name=".ApproveBookingByOwner"
             android:label="@string/needApprove" />
-
-        <activity android:name=".RateCustomer"
-            android:label="@string/rateCustomer"/>
-        <activity android:name=".PaymentPage"
-            android:label="@string/payment"/>
+        <activity
+            android:name=".RateCustomer"
+            android:label="@string/rateCustomer" />
+        <activity
+            android:name=".PaymentPage"
+            android:label="@string/payment" />
         <activity android:name=".ValidatePhoneNumber" />
-        <activity android:name=".CustomerComplaints"
-            android:label="@string/complaints"/>
-        <activity android:name=".ApprovePromotions"
-            android:label="@string/managePromotion"/>
-
-        <activity android:name=".PaymentPromotion"
-            android:label="@string/payment"/>
-        <activity android:name=".ApproveOwners"
-            android:label="@string/approve"/>
-
+        <activity
+            android:name=".CustomerComplaints"
+            android:label="@string/complaints" />
+        <activity
+            android:name=".ApprovePromotions"
+            android:label="@string/managePromotion" />
+        <activity
+            android:name=".PaymentPromotion"
+            android:label="@string/payment" />
+        <activity
+            android:name=".ApproveOwners"
+            android:label="@string/approve" />
+        <activity android:name=".ManageChalet" />
+        <activity android:name=".Statics"></activity>
     </application>
 
 </manifest>

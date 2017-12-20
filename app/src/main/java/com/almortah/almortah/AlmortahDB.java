@@ -196,7 +196,6 @@ public class AlmortahDB extends Activity {
 
                           }
                       });
-
                 break;
             case R.id.about:
                 context.startActivity(new Intent(context, About.class));
@@ -222,7 +221,9 @@ public class AlmortahDB extends Activity {
             case R.id.approvBooking:
                 context.startActivity(new Intent(context, ApproveBookingByOwner.class));
                 break;
-
+            case R.id.stat:
+                context.startActivity(new Intent(context, Statics.class));
+                break;
             default:
                 super.onOptionsItemSelected(item);
         }

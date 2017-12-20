@@ -117,8 +117,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/customerName"
                     android:textColor="@color/colorBlue"
-                    android:layout_marginStart="5dp"
-                    android:text="TEST"/>
+                    android:layout_marginStart="5dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -138,8 +137,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/rateCustomer"
                     android:textColor="@color/colorBlue"
-                    android:layout_marginStart="5dp"
-                    android:text="TEST "/>
+                    android:layout_marginStart="5dp"/>
 
             </LinearLayout>
 

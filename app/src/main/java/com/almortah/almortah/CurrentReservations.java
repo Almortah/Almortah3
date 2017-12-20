@@ -32,6 +32,7 @@ public class CurrentReservations extends AppCompatActivity implements Navigation
     private DrawerLayout drawer;
     private RecyclerView recyclerView;
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    private CurrentReservAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +61,14 @@ public class CurrentReservations extends AppCompatActivity implements Navigation
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         final ArrayList<Reservation> arrayList = new ArrayList<>();
-        final CurrentReservAdapter adapter = new CurrentReservAdapter(this, arrayList);
+        adapter = new CurrentReservAdapter(CurrentReservations.this, arrayList);
         recyclerView.setAdapter(adapter);
+
 
         final SimpleDateFormat dfDate = new SimpleDateFormat("dd-MM-yyyy");
         final Date today = new Date(System.currentTimeMillis());
 
+        if(arrayList.isEmpty())
         FirebaseDatabase.getInstance().getReference().child("reservation").
                 orderByChild("customerID").equalTo(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,6 +86,10 @@ public class CurrentReservations extends AppCompatActivity implements Navigation
                         }
                         Collections.reverse(arrayList);
                         adapter.notifyDataSetChanged();
+//                        recyclerView.setHasFixedSize(true);
+//                        recyclerView.setAdapter(adapter);
+                        //recyclerView.setItemViewCacheSize(arrayList.size());
+//                        recyclerView.invalidate();
 
                     }
 
@@ -121,4 +128,8 @@ public class CurrentReservations extends AppCompatActivity implements Navigation
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+
 }

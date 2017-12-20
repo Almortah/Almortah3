@@ -1,8 +1,6 @@
 package com.almortah.almortah;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -160,87 +158,61 @@ public class RateChaletAdapter extends RecyclerView.Adapter<RateChaletAdapter.My
         holder.submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AsyncTask<Void, Void, Void> updateTask = new AsyncTask<Void, Void, Void>() {
-                    private ProgressDialog pDialog;
-                    @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
-                        pDialog = new ProgressDialog(context);
-                        pDialog.setMessage(context.getString(R.string.wait));
-                        pDialog.setCancelable(false);
-                        pDialog.show();
-                    }
-
-                    @Override
-                    protected Void doInBackground(Void... arg0) {
-                        String comment = holder.comment.getText().toString().trim();
-                        Log.e("USER NAME?",user.getEmail());
-                        if (comment.matches(""))
-                            comment = "-";
-                        HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put("chaletID", reservation.getChaletID());
-                        hashMap.put("comment", comment);
-                        hashMap.put("cleanRating", String.valueOf( (Double) (cleanProgress/2.0) ));
-                        hashMap.put("reicptRating", String.valueOf( (Double) (reciptProgress/2.0) ));
-                        hashMap.put("priceRating", String.valueOf( (Double) (priceProgress/2.0) ));
-                        hashMap.put("customerName", user.getEmail());
-                        hashMap.put("customerID",reservation.getCustomerID());
-                        reference.child("chaletRatings").child(reservation.getReservationID()).setValue(hashMap);
-                        reference.child("reservation").child(reservation.getReservationID()).child("rated").setValue("1")
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        reference.child("chaletRatings").orderByChild("chaletID").equalTo(reservation.getChaletID())
-                                                .addValueEventListener(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                                        if (dataSnapshot.exists()) {
-                                                            int size = (int) dataSnapshot.getChildrenCount();
-                                                            double sum = 0.0;
-                                                            double avgRating = 0.0;
-                                                            for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
-                                                                chaletRatings chaletRating = singlValue.getValue(chaletRatings.class);
-                                                                avgRating =  (Double.parseDouble(chaletRating.getCleanRating()) +
-                                                                        Double.parseDouble(chaletRating.getPriceRating()) +
-                                                                        Double.parseDouble(chaletRating.getReicptRating()))  / 3 ;
-                                                                Log.e("avgRating:", String.valueOf(avgRating));
-                                                                sum += avgRating;
-                                                            }
-                                                            Log.e("sum::", String.valueOf(sum));
-
-                                                            double total = sum / size;
-                                                            DecimalFormat df = new DecimalFormat("#.00");
-                                                            String totalFormated = df.format(total);
-                                                            Log.e("TOTAL:", String.valueOf(total));
-                                                            reference.child("chalets").child(reservation.getChaletID()).child("rating").setValue(totalFormated);
-                                                        }
+                String comment = holder.comment.getText().toString().trim();
+                Log.e("USER NAME?",user.getEmail());
+                if (comment.matches(""))
+                    comment = "-";
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("chaletID", reservation.getChaletID());
+                hashMap.put("comment", comment);
+                hashMap.put("cleanRating", String.valueOf( (Double) (cleanProgress/2.0) ));
+                hashMap.put("reicptRating", String.valueOf( (Double) (reciptProgress/2.0) ));
+                hashMap.put("priceRating", String.valueOf( (Double) (priceProgress/2.0) ));
+                hashMap.put("customerName", user.getEmail());
+                hashMap.put("customerID",reservation.getCustomerID());
+                reference.child("chaletRatings").child(reservation.getReservationID()).setValue(hashMap);
+                reference.child("reservation").child(reservation.getReservationID()).child("rated").setValue("1")
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                reference.child("chaletRatings").orderByChild("chaletID").equalTo(reservation.getChaletID())
+                                        .addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                if (dataSnapshot.exists()) {
+                                                    int size = (int) dataSnapshot.getChildrenCount();
+                                                    double sum = 0.0;
+                                                    double avgRating = 0.0;
+                                                    for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
+                                                        chaletRatings chaletRating = singlValue.getValue(chaletRatings.class);
+                                                        avgRating =  (Double.parseDouble(chaletRating.getCleanRating()) +
+                                                                Double.parseDouble(chaletRating.getPriceRating()) +
+                                                                Double.parseDouble(chaletRating.getReicptRating()))  / 3 ;
+                                                        Log.e("avgRating:", String.valueOf(avgRating));
+                                                        sum += avgRating;
                                                     }
+                                                    Log.e("sum::", String.valueOf(sum));
 
-                                                    @Override
-                                                    public void onCancelled(DatabaseError databaseError) {
+                                                    double total = sum / size;
+                                                    DecimalFormat df = new DecimalFormat("#.00");
+                                                    String totalFormated = df.format(total);
+                                                    Log.e("TOTAL:", String.valueOf(total));
+                                                    reference.child("chalets").child(reservation.getChaletID()).child("rating").setValue(totalFormated);
+                                                    reservations.remove(holder.getAdapterPosition());
+                                                    notifyItemRemoved(holder.getAdapterPosition());
+                                                    notifyItemRangeChanged(holder.getAdapterPosition(), reservations.size());
+                                                    //holder.itemView.setVisibility(View.GONE);
 
-                                                    }
-                                                });
-                                    }
-                                });
+                                                }
+                                            }
 
-                        return null;
-                    }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    protected void onPostExecute(Void result) {
-                        super.onPostExecute(result);
-                        // Dismiss the cleanProgress dialog
-                        if (pDialog.isShowing())
-                            pDialog.dismiss();
-                       reservations.remove(position);
-                       notifyItemRemoved(position);
-                    }
-                };
-
-                updateTask.execute();
-
-
+                                            }
+                                        });
+                            }
+                        });
                 }
         });
     }

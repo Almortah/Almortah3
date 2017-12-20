@@ -302,5 +302,11 @@
     <string name="warning">Warning!</string>
     <string name="yesCancel">Yes cancel this reservation!</string>
     <string name="noGoBack">No keep this reservation</string>
+    <string name="error">Error</string>
+    <string name="errorMap">Location must be within Riyadh city</string>
+    <string name="nbReservation">Number of reservations</string>
+    <string name="rating">Average rating</string>
+    <string name="bestCustomer">Best customer</string>
+    <string name="totalMoney">Total revenue</string>
 
 </resources>

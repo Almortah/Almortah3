@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,54 +73,57 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
         sumOfCustomerRating = 0.0; totalRatingOfCustomer = 0.0;
         holder.chaletName.setText(reservation.getChaletName());
         holder.date.setText(reservation.getDate());
-        Log.e("CHECKINN",reservation.getCheckin());
-        holder.inTime.setText(reservation.getCheckin()+"0");
+        holder.inTime.setText(reservation.getCheckin());
         holder.id.setText(reservation.getReservationID());
-        FirebaseDatabase.getInstance().getReference().child("customerRatings").orderByChild("customerID")
-                .equalTo(reservation.getCustomerID())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()) {
-                            int size = (int) dataSnapshot.getChildrenCount();
-                            for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
-                                customerRatings customerRatings = singlValue.getValue(customerRatings.class);
-                                double avg = Double.parseDouble(customerRatings.getCleanRating()) + Double.parseDouble(customerRatings.getPaymentRating());
-                                double total = avg/2;
-                                sumOfCustomerRating += total;
+
+        if(holder.rating.getText().toString().trim().matches("")) {
+            FirebaseDatabase.getInstance().getReference().child("customerRatings").orderByChild("customerID")
+                    .equalTo(reservation.getCustomerID())
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                int size = (int) dataSnapshot.getChildrenCount();
+                                for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
+                                    customerRatings customerRatings = singlValue.getValue(customerRatings.class);
+                                    double avg = Double.parseDouble(customerRatings.getCleanRating()) + Double.parseDouble(customerRatings.getPaymentRating());
+                                    double total = avg / 2;
+                                    sumOfCustomerRating += total;
+                                }
+
+                                totalRatingOfCustomer = sumOfCustomerRating / size;
+                                DecimalFormat df = new DecimalFormat("#.00");
+                                String totalFormated = df.format(totalRatingOfCustomer);
+
+                                holder.rating.setText(totalFormated + " / " + " 5.0");
+
                             }
-
-                            totalRatingOfCustomer = sumOfCustomerRating/size;
-                            DecimalFormat df = new DecimalFormat("#.00");
-                            String totalFormated = df.format(totalRatingOfCustomer);
-
-                            holder.rating.setText(totalFormated+" / "+" 5.0");
-
-                            }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-        FirebaseDatabase.getInstance().getReference().child("users")
-                .child(reservation.getCustomerID()).child("Name")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()){
-                            holder.customerName.setText(dataSnapshot.getValue().toString());
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+        }
 
+        if (holder.customerName.getText().toString().trim().matches("")) {
+            FirebaseDatabase.getInstance().getReference().child("users")
+                    .child(reservation.getCustomerID()).child("Name")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                holder.customerName.setText(dataSnapshot.getValue().toString());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+        }
 
         holder.accept.setOnClickListener(new View.OnClickListener() {
                                              @Override
@@ -136,9 +138,9 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                                  FirebaseDatabase.getInstance().getReference().child("reservation")
                                                                          .child(reservation.getReservationID()).child("confirm").setValue("1");
                                                                  //code to notify customer!
-
                                                                  reservations.remove(position);
-                                                                 notifyDataSetChanged();
+                                                                 notifyItemRemoved(position);
+                                                                 notifyItemRangeChanged(position,reservations.size());
 
                                                              }
                                                          });
@@ -215,7 +217,10 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                                 FirebaseDatabase.getInstance().getReference().child("reservation")
                                                                         .child(reservation.getReservationID()).child("confirm").setValue("2");
                                                                 reservations.remove(position);
-                                                                notifyDataSetChanged();
+                                                                notifyItemRemoved(position);
+                                                                notifyItemRangeChanged(position,reservations.size());
+                                                                holder.itemView.setVisibility(View.GONE);
+
                                                             }
                                                         });
                                                         //code to notify customer!

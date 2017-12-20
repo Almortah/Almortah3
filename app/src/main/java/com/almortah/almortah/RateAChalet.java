@@ -7,7 +7,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -58,7 +57,7 @@ public class RateAChalet extends AppCompatActivity implements NavigationView.OnN
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(RateAChalet.this);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setItemAnimator(null);
         final ArrayList<Reservation> arrayList = new ArrayList<>();
         final RateChaletAdapter adapter = new RateChaletAdapter(this, arrayList, user);
         recyclerView.setAdapter(adapter);

@@ -260,5 +260,11 @@
     <string name="warning">تحذير!</string>
     <string name="yesCancel">نعم قم بالغاء الحجز!</string>
     <string name="noGoBack">لا احتفظ بحجزك</string>
+    <string name="error">خطا</string>
+    <string name="errorMap">الموقع يجب ان يكون في مدينة الرياض</string>
+    <string name="nbReservation">اجمالي الحجوزات</string>
+    <string name="rating">متوسط التقييم</string>
+    <string name="bestCustomer">افضل زبون</string>
+    <string name="totalMoney">مجمل الآرباح</string>
 
 </resources>

@@ -176,8 +176,8 @@
 
                 <ImageView
                     android:id="@+id/why"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginStart="15dp"
                     android:src="@drawable/ic_ques"
                     android:visibility="invisible"/>

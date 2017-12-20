@@ -96,6 +96,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         inTime.setCurrentMinute(00);
        // setTimePickerInterval(inTime);
 
+        checkin = "11:00";
 
         upDate = finalDates+","+date;
         reference = FirebaseDatabase.getInstance().getReference().child("busyDates").child(chalet.getOwnerID())

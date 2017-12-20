@@ -5,9 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -54,20 +52,16 @@ import com.werb.pickphotoview.util.PickConfig;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
-    private StorageReference storageRef;
     private FirebaseApp app;
     private FirebaseStorage storage;
     private GoogleMap mGoogleMap;
     private Marker marker;
     private LocationManager locationManager;
     private String provider;
-    private String address;
     private DrawerLayout drawer;
 
     private Button mUploadImage;
@@ -85,11 +79,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     private String chaletLocation;
     private Location location;
     private int imgNb = 0;
-    double lat1 = 0, lng1 = 0;
-    private List<Address> addresses;
-    private Geocoder geocoder;
-    private String isApproved = null;
-
 
     static final int PICK_CONTACT_REQUEST = 1;
     static final int MY_PERMISSIONS_REQUEST = 1;
@@ -101,7 +90,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
         setContentView(R.layout.activity_add_chalet);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
-        geocoder = new Geocoder(AddChalet.this, Locale.forLanguageTag("ar"));
         setSupportActionBar(toolbar);
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
@@ -218,33 +206,43 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
         submitChalet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String chaletName = mChaletName.getText().toString().trim();
-                String chaletPrice = mChaletPrice.getText().toString().trim();
+                String chaletName = mChaletName.getText().toString().trim(); // 2--20
+                String chaletPrice = mChaletPrice.getText().toString().trim(); // 50-9999
                 String weekendPrice = mWeekend.getText().toString().trim();
                 String eidPrice = mEid.getText().toString().trim();
                 descr = des.getText().toString().trim();
                 String chaletOwnerId = user.getUid().toString();
-                String id = (chaletOwnerId + "_" + chaletCount);
-                if (latitude == null || longitude == null || chaletName.matches("")
+                String id = chalet.getId();
+
+                if (latitude == null || longitude == null || chaletName.matches("") // in Riyadh
                         || chaletPrice.matches("") || weekendPrice.matches("")
                         || eidPrice.matches("") ) {
                     Toast.makeText(getBaseContext(),R.string.erEmptyField,Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // chaletCount++;
-//                try {
-//                    //ads = gc.getFromLocationName("Riyadh, SA",50000, 24.2939113, 46.2981033, 25.1564724,47.34695430000001);
-//                    addresses = geocoder.getFromLocation(Double.parseDouble(latitude) , Double.parseDouble(longitude),1);
-//                    // ads = gc.getFromLocation(24.7135517,46.6752957,5000);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                if (addresses.size() > 0)
-//                    address = addresses.get(0).getSubLocality();
-//                else
-//                    address = "empty";
 
-                    //Toast.makeText(getApplicationContext(), "Address:- "
+                if(chaletName.length() < 2 || chaletName.length() > 20) {
+                    mChaletName.setError(getString(R.string.error));
+                    return;
+                }
+                if(Integer.parseInt(chaletPrice) < 50 || Integer.parseInt(chaletPrice) > 9999) {
+                    mChaletPrice.setError(getString(R.string.error));
+                    return;
+                }
+                if(Integer.parseInt(weekendPrice) < 50 || Integer.parseInt(weekendPrice) > 9999) {
+                    mWeekend.setError(getString(R.string.error));
+                    return;
+                }
+
+                if(Integer.parseInt(eidPrice) < 50 || Integer.parseInt(eidPrice) > 9999) {
+                    mEid.setError(getString(R.string.error));
+                    return;
+                }
+
+                if(Double.parseDouble(longitude) < 24 || Double.parseDouble(longitude) > 47) {
+                    Toast.makeText(getApplicationContext(),R.string.errorMap,Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("ownerID", chaletOwnerId);
                 hashMap.put("name", chaletName);
@@ -458,7 +456,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
             for (int i = 0; i < selectPaths.size(); i++) {
                 final Uri[] uri = new Uri[selectPaths.size()];
                 uri[i] = Uri.parse("file://" + selectPaths.get(i));
-                storageRef = storage.getReference();
                 final StorageReference ref = firebaseStorage.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(chaletCount)).child(String.valueOf(imgName));
                 ref.putFile(uri[i])
                         .addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
