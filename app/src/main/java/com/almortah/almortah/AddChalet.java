@@ -71,7 +71,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     private EditText mChaletName;
     private EditText mChaletPrice;
     private Button submitChalet;
-    private Chalet chalet;
     private int chaletCount;
     private int imgName;
     private String latitude;
@@ -212,7 +211,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 String eidPrice = mEid.getText().toString().trim();
                 descr = des.getText().toString().trim();
                 String chaletOwnerId = user.getUid().toString();
-                String id = chalet.getId();
+                String id = chaletOwnerId+"_"+chaletCount;
 
                 if (latitude == null || longitude == null || chaletName.matches("") // in Riyadh
                         || chaletPrice.matches("") || weekendPrice.matches("")
