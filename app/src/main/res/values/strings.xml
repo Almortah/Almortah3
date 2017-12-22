@@ -308,5 +308,7 @@
     <string name="rating">Average rating</string>
     <string name="bestCustomer">Best customer</string>
     <string name="totalMoney">Total revenue</string>
+    <string name="clickToDelete">Click to delete</string>
+    <string name="sureDelete">Are you sure you want to delete this photo?</string>
 
 </resources>

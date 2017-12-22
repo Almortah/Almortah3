@@ -9,7 +9,7 @@ import android.os.Parcelable;
 
 public class Chalet implements Parcelable {
 
-    private String images;
+    private String ImageUrl;
     private String description;
     private String chaletNm;
     private String eidPrice;
@@ -28,11 +28,11 @@ public class Chalet implements Parcelable {
 
     public Chalet() {}
 
-    public Chalet(String images, String description,
+    public Chalet(String ImageUrl, String description,
                   String chaletNm, String eidPrice, String id, String latitude,
                   String longitude, String name, String nbImages, String normalPrice,
                   String ownerID, String promotion, String rating, String weekendPrice) {
-        this.images = images;
+        this.ImageUrl = ImageUrl;
         this.description = description;
         this.chaletNm = chaletNm;
         this.eidPrice = eidPrice;
@@ -50,7 +50,7 @@ public class Chalet implements Parcelable {
     }
 
     public Chalet(Parcel in) {
-        this.images = in.readString();
+        this.ImageUrl = in.readString();
         this.description = in.readString();
         this.chaletNm = in.readString();
         this.eidPrice = in.readString();
@@ -61,10 +61,10 @@ public class Chalet implements Parcelable {
         this.nbImages = in.readString();
         this.normalPrice = in.readString();
         this.ownerID = in.readString();
+        this.ownerToken=in.readString();
         this.promotion = in.readString();
         this.rating = in.readString();
         this.weekendPrice = in.readString();
-        this.ownerToken=in.readString();
     }
 
     public String getOwnerToken() { return ownerToken; }
@@ -79,14 +79,6 @@ public class Chalet implements Parcelable {
 
     public String getLongitude() {
         return longitude;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
-    }
-
-    public String getImages() {
-        return images;
     }
 
     public String getChaletNm() {
@@ -117,7 +109,11 @@ public class Chalet implements Parcelable {
         return weekendPrice;
     }
 
-    public String getNbOfImages() {
+    public String getImageUrl() {
+        return ImageUrl;
+    }
+
+    public String getNbImages() {
         return nbImages;
     }
 
@@ -139,7 +135,7 @@ public class Chalet implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(images);
+        dest.writeString(ImageUrl);
         dest.writeString(description);
         dest.writeString(chaletNm);
         dest.writeString(eidPrice);
@@ -150,10 +146,10 @@ public class Chalet implements Parcelable {
         dest.writeString(nbImages);
         dest.writeString(normalPrice);
         dest.writeString(ownerID);
+        dest.writeString(ownerToken);
         dest.writeString(promotion);
         dest.writeString(rating);
         dest.writeString(weekendPrice);
-        dest.writeString(ownerToken);
 
     }
 

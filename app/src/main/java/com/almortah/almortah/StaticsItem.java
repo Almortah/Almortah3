@@ -9,7 +9,7 @@ public class StaticsItem {
     private String totalReservation;
     private String avgRating;
     private String bestCustomer;
-    private int totalRevenue;
+    private int totalRevenue = -1;
     private String priceRating;
     private String reicptRating;
     private String cleanRating;
@@ -64,5 +64,49 @@ public class StaticsItem {
 
     public void setTotalRevenue(int totalRevenue) {
         this.totalRevenue = totalRevenue;
+    }
+
+    public void setChaletName(String chaletName) {
+        this.chaletName = chaletName;
+    }
+
+    public void setTotalReservation(String totalReservation) {
+        this.totalReservation = totalReservation;
+    }
+
+    public void setAvgRating(String avgRating) {
+        this.avgRating = avgRating;
+    }
+
+    public void setBestCustomer(String bestCustomer) {
+        this.bestCustomer = bestCustomer;
+    }
+
+    public void setPriceRating(String priceRating) {
+        this.priceRating = priceRating;
+    }
+
+    public void setReicptRating(String reicptRating) {
+        this.reicptRating = reicptRating;
+    }
+
+    public void setCleanRating(String cleanRating) {
+        this.cleanRating = cleanRating;
+    }
+
+    public boolean isOK() {
+        if(
+        chaletName == null ||
+        totalReservation == null ||
+        avgRating == null ||
+        bestCustomer == null ||
+        totalRevenue == -1 ||
+        priceRating == null ||
+        reicptRating == null ||
+        cleanRating == null
+                )
+            return false;
+
+        else return true;
     }
 }

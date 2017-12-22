@@ -260,8 +260,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("ownerToken", SharedPrefManager.getmInstance(getApplicationContext()).getToken() );
                 mDatabase.child("chalets").child(id).setValue(hashMap);
 
-                HashMap<String, String> dateHashMap = new HashMap<String, String>();
-                dateHashMap.put("busyOn", "");
+//                HashMap<String, String> dateHashMap = new HashMap<String, String>();
+//                dateHashMap.put("busyOn", "");
                 //mDatabase.child("busyDates").child(id).child("busyOn").setValue("");
 
                 startActivity(new Intent(AddChalet.this, MyChalets.class));
