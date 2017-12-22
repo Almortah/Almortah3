@@ -137,8 +137,8 @@ public class UseresRV extends RecyclerView.Adapter<UseresRV.MyViewHolder> {
                                                         FirebaseDatabase.getInstance().getReference()
                                                               .child("users").child(user.getUserID()).removeValue();
                                                         users.remove(user);
-                                                        notifyItemRemoved(position);
-                                                        notifyItemRangeChanged(position,getItemCount());
+                                                        users.clear();
+                                                        notifyDataSetChanged();
                                                     }
                                                 });
                                             }
@@ -153,31 +153,6 @@ public class UseresRV extends RecyclerView.Adapter<UseresRV.MyViewHolder> {
 
                                 dialog = builder.create();//AlertDialog dialog; create like this outside onClick
                                 dialog.show();
-
-
-
-
-                            /*HashMap<String, String> hashMap = new HashMap<String, String>();
-                                hashMap.put("Name", user.getName());
-                                hashMap.put("username", user.getUsername());
-                                hashMap.put("phone", user.getPhone());
-                                hashMap.put("email", user.getEmail());
-                                hashMap.put("nbChalets","0");
-                                hashMap.put("userID",user.getUserID());
-                                hashMap.put("type",user.getType());
-                                FirebaseDatabase.getInstance().getReference().child("blacklist")
-                                        .child(user.getUserID()).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        FirebaseDatabase.getInstance().getReference()
-                                                .child("users").child(user.getUserID()).removeValue();
-                                    }
-                                });*/
-                                //banCount++;
-                              //  FirebaseDatabase.getInstance().getReference().child("blacklist").child(user.getUserID()).setValue(user.getEmail());
-                                //users.remove(user);
-                                //notifyItemRemoved(position);
-                                //notifyItemRangeChanged(position,getItemCount());
                             }
                         });
 

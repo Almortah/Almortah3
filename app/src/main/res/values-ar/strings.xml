@@ -268,5 +268,6 @@
     <string name="totalMoney">مجمل الآرباح</string>
     <string name="clickToDelete">اضغط للحذف</string>
     <string name="sureDelete">هل انت متاكد من حذف هذه الصورة</string>
+    <string name="updateChalet">"تم تحديث الشاليه بنجاح "</string>
 
 </resources>

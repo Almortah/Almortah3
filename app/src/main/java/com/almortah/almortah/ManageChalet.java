@@ -110,6 +110,53 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
 
         submitChalet = (Button) findViewById(R.id.submitChalet);
 
+        submitChalet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String chaletName = mChaletName.getText().toString().trim(); // 2--20
+                String chaletPrice = mChaletPrice.getText().toString().trim(); // 50-9999
+                String weekendPrice = mWeekend.getText().toString().trim();
+                String eidPrice = mEid.getText().toString().trim();
+                descr = des.getText().toString().trim();
+
+                if(chaletName.length() < 2 || chaletName.length() > 20) {
+                    mChaletName.setError(getString(R.string.error));
+                    return;
+                }
+                if(Integer.parseInt(chaletPrice) < 50 || Integer.parseInt(chaletPrice) > 9999) {
+                    mChaletPrice.setError(getString(R.string.error));
+                    return;
+                }
+                if(Integer.parseInt(weekendPrice) < 50 || Integer.parseInt(weekendPrice) > 9999) {
+                    mWeekend.setError(getString(R.string.error));
+                    return;
+                }
+
+                if(Integer.parseInt(eidPrice) < 50 || Integer.parseInt(eidPrice) > 9999) {
+                    mEid.setError(getString(R.string.error));
+                    return;
+                }
+
+                if (!chaletName.equals(chalet.getName()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("name").setValue(chaletName);
+
+                if (!eidPrice.equals(chalet.getEidPrice()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("eidPrice").setValue(eidPrice);
+
+                if (!weekendPrice.equals(chalet.getWeekendPrice()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("weekendPrice").setValue(weekendPrice);
+
+                if (!chaletPrice.equals(chalet.getNormalPrice()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("normalPrice").setValue(chaletPrice);
+
+                if(!descr.equals(chalet.getDescription()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("description").setValue(descr);
+
+                Toast.makeText(getApplicationContext(),R.string.updateChalet,Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getBaseContext(),MyChalets.class));
+
+            }
+        });
 
 
         mUploadImage = (Button) findViewById(R.id.upload);
@@ -173,8 +220,8 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
 
         if (requestCode == PickConfig.PICK_PHOTO_DATA) {
             ArrayList<String> selectPaths = (ArrayList<String>) data.getSerializableExtra(PickConfig.INTENT_IMG_LIST_SELECT);
-            imgNb = Integer.parseInt(chalet.getNbImages());
-            imgName = imgNb + 1;
+            imgNb = Integer.parseInt(chalet.getNbImages()) + selectPaths.size();
+            imgName = Integer.parseInt(chalet.getNbImages()) + 1;
             int newNbImgs = selectPaths.size() + imgNb;
             for (int i = 0; i < selectPaths.size(); i++) {
                 final Uri[] uri = new Uri[selectPaths.size()];
@@ -195,9 +242,10 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
                 // do something u want
             }
             FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).child("nbImages")
-                    .setValue(String.valueOf(newNbImgs));
+                    .setValue(imgNb);
 
             Toast.makeText(getApplicationContext(), R.string.doneUpload, Toast.LENGTH_SHORT).show();
+            updatePhotosAfterUploads();
         }
     }
 
@@ -289,5 +337,37 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    public void updatePhotosAfterUploads(){
+        mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+        if (Integer.parseInt(chalet.getNbImages()) > 0) {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
+            for (int i = 1; i <= Integer.parseInt(chalet.getNbImages()); i++) {
+                StorageReference tmp = storageReference.child(String.valueOf(i));
+                tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(final Uri uri) {
+                        TextSliderView textSliderView = new TextSliderView(ManageChalet.this);
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(getString(R.string.clickToDelete))
+                                .image(uri.toString())
+                                .setBitmapTransformation(new CenterCrop())
+                                .setOnSliderClickListener(ManageChalet.this);
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle().putString("extra", "!!!!!!");
+                        mDemoSlider.addSlider(textSliderView);
+                    }
+                });
+            }
+            mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+            mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+            mDemoSlider.setDuration(4000);
+            mDemoSlider.addOnPageChangeListener(ManageChalet.this);
+        }
+        else mDemoSlider.setVisibility(View.GONE);
     }
 }

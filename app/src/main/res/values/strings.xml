@@ -310,5 +310,6 @@
     <string name="totalMoney">Total revenue</string>
     <string name="clickToDelete">Click to delete</string>
     <string name="sureDelete">Are you sure you want to delete this photo?</string>
+    <string name="updateChalet">Your chalet was updated successfully</string>
 
 </resources>

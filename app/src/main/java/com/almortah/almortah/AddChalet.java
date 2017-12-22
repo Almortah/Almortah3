@@ -238,7 +238,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                     return;
                 }
 
-                if(Double.parseDouble(longitude) < 24 || Double.parseDouble(longitude) > 47) {
+                if(Double.parseDouble(latitude) < 24 || Double.parseDouble(latitude) > 25.1 ||
+                        Double.parseDouble(longitude) > 47 || Double.parseDouble(longitude) < 46) {
                     Toast.makeText(getApplicationContext(),R.string.errorMap,Toast.LENGTH_SHORT).show();
                     return;
                 }
