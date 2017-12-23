@@ -7,7 +7,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -59,7 +58,7 @@ public class CurrentReservations extends AppCompatActivity implements Navigation
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(CurrentReservations.this);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setItemAnimator(null);
         final ArrayList<Reservation> arrayList = new ArrayList<>();
         adapter = new CurrentReservAdapter(CurrentReservations.this, arrayList);
         recyclerView.setAdapter(adapter);

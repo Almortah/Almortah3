@@ -105,6 +105,13 @@
                     android:layout_height="40dp"
                     android:backgroundTint="@color/colorDarkGrey"
                     android:textColor="@color/colorWhite"
+                    android:text="- -"/>
+                <Button
+                    android:id="@+id/desDesMin"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/colorDarkGrey"
+                    android:textColor="@color/colorWhite"
                     android:text="-"/>
                 <EditText
                     android:layout_width="120dp"
@@ -112,6 +119,8 @@
                     android:gravity="center"
                     android:id="@+id/min"
                     android:maxLength="4"
+                    android:editable="false"
+                    android:focusable="false"
                     android:hint="@string/minPrice"
                     android:inputType="number" />
                 <Button
@@ -121,6 +130,14 @@
                     android:backgroundTint="@color/colorGreen"
                     android:textColor="@color/colorWhite"
                     android:text="+"/>
+                <Button
+                    android:id="@+id/addAddMin"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/colorGreen"
+                    android:textColor="@color/colorWhite"
+                    android:text="+ +"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -129,6 +146,13 @@
                 android:gravity="center"
                 android:layout_marginTop="9dp"
                 android:orientation="horizontal">
+                <Button
+                    android:id="@+id/desDesMax"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/colorDarkGrey"
+                    android:textColor="@color/colorWhite"
+                    android:text="- -"/>
             <Button
                 android:id="@+id/desMax"
                 android:layout_width="50dp"
@@ -142,15 +166,24 @@
                 android:gravity="center"
                 android:id="@+id/max"
                 android:maxLength="4"
+                android:editable="false"
+                android:focusable="false"
                 android:hint="@string/maxPrice"
                 android:inputType="number" />
-            <Button
-                android:id="@+id/addMax"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:backgroundTint="@color/colorGreen"
-                android:textColor="@color/colorWhite"
-                android:text="+"/>
+                <Button
+                    android:id="@+id/addMax"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/colorGreen"
+                    android:textColor="@color/colorWhite"
+                    android:text="+"/>
+                <Button
+                    android:id="@+id/addAddMax"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="@color/colorGreen"
+                    android:textColor="@color/colorWhite"
+                    android:text="+ +"/>
             </LinearLayout>
 
 

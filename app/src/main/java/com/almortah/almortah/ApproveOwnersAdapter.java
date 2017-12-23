@@ -75,11 +75,10 @@ public class ApproveOwnersAdapter extends RecyclerView.Adapter<ApproveOwnersAdap
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
                                 FirebaseDatabase.getInstance().getReference().child("users").child(user.getUserID()).child("isApproved").setValue("1");
-                                arrayList.remove(position);
-                                Toast.makeText(context,R.string.promoted,Toast.LENGTH_SHORT).show();
-                                notifyItemRemoved(position);
-                                notifyItemRangeChanged(position,arrayList.size());
-                                holder.itemView.setVisibility(View.GONE);
+                                Toast.makeText(context,R.string.doneApprove,Toast.LENGTH_SHORT).show();
+                                arrayList.remove(user);
+                                arrayList.clear();
+                                notifyDataSetChanged();
 
                             }
                         });
@@ -105,12 +104,11 @@ public class ApproveOwnersAdapter extends RecyclerView.Adapter<ApproveOwnersAdap
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-                                arrayList.remove(position);
-                                Toast.makeText(context,R.string.rejected,Toast.LENGTH_SHORT).show();
-                                notifyItemRemoved(position);
-                                notifyItemRangeChanged(position,arrayList.size());
-                                holder.itemView.setVisibility(View.GONE);
-
+                                Toast.makeText(context,R.string.doneReject,Toast.LENGTH_SHORT).show();
+                                arrayList.remove(user);
+                                arrayList.clear();
+                                notifyDataSetChanged();
+                                FirebaseDatabase.getInstance().getReference().child("users").child(user.getUserID()).child("isApproved").setValue("2");
                             }
                         });
 

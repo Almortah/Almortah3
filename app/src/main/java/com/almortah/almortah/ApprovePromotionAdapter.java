@@ -74,12 +74,13 @@ public class ApprovePromotionAdapter extends RecyclerView.Adapter<ApprovePromoti
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
+                                arrayList.remove(promotions);
+                                arrayList.clear();
+                                notifyDataSetChanged();
                                 FirebaseDatabase.getInstance().getReference().child("chalets").child(promotions.getChaletID()).child("promotion").setValue("1");
                                 FirebaseDatabase.getInstance().getReference().child("Promotions").child(promotions.getChaletID()).removeValue();
-                                arrayList.remove(position);
                                 Toast.makeText(context,R.string.promotedAccepted,Toast.LENGTH_SHORT).show();
-                                notifyItemRemoved(position);
-                                notifyItemRangeChanged(position,arrayList.size());
+
                             }
                         });
 
@@ -104,12 +105,13 @@ public class ApprovePromotionAdapter extends RecyclerView.Adapter<ApprovePromoti
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
+                                arrayList.remove(promotions);
+                                arrayList.clear();
+                                notifyDataSetChanged();
+
                                 FirebaseDatabase.getInstance().getReference().child("chalets").child(promotions.getChaletID()).child("promotion").setValue("0");
                                 FirebaseDatabase.getInstance().getReference().child("Promotions").child(promotions.getChaletID()).removeValue();
-                                arrayList.remove(position);
                                 Toast.makeText(context,R.string.rejectedPromotion,Toast.LENGTH_SHORT).show();
-                                notifyItemRemoved(position);
-                                notifyItemRangeChanged(position,arrayList.size());
                             }
                         });
 

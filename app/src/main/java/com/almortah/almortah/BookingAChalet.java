@@ -75,7 +75,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
             navigationView.inflateMenu(R.menu.visitor_menu);
 
         java.util.Calendar c = java.util.Calendar.getInstance();
-        c.add(java.util.Calendar.MONTH, +2);
+        c.add(java.util.Calendar.MONTH, +6);
         long result = c.getTimeInMillis();
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         calendarView.setFirstDayOfWeek(Calendar.SUNDAY);

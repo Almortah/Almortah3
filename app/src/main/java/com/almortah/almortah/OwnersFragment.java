@@ -42,7 +42,6 @@ public class OwnersFragment extends Fragment {
         oAdapter = new UseresRV(getContext() ,owners);
         rv = (RecyclerView) view.findViewById(R.id.recycler_view);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
-
         rv.setAdapter(oAdapter);
         // You don't need anything here
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("users");
