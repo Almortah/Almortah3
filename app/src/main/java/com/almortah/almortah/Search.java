@@ -404,30 +404,6 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        Intent intent = new Intent(getBaseContext(),SearchResult.class);
-        switch (position) {
-            case 0:
-                // Whatever you want to happen when the first item gets selected
-                double maxLt = 24.79; double maxLg = 46.72;
-                double minLt = 24.75; double minLg = 46.60;
-                intent.putExtra("maxLt",maxLt);
-                intent.putExtra("minLt",minLt);
-                intent.putExtra("maxLg",maxLg);
-                intent.putExtra("minLg",minLg);
-                //startActivity(intent);
-                break;
-            case 1:
-                // Whatever you want to happen when the second item gets selected
-                intent.putExtra("location", parent.getItemAtPosition(position).toString());
-                Log.e("LOCATION",parent.getItemAtPosition(position).toString());
-                //startActivity(intent);
-                break;
-            case 2:
-                // Whatever you want to happen when the third item gets selected
-                break;
-
-        }
-
     }
 
     @Override
