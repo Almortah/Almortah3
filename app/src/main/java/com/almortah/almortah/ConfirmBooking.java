@@ -162,12 +162,11 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 map.put("chaletName",chalet.getName());
                 map.put("rated","0");
               final String token = SharedPrefManager.getmInstance(getApplicationContext()).getToken();
-
+                Log.i("Token", token);
                 map.put("reservationID", String.valueOf(resID));
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
                 if(SharedPrefManager.getmInstance(getApplicationContext()).getToken()!=null){
-                    Log.i("Token", token);
+
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, app_server_url,
 
                             new Response.Listener<String>() {

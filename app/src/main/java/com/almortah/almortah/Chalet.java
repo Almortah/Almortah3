@@ -23,6 +23,7 @@ public class Chalet implements Parcelable {
     private String promotion;
     private String rating;
     private String weekendPrice;
+
     private String ownerToken;
 
 
@@ -128,6 +129,9 @@ public class Chalet implements Parcelable {
         return rating;
     }
 
+    public void setOwnerToken(String ownerToken) {
+        this.ownerToken = ownerToken;
+    }
     @Override
     public int describeContents() {
         return 0;

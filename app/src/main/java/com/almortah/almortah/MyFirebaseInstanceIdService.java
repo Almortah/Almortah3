@@ -17,6 +17,7 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         Log.d("Token", "Refreshed token: " + refreshedToken);
         getApplicationContext().sendBroadcast(new Intent(TOKEN_BROADCAST));
         storeToken(refreshedToken);
+
     }
     /*private void sendRegistrationToServer(String token) {
         //Implement this method if you want to store the token on your server
@@ -24,4 +25,5 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
     private void storeToken(String token ){
         SharedPrefManager.getmInstance(getApplicationContext()).storeToken(token);
     }
+
 }
