@@ -270,5 +270,7 @@
     <string name="sureDelete">هل انت متاكد من حذف هذه الصورة</string>
     <string name="updateChalet">"تم تحديث الشاليه بنجاح "</string>
     <string name="noChalet">هذا الشالية غير موجود</string>
+    <string name="doneApprove">هذا المالك الان موثوق</string>
+    <string name="doneReject">تم رفض هذا الطلب بنجاح</string>
 
 </resources>
