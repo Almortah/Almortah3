@@ -135,12 +135,13 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                          new DialogInterface.OnClickListener() {
                                                              @Override
                                                              public void onClick(DialogInterface arg0, int arg1) {
+                                                                 reservations.remove(reservation);
+                                                                 reservations.clear();
+                                                                 notifyDataSetChanged();
                                                                  FirebaseDatabase.getInstance().getReference().child("reservation")
                                                                          .child(reservation.getReservationID()).child("confirm").setValue("1");
                                                                  //code to notify customer!
-                                                                 reservations.remove(position);
-                                                                 notifyItemRemoved(position);
-                                                                 notifyItemRangeChanged(position,reservations.size());
+
 
                                                              }
                                                          });

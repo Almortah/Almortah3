@@ -65,9 +65,9 @@ public class StaticsAdapter extends RecyclerView.Adapter<StaticsAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final StaticsAdapter.MyViewHolder holder, final int position) {
         final StaticsItem item = items.get(position);
-        holder.cleanRate.setText(item.getCleanRating());
-        holder.priceRate.setText(item.getPriceRating());
-        holder.reciptRate.setText(item.getReicptRating());
+        holder.cleanRate.setText(item.getCleanRating() +" / 5");
+        holder.priceRate.setText(item.getPriceRating() +" / 5");
+        holder.reciptRate.setText(item.getReicptRating() +" / 5");
         holder.rating.setText(item.getAvgRating() + " / 5");
         holder.customerName.setText(item.getBestCustomer());
         holder.totalRevenue.setText( String.valueOf(item.getTotalRevenue()) + " " +context.getString(R.string.riyal));

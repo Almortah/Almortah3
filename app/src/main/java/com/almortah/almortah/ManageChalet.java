@@ -1,27 +1,31 @@
 package com.almortah.almortah;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.Marker;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.glide.slider.library.Animations.DescriptionAnimation;
+import com.glide.slider.library.SliderLayout;
+import com.glide.slider.library.SliderTypes.BaseSliderView;
+import com.glide.slider.library.SliderTypes.TextSliderView;
+import com.glide.slider.library.Tricks.ViewPagerEx;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,22 +35,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.werb.pickphotoview.PickPhotoView;
 import com.werb.pickphotoview.util.PickConfig;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class ManageChalet extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ManageChalet extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     private FirebaseApp app;
     private FirebaseStorage storage;
-    private GoogleMap mGoogleMap;
-    private Marker marker;
-    private LocationManager locationManager;
-    private String provider;
     private DrawerLayout drawer;
 
     private Button mUploadImage;
@@ -57,17 +54,13 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
     private EditText mChaletPrice;
     private Button submitChalet;
     private Chalet chalet;
-    private int chaletCount;
     private int imgName;
-    private String latitude;
-    private String longitude;
-    private String chaletLocation;
-    private Location location;
     private int imgNb = 0;
 
     static final int PICK_CONTACT_REQUEST = 1;
     static final int MY_PERMISSIONS_REQUEST = 1;
     private String descr = "Empty";
+    private SliderLayout mDemoSlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +73,10 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = mAuth.getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        chalet = (Chalet) getIntent().getExtras().getParcelable("chalet");
+        Bundle chaletInfo = getIntent().getExtras();
+        chalet = (Chalet) chaletInfo.getParcelable("chalet");
+        Log.e("chalet",chalet.getName());
+        Log.e("nbImages?", chalet.getNbImages());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.drawer_open, R.string.drawer_close);
@@ -96,48 +92,8 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
         else
             navigationView.inflateMenu(R.menu.visitor_menu);
 
-
-        PermissionListener permissionlistener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                //Toast.makeText(getApplicationContext(), "Permissions Granted", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(getApplicationContext(), "Permissions Denied" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
-
-            }
-        };
-
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionlistener)
-                .setRationaleTitle("Allow Permissions")
-                .setRationaleMessage("Allow This app to access contacts and location")
-                .setDeniedTitle("Permission denied")
-                .setDeniedMessage(
-                        "If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                .setGotoSettingButtonText("Allow")
-                .setPermissions(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION)
-                .check();
-
-
         app = FirebaseApp.getInstance();
         storage = FirebaseStorage.getInstance(app);
-        int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                return;
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST);
-                return;
-
-            }
-        }
-
         firebaseStorage = FirebaseStorage.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mChaletName = (EditText) findViewById(R.id.chaletName);
@@ -154,6 +110,53 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
 
         submitChalet = (Button) findViewById(R.id.submitChalet);
 
+        submitChalet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String chaletName = mChaletName.getText().toString().trim(); // 2--20
+                String chaletPrice = mChaletPrice.getText().toString().trim(); // 50-9999
+                String weekendPrice = mWeekend.getText().toString().trim();
+                String eidPrice = mEid.getText().toString().trim();
+                descr = des.getText().toString().trim();
+
+                if(chaletName.length() < 2 || chaletName.length() > 20) {
+                    mChaletName.setError(getString(R.string.error));
+                    return;
+                }
+                if(Integer.parseInt(chaletPrice) < 50 || Integer.parseInt(chaletPrice) > 9999) {
+                    mChaletPrice.setError(getString(R.string.error));
+                    return;
+                }
+                if(Integer.parseInt(weekendPrice) < 50 || Integer.parseInt(weekendPrice) > 9999) {
+                    mWeekend.setError(getString(R.string.error));
+                    return;
+                }
+
+                if(Integer.parseInt(eidPrice) < 50 || Integer.parseInt(eidPrice) > 9999) {
+                    mEid.setError(getString(R.string.error));
+                    return;
+                }
+
+                if (!chaletName.equals(chalet.getName()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("name").setValue(chaletName);
+
+                if (!eidPrice.equals(chalet.getEidPrice()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("eidPrice").setValue(eidPrice);
+
+                if (!weekendPrice.equals(chalet.getWeekendPrice()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("weekendPrice").setValue(weekendPrice);
+
+                if (!chaletPrice.equals(chalet.getNormalPrice()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("normalPrice").setValue(chaletPrice);
+
+                if(!descr.equals(chalet.getDescription()))
+                    mDatabase.child("chalets").child(chalet.getId()).child("description").setValue(descr);
+
+                Toast.makeText(getApplicationContext(),R.string.updateChalet,Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getBaseContext(),MyChalets.class));
+
+            }
+        });
 
 
         mUploadImage = (Button) findViewById(R.id.upload);
@@ -173,6 +176,35 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+        if (Integer.parseInt(chalet.getNbImages()) > 0) {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
+            for (int i = 1; i <= Integer.parseInt(chalet.getNbImages()); i++) {
+                StorageReference tmp = storageReference.child(String.valueOf(i));
+                tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(final Uri uri) {
+                        TextSliderView textSliderView = new TextSliderView(ManageChalet.this);
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(getString(R.string.clickToDelete))
+                                .image(uri.toString())
+                                .setBitmapTransformation(new CenterCrop())
+                                .setOnSliderClickListener(ManageChalet.this);
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle().putString("extra", "!!!!!!");
+                        mDemoSlider.addSlider(textSliderView);
+                    }
+                });
+            }
+            mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+            mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+            mDemoSlider.setDuration(4000);
+            mDemoSlider.addOnPageChangeListener(ManageChalet.this);
+        }
+        else mDemoSlider.setVisibility(View.GONE);
 
     }
 
@@ -188,30 +220,32 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
 
         if (requestCode == PickConfig.PICK_PHOTO_DATA) {
             ArrayList<String> selectPaths = (ArrayList<String>) data.getSerializableExtra(PickConfig.INTENT_IMG_LIST_SELECT);
-            imgNb = Integer.parseInt(chalet.getNbOfImages());
-            imgName = imgNb + 1;
+            imgNb = Integer.parseInt(chalet.getNbImages()) + selectPaths.size();
+            imgName = Integer.parseInt(chalet.getNbImages()) + 1;
             int newNbImgs = selectPaths.size() + imgNb;
             for (int i = 0; i < selectPaths.size(); i++) {
                 final Uri[] uri = new Uri[selectPaths.size()];
                 uri[i] = Uri.parse("file://" + selectPaths.get(i));
-                final StorageReference ref = firebaseStorage.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(chaletCount)).child(String.valueOf(imgName));
+                final StorageReference ref = firebaseStorage.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(chalet.getChaletNm())).child(String.valueOf(imgName));
                 ref.putFile(uri[i])
                         .addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
                                 String content = downloadUrl.toString();
                                 if (content.length() > 0) {
-                                    Random rand = new Random();
-                                    int n = rand.nextInt(50) + 1;
                                     //++chaletCount;
-                                    firebaseStorage.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(chaletCount)).child(String.valueOf(imgName));
+                                    firebaseStorage.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(chalet.getChaletNm())).child(String.valueOf(imgName));
                                 }
                             }
                         });
                 imgName++;
                 // do something u want
             }
+            FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).child("nbImages")
+                    .setValue(imgNb);
+
             Toast.makeText(getApplicationContext(), R.string.doneUpload, Toast.LENGTH_SHORT).show();
+            updatePhotosAfterUploads();
         }
     }
 
@@ -236,4 +270,104 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @Override
+    protected void onStop() {
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        mDemoSlider.stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
+    public void onSliderClick(final BaseSliderView slider) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ManageChalet.this);
+        alertDialogBuilder.setMessage(getString(R.string.sureDelete));
+        alertDialogBuilder.setPositiveButton(getString(R.string.yes),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        StorageReference mStorageRef;
+                        String storageurl = slider.getUrl();
+                        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(storageurl);
+                        mStorageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // File deleted successfully
+                                Toast.makeText(getApplicationContext(), "Photo deleted", Toast.LENGTH_SHORT).show();
+                                int newNb = Integer.parseInt(chalet.getNbImages()) - 1;
+                                FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId())
+                                        .child("nbImages").setValue(String.valueOf(newNb));
+                                if(newNb == 0)
+                                    mDemoSlider.setVisibility(View.GONE);
+
+                                recreate();
+                                //Log.d(TAG, "onSuccess: deleted file");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Uh-oh, an error occurred!
+                                //Log.d(TAG, "onFailure: did not delete file");
+                                Toast.makeText(getApplicationContext(), "Error deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton(getString(R.string.no),new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    public void updatePhotosAfterUploads(){
+        mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+        if (Integer.parseInt(chalet.getNbImages()) > 0) {
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
+            for (int i = 1; i <= Integer.parseInt(chalet.getNbImages()); i++) {
+                StorageReference tmp = storageReference.child(String.valueOf(i));
+                tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(final Uri uri) {
+                        TextSliderView textSliderView = new TextSliderView(ManageChalet.this);
+                        // initialize a SliderLayout
+                        textSliderView
+                                .description(getString(R.string.clickToDelete))
+                                .image(uri.toString())
+                                .setBitmapTransformation(new CenterCrop())
+                                .setOnSliderClickListener(ManageChalet.this);
+                        //add your extra information
+                        textSliderView.bundle(new Bundle());
+                        textSliderView.getBundle().putString("extra", "!!!!!!");
+                        mDemoSlider.addSlider(textSliderView);
+                    }
+                });
+            }
+            mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
+            mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+            mDemoSlider.setDuration(4000);
+            mDemoSlider.addOnPageChangeListener(ManageChalet.this);
+        }
+        else mDemoSlider.setVisibility(View.GONE);
+    }
 }

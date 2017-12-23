@@ -26,14 +26,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:orientation="vertical">
+
+            <com.glide.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
             <EditText
                 android:id="@+id/chaletName"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:hint="@string/chaletName" />
             <TextView
                 android:id="@+id/price"
@@ -95,18 +99,6 @@
                 android:maxLength="500"
                 android:hint="@string/description" />
 
-            <TextView
-                android:id="@+id/location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textSize="15sp"
-                android:hint="@string/location" />
-            <fragment
-                android:id="@+id/mapFragment"
-                android:name="com.google.android.gms.maps.MapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="250dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

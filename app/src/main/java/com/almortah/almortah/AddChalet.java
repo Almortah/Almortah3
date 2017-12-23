@@ -71,7 +71,6 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
     private EditText mChaletName;
     private EditText mChaletPrice;
     private Button submitChalet;
-    private Chalet chalet;
     private int chaletCount;
     private int imgName;
     private String latitude;
@@ -212,7 +211,7 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 String eidPrice = mEid.getText().toString().trim();
                 descr = des.getText().toString().trim();
                 String chaletOwnerId = user.getUid().toString();
-                String id = chalet.getId();
+                String id = chaletOwnerId+"_"+chaletCount;
 
                 if (latitude == null || longitude == null || chaletName.matches("") // in Riyadh
                         || chaletPrice.matches("") || weekendPrice.matches("")
@@ -239,7 +238,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                     return;
                 }
 
-                if(Double.parseDouble(longitude) < 24 || Double.parseDouble(longitude) > 47) {
+                if(Double.parseDouble(latitude) < 24 || Double.parseDouble(latitude) > 25.1 ||
+                        Double.parseDouble(longitude) > 47 || Double.parseDouble(longitude) < 46) {
                     Toast.makeText(getApplicationContext(),R.string.errorMap,Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -261,8 +261,8 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("ownerToken", SharedPrefManager.getmInstance(getApplicationContext()).getToken() );
                 mDatabase.child("chalets").child(id).setValue(hashMap);
 
-                HashMap<String, String> dateHashMap = new HashMap<String, String>();
-                dateHashMap.put("busyOn", "");
+//                HashMap<String, String> dateHashMap = new HashMap<String, String>();
+//                dateHashMap.put("busyOn", "");
                 //mDatabase.child("busyDates").child(id).child("busyOn").setValue("");
 
                 startActivity(new Intent(AddChalet.this, MyChalets.class));

@@ -177,7 +177,8 @@
             android:name=".ApproveOwners"
             android:label="@string/approve" />
         <activity android:name=".ManageChalet" />
-        <activity android:name=".Statics"></activity>
+        <activity android:name=".Statics" />
+        <activity android:name=".GridPhotos"></activity>
     </application>
 
 </manifest>
