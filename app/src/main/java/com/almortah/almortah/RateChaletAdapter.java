@@ -198,10 +198,12 @@ public class RateChaletAdapter extends RecyclerView.Adapter<RateChaletAdapter.My
                                                     String totalFormated = df.format(total);
                                                     Log.e("TOTAL:", String.valueOf(total));
                                                     reference.child("chalets").child(reservation.getChaletID()).child("rating").setValue(totalFormated);
-                                                    reservations.remove(holder.getAdapterPosition());
-                                                    notifyItemRemoved(holder.getAdapterPosition());
-                                                    notifyItemRangeChanged(holder.getAdapterPosition(), reservations.size());
+
+                                                    reservations.remove(reservation);
+                                                    reservations.clear();
+                                                    notifyDataSetChanged();
                                                     //holder.itemView.setVisibility(View.GONE);
+
 
                                                 }
                                             }

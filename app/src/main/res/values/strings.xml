@@ -311,5 +311,8 @@
     <string name="clickToDelete">Click to delete</string>
     <string name="sureDelete">Are you sure you want to delete this photo?</string>
     <string name="updateChalet">Your chalet was updated successfully</string>
+    <string name="noChalet">This chalet is not exist.</string>
+    <string name="doneApprove">This owner now is approved</string>
+    <string name="doneReject">You have reject this request successfully</string>
 
 </resources>

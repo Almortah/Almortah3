@@ -70,7 +70,6 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final ApproveAdapter.MyViewHolder holder, final int position) {
         final Reservation reservation = reservations.get(position);
-        sumOfCustomerRating = 0.0; totalRatingOfCustomer = 0.0;
         holder.chaletName.setText(reservation.getChaletName());
         holder.date.setText(reservation.getDate());
         holder.inTime.setText(reservation.getCheckin());
@@ -83,6 +82,7 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
+                                sumOfCustomerRating = 0.00; totalRatingOfCustomer = 0.00;
                                 int size = (int) dataSnapshot.getChildrenCount();
                                 for (DataSnapshot singlValue : dataSnapshot.getChildren()) {
                                     customerRatings customerRatings = singlValue.getValue(customerRatings.class);
@@ -92,10 +92,10 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                 }
 
                                 totalRatingOfCustomer = sumOfCustomerRating / size;
-                                DecimalFormat df = new DecimalFormat("#.00");
+                                DecimalFormat df = new DecimalFormat("#.##");
                                 String totalFormated = df.format(totalRatingOfCustomer);
 
-                                holder.rating.setText(totalFormated + " / " + " 5.0");
+                                holder.rating.setText(totalFormated + " / " + " 5");
 
                             }
                         }
@@ -217,10 +217,9 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                             public void onSuccess(Void aVoid) {
                                                                 FirebaseDatabase.getInstance().getReference().child("reservation")
                                                                         .child(reservation.getReservationID()).child("confirm").setValue("2");
-                                                                reservations.remove(position);
-                                                                notifyItemRemoved(position);
-                                                                notifyItemRangeChanged(position,reservations.size());
-                                                                holder.itemView.setVisibility(View.GONE);
+                                                                reservations.remove(reservation);
+                                                                reservations.clear();
+                                                                notifyDataSetChanged();
 
                                                             }
                                                         });
@@ -232,7 +231,7 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int id) {
                                                         //  Your code when user clicked on Cancel
-                                                        builder.create().cancel();
+                                                        dialog.cancel();
                                                     }
                                                 });
 

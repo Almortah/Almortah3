@@ -166,10 +166,9 @@ public class RateCustomerAdapter extends RecyclerView.Adapter<RateCustomerAdapte
                             }
                         });
                 reference.child("reservation").child(reservation.getReservationID()).child("ratedCustomer").setValue("1");
-                reservations.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position,reservations.size());
-                holder.itemView.setVisibility(View.GONE);
+                reservations.remove(reservation);
+                reservations.clear();
+                notifyDataSetChanged();
 
             }
         });

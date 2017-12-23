@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -99,7 +100,7 @@ public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.My
         holder.chaletPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                FirebaseDatabase.getInstance().getReference().child("chalet").child(complain.getChaletID())
+                FirebaseDatabase.getInstance().getReference().child("chalets").child(complain.getChaletID())
                         .addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -110,6 +111,8 @@ public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.My
                                     v.getContext().startActivity(intent);
                                     return;
                                 }
+                                else
+                                    Toast.makeText(context.getApplicationContext(),R.string.noChalet,Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
@@ -237,7 +240,7 @@ public class ComplaintsAdapter extends RecyclerView.Adapter<ComplaintsAdapter.My
                 arrayList.remove(complain);
                 arrayList.clear();
                 notifyDataSetChanged();
-                FirebaseDatabase.getInstance().getReference().child("complaints").child("isDismiss").setValue("1");
+                FirebaseDatabase.getInstance().getReference().child("complaints").child(complain.getComplainID()).child("isDismiss").setValue("1");
             }
         });
 

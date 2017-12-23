@@ -66,7 +66,6 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
 
             String[] list = getResources().getStringArray(R.array.Riyadh);
-            String[] tmp = {"-","N","E","W","C","S"};
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(Search.this,
                     android.R.layout.simple_spinner_item, list);
 
@@ -74,20 +73,29 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(this);
 
-            Button addMin = (Button) findViewById(R.id.addMin);
-            Button desMin = (Button) findViewById(R.id.desMin);
-            Button addMax = (Button) findViewById(R.id.addMax);
-            Button desMax = (Button) findViewById(R.id.desMax);
+        Button addMin = (Button) findViewById(R.id.addMin);
+        Button desMin = (Button) findViewById(R.id.desMin);
+        Button addMax = (Button) findViewById(R.id.addMax);
+        Button desMax = (Button) findViewById(R.id.desMax);
+
+        Button addAddMin = (Button) findViewById(R.id.addAddMin);
+        Button desDesMin = (Button) findViewById(R.id.desDesMin);
+        Button addAddMax = (Button) findViewById(R.id.addAddMax);
+        Button desDesMax = (Button) findViewById(R.id.desDesMax);
+
 
             final EditText max = (EditText) findViewById(R.id.max);
             final EditText min = (EditText) findViewById(R.id.min);
+
             datePicker = (DatePicker) findViewById(R.id.date);
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.MONTH, +2);
+        c.add(Calendar.MONTH, +6);
         long result = c.getTimeInMillis();
 
             datePicker.setMinDate(System.currentTimeMillis() - 1000);
             datePicker.setMaxDate(result);
+
+
             desMin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -144,8 +152,8 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
                     else {
                         minPrice = Integer.parseInt(min.getText().toString().trim()) + 50;
-                        if(minPrice > 3000)
-                            minPrice = 3000;
+                        if(minPrice > 5000)
+                            minPrice = 5000;
                         else if (minPrice > maxPrice && maxPrice != -1)
                             minPrice = maxPrice;
 
@@ -154,7 +162,11 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                 }
             });
 
-            addMax.setOnClickListener(new View.OnClickListener() {
+
+            // **************************///
+
+
+            addAddMax.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (max.getText().toString().matches("")) {
@@ -163,9 +175,9 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                 }
 
                     else {
-                        maxPrice = Integer.parseInt(max.getText().toString().trim()) + 50;
-                        if(maxPrice > 5000)
-                            maxPrice = 5000;
+                        maxPrice = Integer.parseInt(max.getText().toString().trim()) + 200;
+                        if(maxPrice > 9000)
+                            maxPrice = 9000;
                         else if(maxPrice < minPrice)
                             maxPrice = minPrice;
 
@@ -174,12 +186,103 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                 }
             });
 
-            Button filter = (Button) findViewById(R.id.filter);
+
+
+        desDesMin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(min.getText().toString().matches("")) {
+                    min.setText("0");
+                    minPrice = 0;
+                }
+                else {
+                    minPrice = Integer.parseInt(min.getText().toString().trim()) - 200;
+                    if(minPrice < 0)
+                        minPrice = 0;
+                    else if(minPrice > maxPrice)
+                        minPrice = maxPrice;
+
+                    min.setText(String.valueOf(minPrice));
+                }
+            }
+        });
+
+
+        desDesMax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(max.getText().toString().matches("")) {
+                    max.setText("0");
+                    maxPrice = 0;
+                }
+                else {
+                    maxPrice = Integer.parseInt(max.getText().toString().trim()) - 200;
+                    if(maxPrice < 0)
+                        maxPrice = 0;
+                    else if(maxPrice < minPrice && minPrice != -1)
+                        maxPrice = minPrice;
+                    max.setText(String.valueOf(maxPrice));
+                }
+            }
+        });
+
+        addAddMin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(maxPrice == -1) {
+                    Toast.makeText(getApplicationContext(),R.string.addMax,Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                else if(minPrice > maxPrice)
+                    return;
+
+                else if(min.getText().toString().matches("")) {
+                    min.setText("0");
+                    minPrice = 0;
+                }
+
+                else {
+                    minPrice = Integer.parseInt(min.getText().toString().trim()) + 200;
+                    if(minPrice > 5000)
+                        minPrice = 5000;
+                    else if (minPrice > maxPrice && maxPrice != -1)
+                        minPrice = maxPrice;
+
+                    min.setText(String.valueOf(minPrice));
+                }
+            }
+        });
+
+        addAddMax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (max.getText().toString().matches("")) {
+                    max.setText("0");
+                    maxPrice = 0;
+                }
+
+                else {
+                    maxPrice = Integer.parseInt(max.getText().toString().trim()) + 200;
+                    if(maxPrice > 9000)
+                        maxPrice = 9000;
+                    else if(maxPrice < minPrice)
+                        maxPrice = minPrice;
+
+                    max.setText(String.valueOf(maxPrice));
+                }
+            }
+        });
+
+
+
+        Button filter = (Button) findViewById(R.id.filter);
             filter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                    // String minPrice = min.getText().toString().trim();
                     //String maxPrice = max.getText().toString().trim();
+
                         Intent toResult = new Intent(getBaseContext() ,SearchResult.class);
                         if(minPrice == -1 && maxPrice != -1) {
                                 minPrice = 0;
