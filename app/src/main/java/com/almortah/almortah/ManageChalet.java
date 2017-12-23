@@ -242,8 +242,8 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
                 // do something u want
             }
             FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).child("nbImages")
-                    .setValue(imgNb);
-
+                    .setValue(String.valueOf(imgNb));
+            chalet.setNbImages(String.valueOf(imgNb));
             Toast.makeText(getApplicationContext(), R.string.doneUpload, Toast.LENGTH_SHORT).show();
             updatePhotosAfterUploads();
         }

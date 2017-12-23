@@ -92,9 +92,11 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         c.add(Calendar.MONTH, +6);
         long result = c.getTimeInMillis();
 
-            datePicker.setMinDate(System.currentTimeMillis() - 1000);
-            datePicker.setMaxDate(result);
+        Calendar minDate = Calendar.getInstance();
+        minDate.add(Calendar.DAY_OF_MONTH, +1);
 
+            datePicker.setMinDate(minDate.getTimeInMillis());
+            datePicker.setMaxDate(result);
 
             desMin.setOnClickListener(new View.OnClickListener() {
                 @Override

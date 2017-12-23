@@ -163,4 +163,8 @@ public class Chalet implements Parcelable {
             return new Chalet[size];
         }
     };
+
+    public void setNbImages(String nbImages) {
+        this.nbImages = nbImages;
+    }
 }
