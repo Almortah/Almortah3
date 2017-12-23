@@ -35,6 +35,7 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
     private String date;
     private String finalDates = "";
     private TextView t;
+
     private DatabaseReference reference;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     boolean flag = false;

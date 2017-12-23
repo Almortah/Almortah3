@@ -61,7 +61,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         Bundle info = getIntent().getExtras();
         date = info.getString("name");
         final Chalet chalet = (Chalet) info.getParcelable("chalet");
-     //   finalDates = info.getString("finalDates");
+        //   finalDates = info.getString("finalDates");
         boolean finalPrice = info.getBoolean("price");
         if(finalPrice)
             price = chalet.getWeekendPrice();
@@ -94,7 +94,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         inTime = (TimePicker) findViewById(R.id.checkin);
         inTime.setCurrentHour(11);
         inTime.setCurrentMinute(00);
-       // setTimePickerInterval(inTime);
+        // setTimePickerInterval(inTime);
 
         checkin = "11:00";
 
@@ -111,7 +111,7 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         //Map<String, Object> update = new HashMap<String, Object>();
         //update.put("busyOn", new String(upDate));
         //reference.updateChildren(update);
-       // Toast.makeText(getApplicationContext(),"Now its busy",Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getApplicationContext(),"Now its busy",Toast.LENGTH_SHORT).show();
 
         Button confirm = (Button) findViewById(R.id.confirm);
         payment = "cash";
@@ -161,10 +161,11 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                 map.put("ratedCustomer","0");
                 map.put("chaletName",chalet.getName());
                 map.put("rated","0");
-              final String token = SharedPrefManager.getmInstance(getApplicationContext()).getToken();
+                final String token = SharedPrefManager.getmInstance(getApplicationContext()).getToken();
 
                 map.put("reservationID", String.valueOf(resID));
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Log.i("shared",SharedPrefManager.getmInstance(getApplicationContext()).getToken());
 
                 if(SharedPrefManager.getmInstance(getApplicationContext()).getToken()!=null){
                     Log.i("Token", token);
@@ -231,8 +232,8 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
                     public void onComplete(@NonNull Task<Void> task) {
                         FirebaseDatabase.getInstance().getReference().child("busyDates").
                                 child(chalet.getId()).child(date).setValue(mAuth.getCurrentUser().getUid());
-                                startActivity(new Intent(ConfirmBooking.this,CurrentReservations.class));
-                                Toast.makeText(getBaseContext(), R.string.thanksForCash, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ConfirmBooking.this,CurrentReservations.class));
+                        Toast.makeText(getBaseContext(), R.string.thanksForCash, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -262,4 +263,3 @@ public class ConfirmBooking extends AppCompatActivity implements NavigationView.
         }
     }
 }
-
