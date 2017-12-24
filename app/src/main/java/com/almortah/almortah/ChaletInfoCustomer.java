@@ -84,6 +84,9 @@ public class ChaletInfoCustomer extends AppCompatActivity implements BaseSliderV
             book.setText(book.getText().toString() + " " + getString(R.string.on) + " " + tmp[0] + "/" + tmp[1]);
         }
 
+        TextView rating = (TextView) findViewById(R.id.rating);
+        rating.setText(chalet.getRating() + " / 5");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 

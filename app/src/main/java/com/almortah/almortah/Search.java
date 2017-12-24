@@ -168,7 +168,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             // **************************///
 
 
-            addAddMax.setOnClickListener(new View.OnClickListener() {
+            addMax.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (max.getText().toString().matches("")) {
@@ -177,7 +177,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                 }
 
                     else {
-                        maxPrice = Integer.parseInt(max.getText().toString().trim()) + 200;
+                        maxPrice = Integer.parseInt(max.getText().toString().trim()) + 50;
                         if(maxPrice > 9000)
                             maxPrice = 9000;
                         else if(maxPrice < minPrice)
@@ -189,6 +189,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             });
 
 
+        // **************************///
 
         desDesMin.setOnClickListener(new View.OnClickListener() {
             @Override

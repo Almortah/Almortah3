@@ -100,14 +100,14 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/desMin"
+                    android:id="@+id/desDesMin"
                     android:layout_width="50dp"
                     android:layout_height="40dp"
                     android:backgroundTint="@color/colorDarkGrey"
                     android:textColor="@color/colorWhite"
                     android:text="- -"/>
                 <Button
-                    android:id="@+id/desDesMin"
+                    android:id="@+id/desMin"
                     android:layout_width="50dp"
                     android:layout_height="40dp"
                     android:backgroundTint="@color/colorDarkGrey"
