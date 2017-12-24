@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class About extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private int type = -1;
     private DrawerLayout drawer;
+    private NavigationView navigationView;
 
 
     @Override
@@ -26,12 +27,20 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        assert navigationView != null;
+        navigationView.setNavigationItemSelectedListener(this);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
             FirebaseDatabase.getInstance().getReference().child("users").child(user.getUid()).child("type").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     type = Integer.parseInt(dataSnapshot.getValue().toString());
+                    if (type == 1)
+                        navigationView.inflateMenu(R.menu.customer_menu);
+                    else
+                        navigationView.inflateMenu(R.menu.owner_menu);
                 }
 
                 @Override
@@ -39,6 +48,9 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
                 }
             });
         }
+
+        else
+            navigationView.inflateMenu(R.menu.visitor_menu);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -51,17 +63,6 @@ public class About extends AppCompatActivity implements NavigationView.OnNavigat
                 R.string.drawer_open, R.string.drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        assert navigationView != null;
-        navigationView.setNavigationItemSelectedListener(this);
-
-        if (type == 1)
-            navigationView.inflateMenu(R.menu.customer_menu);
-        else if(type == -1)
-            navigationView.inflateMenu(R.menu.visitor_menu);
-        else
-            navigationView.inflateMenu(R.menu.owner_menu);
 
 
     }

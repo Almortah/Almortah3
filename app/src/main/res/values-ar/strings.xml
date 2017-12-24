@@ -272,5 +272,7 @@
     <string name="noChalet">هذا الشالية غير موجود</string>
     <string name="doneApprove">هذا المالك الان موثوق</string>
     <string name="doneReject">تم رفض هذا الطلب بنجاح</string>
+    <string name="failDelete">"هناك مشكلة في حذف هذه الصورة، حاول مرة أخرى "</string>
+    <string name="doneDelete">"تم حذف هذه الصورة بنجاح "</string>
 
 </resources>

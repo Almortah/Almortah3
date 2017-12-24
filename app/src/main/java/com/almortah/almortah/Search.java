@@ -92,9 +92,11 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
         c.add(Calendar.MONTH, +6);
         long result = c.getTimeInMillis();
 
-            datePicker.setMinDate(System.currentTimeMillis() - 1000);
-            datePicker.setMaxDate(result);
+        Calendar minDate = Calendar.getInstance();
+        minDate.add(Calendar.DAY_OF_MONTH, +1);
 
+            datePicker.setMinDate(minDate.getTimeInMillis());
+            datePicker.setMaxDate(result);
 
             desMin.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -166,7 +168,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             // **************************///
 
 
-            addAddMax.setOnClickListener(new View.OnClickListener() {
+            addMax.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (max.getText().toString().matches("")) {
@@ -175,7 +177,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
                 }
 
                     else {
-                        maxPrice = Integer.parseInt(max.getText().toString().trim()) + 200;
+                        maxPrice = Integer.parseInt(max.getText().toString().trim()) + 50;
                         if(maxPrice > 9000)
                             maxPrice = 9000;
                         else if(maxPrice < minPrice)
@@ -187,6 +189,7 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
             });
 
 
+        // **************************///
 
         desDesMin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -402,30 +405,6 @@ public class Search extends AppCompatActivity implements NavigationView.OnNaviga
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        Intent intent = new Intent(getBaseContext(),SearchResult.class);
-        switch (position) {
-            case 0:
-                // Whatever you want to happen when the first item gets selected
-                double maxLt = 24.79; double maxLg = 46.72;
-                double minLt = 24.75; double minLg = 46.60;
-                intent.putExtra("maxLt",maxLt);
-                intent.putExtra("minLt",minLt);
-                intent.putExtra("maxLg",maxLg);
-                intent.putExtra("minLg",minLg);
-                //startActivity(intent);
-                break;
-            case 1:
-                // Whatever you want to happen when the second item gets selected
-                intent.putExtra("location", parent.getItemAtPosition(position).toString());
-                Log.e("LOCATION",parent.getItemAtPosition(position).toString());
-                //startActivity(intent);
-                break;
-            case 2:
-                // Whatever you want to happen when the third item gets selected
-                break;
-
-        }
-
     }
 
     @Override

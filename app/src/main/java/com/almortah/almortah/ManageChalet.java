@@ -56,6 +56,7 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
     private Chalet chalet;
     private int imgName;
     private int imgNb = 0;
+    private int newNbImages = -1;
 
     static final int PICK_CONTACT_REQUEST = 1;
     static final int MY_PERMISSIONS_REQUEST = 1;
@@ -77,6 +78,9 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
         chalet = (Chalet) chaletInfo.getParcelable("chalet");
         Log.e("chalet",chalet.getName());
         Log.e("nbImages?", chalet.getNbImages());
+
+        if(newNbImages == -1)
+        newNbImages = Integer.parseInt(chalet.getNbImages());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.drawer_open, R.string.drawer_close);
@@ -164,7 +168,6 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
         mUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 new PickPhotoView.Builder(ManageChalet.this)
                         .setPickPhotoSize(5)   //select max size
                         .setShowCamera(true)   //is show camera
@@ -220,13 +223,15 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
 
         if (requestCode == PickConfig.PICK_PHOTO_DATA) {
             ArrayList<String> selectPaths = (ArrayList<String>) data.getSerializableExtra(PickConfig.INTENT_IMG_LIST_SELECT);
-            imgNb = Integer.parseInt(chalet.getNbImages()) + selectPaths.size();
+            newNbImages = newNbImages + selectPaths.size();
             imgName = Integer.parseInt(chalet.getNbImages()) + 1;
-            int newNbImgs = selectPaths.size() + imgNb;
+            Log.e("newNbImagesAfterUp", String.valueOf(newNbImages));
+            FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).child("nbImages")
+                    .setValue(String.valueOf(newNbImages));
             for (int i = 0; i < selectPaths.size(); i++) {
+                final StorageReference ref = firebaseStorage.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(chalet.getChaletNm())).child(String.valueOf(imgName));
                 final Uri[] uri = new Uri[selectPaths.size()];
                 uri[i] = Uri.parse("file://" + selectPaths.get(i));
-                final StorageReference ref = firebaseStorage.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(chalet.getChaletNm())).child(String.valueOf(imgName));
                 ref.putFile(uri[i])
                         .addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -234,18 +239,14 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
                                 String content = downloadUrl.toString();
                                 if (content.length() > 0) {
                                     //++chaletCount;
-                                    firebaseStorage.child(mAuth.getCurrentUser().getUid()).child(String.valueOf(chalet.getChaletNm())).child(String.valueOf(imgName));
                                 }
                             }
                         });
                 imgName++;
                 // do something u want
             }
-            FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).child("nbImages")
-                    .setValue(imgNb);
-
             Toast.makeText(getApplicationContext(), R.string.doneUpload, Toast.LENGTH_SHORT).show();
-            updatePhotosAfterUploads();
+            //reate();
         }
     }
 
@@ -292,14 +293,12 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
                             @Override
                             public void onSuccess(Void aVoid) {
                                 // File deleted successfully
-                                Toast.makeText(getApplicationContext(), "Photo deleted", Toast.LENGTH_SHORT).show();
-                                int newNb = Integer.parseInt(chalet.getNbImages()) - 1;
+                                Toast.makeText(getApplicationContext(), R.string.doneDelete, Toast.LENGTH_SHORT).show();
+                                --newNbImages;
+                                Log.e("newNbImagesAfterDelete", String.valueOf(newNbImages));
                                 FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId())
-                                        .child("nbImages").setValue(String.valueOf(newNb));
-                                if(newNb == 0)
-                                    mDemoSlider.setVisibility(View.GONE);
-
-                                recreate();
+                                        .child("nbImages").setValue(String.valueOf(newNbImages));
+                                mDemoSlider.removeSliderAt(mDemoSlider.getCurrentPosition());
                                 //Log.d(TAG, "onSuccess: deleted file");
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -307,7 +306,7 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
                             public void onFailure(@NonNull Exception exception) {
                                 // Uh-oh, an error occurred!
                                 //Log.d(TAG, "onFailure: did not delete file");
-                                Toast.makeText(getApplicationContext(), "Error deleted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.failDelete, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -342,9 +341,11 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
     public void updatePhotosAfterUploads(){
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         if (Integer.parseInt(chalet.getNbImages()) > 0) {
+            mDemoSlider.setVisibility(View.VISIBLE);
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(chalet.getOwnerID()).child(chalet.getChaletNm());
             for (int i = 1; i <= Integer.parseInt(chalet.getNbImages()); i++) {
                 StorageReference tmp = storageReference.child(String.valueOf(i));
+                final int finalI = i;
                 tmp.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(final Uri uri) {
@@ -359,6 +360,7 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
                         textSliderView.bundle(new Bundle());
                         textSliderView.getBundle().putString("extra", "!!!!!!");
                         mDemoSlider.addSlider(textSliderView);
+
                     }
                 });
             }
@@ -367,6 +369,7 @@ public class ManageChalet extends AppCompatActivity implements NavigationView.On
             mDemoSlider.setCustomAnimation(new DescriptionAnimation());
             mDemoSlider.setDuration(4000);
             mDemoSlider.addOnPageChangeListener(ManageChalet.this);
+
         }
         else mDemoSlider.setVisibility(View.GONE);
     }

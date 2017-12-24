@@ -76,12 +76,16 @@ public class BookingAChalet extends AppCompatActivity implements NavigationView.
 
         java.util.Calendar c = java.util.Calendar.getInstance();
         c.add(java.util.Calendar.MONTH, +6);
+        java.util.Calendar min = java.util.Calendar.getInstance();
+        min.add(java.util.Calendar.DAY_OF_MONTH, +1);
+
         long result = c.getTimeInMillis();
         calendarView = (CalendarView) findViewById(R.id.calendarView);
         calendarView.setFirstDayOfWeek(Calendar.SUNDAY);
-        Long l = System.currentTimeMillis();
-        //calendarView.setMinDate(l);
+        calendarView.setMinDate(min.getTimeInMillis());
         calendarView.setMaxDate(result);
+        calendarView.setDate(min.getTimeInMillis());
+
 
         t = (TextView) findViewById(R.id.dateChoose);
         checkBusy = (Button) findViewById(R.id.checkBusy);
