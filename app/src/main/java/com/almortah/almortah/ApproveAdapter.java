@@ -307,6 +307,7 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                                         params.put("title","AlMortah");
                                                                         params.put("body","Your reservation on "+reservation.getChaletName()+" have been Rejected");
                                                                         params.put("customer_token",token);
+                                                                        Log.i("test","test");
                                                                         return params;
                                                                     }
                                                                 };
