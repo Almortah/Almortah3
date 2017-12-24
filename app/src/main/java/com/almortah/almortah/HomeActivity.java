@@ -39,18 +39,25 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         if (getIntent().getExtras() != null && mAuth.getCurrentUser() != null) {
 
-//            for (String key : getIntent().getExtras().keySet()) {
-             //   String value = getIntent().getExtras().getString(key);
+           for (String key : getIntent().getExtras().keySet()) {
+                String value = getIntent().getExtras().getString(key);
+             //   Log.i("Value",value);
 
-               // if (key.equals("AnotherActivity") && value.equals("True")) {
+                if (key.equals("AnotherActivity") && value.equals("True")) {
                     Log.i("hello","Hello");
                     Intent intent = new Intent(this, ApproveBookingByOwner.class);
-                  //  intent.putExtra("value", value);
                     startActivity(intent);
                     finish();
-                //}
+                }
+                else if (key.equals("AnotherActivity") && value.equals("False")){
+                    Log.i("bye","Bye");
+                    Intent intent = new Intent(this, CurrentReservations.class);
+                    startActivity(intent);
+                    finish();
 
-  //          }
+                }
+
+          }
         }
 
         guestButton = (Button) findViewById(R.id.guestButton);

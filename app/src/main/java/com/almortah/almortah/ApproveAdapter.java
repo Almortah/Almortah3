@@ -3,6 +3,7 @@ package com.almortah.almortah;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.constraint.solver.widgets.Snapshot;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ALMAHRI on 02/12/2017.
@@ -42,6 +50,7 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
         public Button accept;
         public Button reject;
         public TextView customerName;
+
 
         public MyViewHolder(View view) {
             super(view);
@@ -141,7 +150,50 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                                  notifyDataSetChanged();
                                                                  FirebaseDatabase.getInstance().getReference().child("reservation")
                                                                          .child(reservation.getReservationID()).child("confirm").setValue("1");
-                                                                    sendEmail();
+                                                                 final String url_notify = "http://almortah2017-001-site1.etempurl.com/send_to_customer.php";
+
+                                                                 FirebaseDatabase.getInstance().getReference().child("users")
+                                                                         .child(reservation.getCustomerID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                     @Override
+                                                                     public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                         final String token = dataSnapshot.child("token").getValue().toString();
+
+                                                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url_notify,
+
+                                                                                 new Response.Listener<String>() {
+                                                                                     @Override
+                                                                                     public void onResponse(String response) {
+
+                                                                                     }
+                                                                                 }, new Response.ErrorListener() {
+                                                                             @Override
+                                                                             public void onErrorResponse(VolleyError error) {
+
+                                                                             }
+                                                                         })
+                                                                         {
+                                                                             @Override
+                                                                             protected Map<String, String> getParams() throws AuthFailureError {
+                                                                                 Map<String,String> params = new HashMap<>();
+                                                                                 params.put("title","AlMortah");
+                                                                                 params.put("body","Your reservation on"+reservation.getChaletName()+"have been Accepted");
+                                                                                 params.put("customer_token",token);
+
+                                                                                 return params;
+                                                                             }
+                                                                         };
+                                                                         MySingleton.getmInstance(context).addToRequestque(stringRequest2);
+
+                                                                     }
+
+                                                                     @Override
+                                                                     public void onCancelled(DatabaseError databaseError) {
+
+                                                                     }
+                                                                 });
+
+
+
 
                                                              }
                                                          });
@@ -226,6 +278,48 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                         });
                                                         //code to notify customer!
 
+                                                        final String url_notify = "http://almortah2017-001-site1.etempurl.com/send_to_customer.php";
+
+                                                        FirebaseDatabase.getInstance().getReference().child("users")
+                                                                .child(reservation.getCustomerID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                final String token = dataSnapshot.child("token").getValue().toString();
+
+                                                                StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url_notify,
+
+                                                                        new Response.Listener<String>() {
+                                                                            @Override
+                                                                            public void onResponse(String response) {
+
+                                                                            }
+                                                                        }, new Response.ErrorListener() {
+                                                                    @Override
+                                                                    public void onErrorResponse(VolleyError error) {
+
+                                                                    }
+                                                                })
+                                                                {
+                                                                    @Override
+                                                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                                                        Map<String,String> params = new HashMap<>();
+                                                                        params.put("title","AlMortah");
+                                                                        params.put("body","Your reservation on "+reservation.getChaletName()+" have been Rejected");
+                                                                        params.put("customer_token",token);
+
+                                                                        return params;
+                                                                    }
+                                                                };
+                                                                MySingleton.getmInstance(context).addToRequestque(stringRequest2);
+
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+
                                                     }
                                                 })
                                                 .setNegativeButton(context.getString(R.string.cancel1), new DialogInterface.OnClickListener() {
@@ -268,31 +362,7 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
         return reservations.size();
     }
 
-    public void sendEmail(){
 
-
-        BackgroundMail.newBuilder(context)
-                .withUsername("aalmortah@gmail.com")
-                .withPassword("@lmortah")
-                .withMailto("toemail@gmail.com")
-                .withType(BackgroundMail.TYPE_PLAIN)
-                .withSubject("this is the subject")
-                .withBody("this is the body")
-                .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
-                    @Override
-                    public void onSuccess() {
-                        //do some magic
-                    }
-                })
-                .withOnFailCallback(new BackgroundMail.OnFailCallback() {
-                    @Override
-                    public void onFail() {
-                        //do some magic
-                    }
-                })
-                .send();
-
-    }
 
 
 }

@@ -4,6 +4,8 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -32,12 +34,14 @@ public class MyNotificationManager {
                 intent,
                 PendingIntent.FLAG_CANCEL_CURRENT
         );
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder mNotificationBuilder = new NotificationCompat.Builder( context)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("AL-Mortah")
                 .setContentText(notifcation)
+                .setSound(defaultSoundUri)
                 .setAutoCancel( true )
                 ;
         String ns = Context.NOTIFICATION_SERVICE;

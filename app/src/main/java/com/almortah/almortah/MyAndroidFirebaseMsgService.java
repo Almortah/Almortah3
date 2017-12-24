@@ -37,7 +37,7 @@ public class MyAndroidFirebaseMsgService extends FirebaseMessagingService {
 
             Intent intent = new Intent(this, HomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("AnotherActivity", anotherActivity);
+            intent.putExtra("AnotherActivity", anotherActivity);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent,
                     PendingIntent.FLAG_ONE_SHOT);
