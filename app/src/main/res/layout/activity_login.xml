@@ -60,7 +60,8 @@
         android:layout_marginLeft="100dp"
         android:layout_height="wrap_content"
         android:text="forget password?"
-        android:textSize="15sp"/>
+        android:textSize="15sp"
+        android:onClick="forget"/>
 
 
 

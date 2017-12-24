@@ -226,7 +226,12 @@ public class login extends AppCompatActivity  {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+public void forget(View view){
+    Intent myIntent = new Intent(view.getContext(),ForgetPassword.class);
+    startActivity(myIntent);
 
+
+}
 
 
 }

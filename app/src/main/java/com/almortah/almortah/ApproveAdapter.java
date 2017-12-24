@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -140,11 +141,11 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                                  notifyDataSetChanged();
                                                                  FirebaseDatabase.getInstance().getReference().child("reservation")
                                                                          .child(reservation.getReservationID()).child("confirm").setValue("1");
-                                                                 //code to notify customer!
-
+                                                                    sendEmail();
 
                                                              }
                                                          });
+
 
                                                  alertDialogBuilder.setNegativeButton(context.getString(R.string.no), new DialogInterface.OnClickListener() {
                                                      @Override
@@ -266,5 +267,33 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
     public int getItemCount() {
         return reservations.size();
     }
+
+    public void sendEmail(){
+
+
+        BackgroundMail.newBuilder(context)
+                .withUsername("aalmortah@gmail.com")
+                .withPassword("@lmortah")
+                .withMailto("toemail@gmail.com")
+                .withType(BackgroundMail.TYPE_PLAIN)
+                .withSubject("this is the subject")
+                .withBody("this is the body")
+                .withOnSuccessCallback(new BackgroundMail.OnSuccessCallback() {
+                    @Override
+                    public void onSuccess() {
+                        //do some magic
+                    }
+                })
+                .withOnFailCallback(new BackgroundMail.OnFailCallback() {
+                    @Override
+                    public void onFail() {
+                        //do some magic
+                    }
+                })
+                .send();
+
+    }
+
+
 }
 
