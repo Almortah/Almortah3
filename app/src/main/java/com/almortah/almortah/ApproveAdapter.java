@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.constraint.solver.widgets.Snapshot;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -306,7 +307,7 @@ public class ApproveAdapter extends RecyclerView.Adapter<ApproveAdapter.MyViewHo
                                                                         params.put("title","AlMortah");
                                                                         params.put("body","Your reservation on "+reservation.getChaletName()+" have been Rejected");
                                                                         params.put("customer_token",token);
-
+                                                                        Log.i("test","test");
                                                                         return params;
                                                                     }
                                                                 };
