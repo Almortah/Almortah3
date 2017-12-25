@@ -51,7 +51,6 @@ public class Promotion extends AppCompatActivity implements NavigationView.OnNav
 
         Bundle info = getIntent().getExtras();
         final Chalet chalet = (Chalet) info.getParcelable("chalet");
-        final String chaletID = info.getString("id");
         Button submit = (Button) findViewById(R.id.submit);
         final RadioGroup offer = (RadioGroup) findViewById(R.id.offer);
         final RadioGroup payment = (RadioGroup) findViewById(R.id.payment);

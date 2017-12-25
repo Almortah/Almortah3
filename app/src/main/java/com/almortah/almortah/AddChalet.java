@@ -259,13 +259,20 @@ public class AddChalet extends AppCompatActivity implements OnMapReadyCallback, 
                 hashMap.put("nbImages", String.valueOf(imgNb));
                 hashMap.put("id", id);
                 hashMap.put("ownerToken", SharedPrefManager.getmInstance(getApplicationContext()).getToken() );
-                mDatabase.child("chalets").child(id).setValue(hashMap);
+                mDatabase.child("chalets").child(id).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent i = new Intent(getBaseContext(), MyChalets.class);
+                        //i.putExtra("hi","");
+                        startActivity(i);
+                        return;
+                    }
+                });
 
 //                HashMap<String, String> dateHashMap = new HashMap<String, String>();
 //                dateHashMap.put("busyOn", "");
                 //mDatabase.child("busyDates").child(id).child("busyOn").setValue("");
 
-                startActivity(new Intent(AddChalet.this, MyChalets.class));
             }
         });
 

@@ -114,7 +114,8 @@ public class MyChaletRV extends RecyclerView.Adapter<MyChaletRV.MyViewHolder> {
                                 chalets.remove(chalet);
                                 chalets.clear();
                                 notifyDataSetChanged();
-                                FirebaseDatabase.getInstance().getReference().child("chalets").child(chalet.getId()).removeValue();
+                                FirebaseDatabase.getInstance().getReference().child("chalets")
+                                        .child(chalet.getId()).removeValue();
                             }
                         });
 

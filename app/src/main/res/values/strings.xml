@@ -316,5 +316,6 @@
     <string name="doneReject">You have reject this request successfully</string>
     <string name="doneDelete">This photo has been deleted successfully</string>
     <string name="failDelete">There is issue with deleting this photo, try again</string>
+    <string name="rating1">Rating</string>
 
 </resources>
